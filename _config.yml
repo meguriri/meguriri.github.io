@@ -13,8 +13,8 @@ plainwhite:
   name: meguriri
   tagline: 只要不停下来……道路就会不断延伸……
   date_format: "%b %-d, %Y"
-  dark_mode: true
-  search: true
+  dark_mode: false
+  search: false
   sitemap: true
   #portfolio_image: "assets/wallhaven-lmxm62(2).png"
   #disqus_shortname: albertoaflores
