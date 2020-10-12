@@ -6,7 +6,8 @@ description: > # this means to ignore newlines until "show_exerpts:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 show_excerpts: true # set to true to show excerpts on the homepage
-
+remote_theme:
+  samarsault/plainwhite-jekyll
 # Minima date format
 # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
 sass:
@@ -20,11 +21,18 @@ plainwhite:
   search: true # set to true to enable searchbar
   dark_mode: true # set to true to add dark mode toggle
   portfolio_image: "assets/wallhaven-lmxm62 (2).png" # the path from the base directory of the site to the image to display (no / at the start)
+  show_excerpts: true
+  navigation:
+    - title: My Work
+      url: "/my-work"
+    - title: Resume
+      url: "/resume"
   html_lang: "en" # set the lang attribute of the <html> tag for the pages. See here for a list of codes: https://www.w3schools.com/tags/ref_country_codes.asp
   condensed_mobile:
     #- home
     - page
     - post
+    - page
   # generate social links in footer
   social_links:
     #twitter: samarsault
@@ -59,10 +67,3 @@ theme: plainwhite
 plugins:
   - jekyll-seo-tag
 #  - jekyll-feed
-links1:
-  - name: 博弈论
-    url： /blog/recent
-    type: recent
-    external:false
-blog_1: recent
-
