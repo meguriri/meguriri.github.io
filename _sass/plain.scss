@@ -235,11 +235,11 @@ blockquote {
   margin: 0;
   padding: 0;
   li {
-    font-size: 12px;
+    font-size: 14px;
     float: left;
-    background-color: #d1619f;
+    background-color: #e9a6cb;
     color: #000;
-    padding: 2px 7px;
+    padding: 5px 10px;
     border-radius: 7px;
     @media screen and (max-width: $mobileW) {
       margin-top: 7px;
@@ -255,7 +255,7 @@ blockquote {
     font-size: 16px;
     float: left;
     background-color: #e3e3e3;
-    padding: 5px 20px;
+    padding: 10px 20px;
     border-radius: 5px;
     @media screen and (max-width: $mobileW) {
       margin-top: 5px;
