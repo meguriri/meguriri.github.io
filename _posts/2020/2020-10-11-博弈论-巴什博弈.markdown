@@ -26,8 +26,7 @@ excerpt: '两个顶尖聪明的人在玩游戏，有n个石子，每人可以随
 * 当石子为k*(m+1),即n能被m+1整除时，后手必胜。
   
 ### 三代码：
-
-{% highlight c++ linenos %}
+```c++
 #include<iostream>
 using namespace std;
 int main(){
@@ -39,7 +38,7 @@ int main(){
         cout<<"first"<<endl;
     return 0;
 }
-{% endhighlight %}
+``` 
 #header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
 #catalog: true 						# 是否归档
 #subtitle:   巴什博弈 #副标题
