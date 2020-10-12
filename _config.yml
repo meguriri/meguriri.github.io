@@ -8,35 +8,32 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Theme Info: https://github.com/thelehhman/plainwhite-jekyll
 #theme: plainwhite
-
+title: cherry blessing
 plainwhite:
-  name: Alberto A. Flores
-  tagline: Sr. Systems Architect
+  name: meguriri
+  tagline: 只要不停下来……道路就会不断延伸……
   date_format: "%b %-d, %Y"
   dark_mode: true
   search: true
   sitemap: true
+  portfolio_image: "assets/wallhaven-lmxm62 (2).png"
   #disqus_shortname: albertoaflores
-  navigation:
-    - title: Books
-      url: "/books"
-    - title: Homework
-      url: "/homework"
-    - title: About me
-      url: "/about"
+  #navigation:
+    #- title: 关于我
+     # url: "/about"
 
   social_links:
-    twitter: albertoaflores
-    github: albertoaflores
-    linkedIn: in/aflores\
-    facebook: albertoaflores37
-    youtube: albertoaflores
+    #twitter: albertoaflores
+    github: meguriri
+    #linkedIn: in/aflores\
+    #facebook: albertoaflores37
+    #youtube: albertoaflores
     rss: rss
 
 #Enable excerpts in blog entries
 show_excerpts: true
 
-markdown: kramdown
+#markdown: kramdown
 
 # More › http://kramdown.gettalong.org/quickref.html
 # Options › http://kramdown.gettalong.org/options.html
@@ -57,7 +54,7 @@ kramdown:
       line_numbers: true
       start_line: 1
 
-paginate: 10
+paginate: 6
 
 plugins:
   - jekyll-feed
