@@ -8,11 +8,3 @@
 {% if site.plainwhite.dark_mode %}
 <script type="text/javascript" src="{{ "/assets/js/darkmode.js" | relative_url }}"></script>
 {% endif %}
-{%for link in site links1 %}
-    {%assign count = 0%}
-    {%if link.type == site.blog_1%}
-        {%for post in site.posts%}
-            {%assign count =count|plus:1%}
-        {%endfor%}
-    {%endif%}
-{%endfor%}
