@@ -11,7 +11,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 title: cherry blessing
 plainwhite:
   name: meguriri
-  tagline: 只要不停下来……道路就会不断延伸……
+  tagline: 只要不停下来…道路就会不断延伸
   date_format: "%b %-d, %Y"
   dark_mode: false
   search: false
