@@ -1,4 +1,4 @@
-title: ccpc打铁。。。
+title: ccpc
 author: meguriri
 email: 1310500986@qq.com
 description: > # this means to ignore newlines until "show_exerpts:"
@@ -15,6 +15,9 @@ plainwhite:
   name: meguriri
   tagline: 只要不停下来……道路就会不断延伸……
   date_format: "%b %-d, %Y"
+  sidebar: true                           # whether or not using Sidebar.
+  sidebar-about-description: "哈哈哈"
+  sidebar-avatar: /img/avatar_binggan.jpg      # use absolute URL, seeing it's 
   sitemap: true # set to true to generate sitemap.xml content
   search: true # set to true to enable searchbar
   dark_mode: true # set to true to add dark mode toggle
