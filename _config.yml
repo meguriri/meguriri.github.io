@@ -1,4 +1,4 @@
-title: ccpc打铁。。
+title: ccpc打铁。。。
 author: meguriri
 email: 1310500986@qq.com
 description: > # this means to ignore newlines until "show_exerpts:"
@@ -57,9 +57,4 @@ theme: plainwhite
 
 plugins:
   - jekyll-seo-tag
-  
 #  - jekyll-feed
-# Sidebar settings
-sidebar: true                            #添加侧边栏
-sidebar-about-description: "简单的描述一下你自己"
-sidebar-avatar: /assets/wallhaven-lmxm62 (2).png     #你的大头贴，请使用绝对地址.
