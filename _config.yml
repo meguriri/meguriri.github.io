@@ -33,7 +33,7 @@ plainwhite:
 #Enable excerpts in blog entries
 show_excerpts: true
 
-#markdown: kramdown
+markdown: kramdown
 
 # More › http://kramdown.gettalong.org/quickref.html
 # Options › http://kramdown.gettalong.org/options.html
