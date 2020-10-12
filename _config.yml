@@ -14,7 +14,7 @@ plainwhite:
   tagline: 只要不停下来…道路就会不断延伸
   date_format: "%b %-d, %Y"
   dark_mode: false
-  search: false
+  search: true
   sitemap: true
   #portfolio_image: "assets/wallhaven-lmxm62(2).png"
   #disqus_shortname: albertoaflores
@@ -37,22 +37,24 @@ show_excerpts: true
 
 # More › http://kramdown.gettalong.org/quickref.html
 # Options › http://kramdown.gettalong.org/options.html
-kramdown:
-  input: GFM
+
+
+#kramdown:
+ # input: GFM
   # https://github.com/jekyll/jekyll/pull/4090
-  syntax_highlighter: rouge
+  #syntax_highlighter: rouge
 
   # Rouge Highlighter in Kramdown › http://kramdown.gettalong.org/syntax_highlighter/rouge.html
   # span, block element options fall back to global
-  syntax_highlighter_opts:
+  #syntax_highlighter_opts:
     # Rouge Options › https://github.com/jneen/rouge#full-options
-    css_class: 'highlight'
+    #css_class: 'highlight'
     #line_numbers: true # bad idea, spans don't need linenos and would inherit this option
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
-      start_line: 1
+    #span:
+    #  line_numbers: false
+   # block:
+   #   line_numbers: true
+    #  start_line: 1
 
 paginate: 6
 
