@@ -1,0 +1,121 @@
+---
+layout: post
+title: Generics and DAOs
+date: '2008-10-09T10:30:00.010-04:00'
+author: Alberto
+tags:
+- DAO
+- Hibernate
+- Generics
+- Spring
+modified_time: '2010-01-07T08:54:52.204-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-6951793317370516301
+blogger_orig_url: https://alberto-flores.blogspot.com/2008/09/java-generics-and-dao-pattern.html
+---
+
+<div align="justify">Since the coming of Hibernate 3, I have started to refactor a lot of code that I simply didn't need anymore. Among these, my data access objects have always seemed repetitive. Repetition (in my opinion) calls for code refactoring. The hibernate tools project aims at fixing this problem by providing a "Dao Code Generator" which can certainly help. Additionally, other tools out there offer similar solutions, however one must understand how much the JVM will have to use in working with our "dao-centric" application. Can we do better? <br /><br />With the introduction of Generics in Java 5, I found a good way to make good use of this generic approach to DAO's without breaking my application logic. Consider the following code:<br /><a name='more'></a><br /><br /><pre class="brush: java">package sample;
+<br />
+<br />public interface GenericDao
+<br />&lt;T, PK extends Serializable&gt; {
+<br />/**
+<br />* Persists the new instance object into the
+<br />* persistent store.
+<br />* @param newInstance - the instance object
+<br />* to persist.
+<br />* @return the primary key of the T object.
+<br />*/
+<br />PK createEntity(T newInstance);
+<br />
+<br />/**
+<br />* Retrieve the an object that was previously
+<br />* persisted to the persistent store using the
+<br />* primary key passed in the parameter.
+<br />* @param recnum - the primary key of the
+<br />* persisted object.
+<br />* @return the object instance.
+<br />*/
+<br />T getByRecnum(PK recnum);
+<br />
+<br />/**
+<br />* Deletes an entity from the persistent store.
+<br />* Note that all cascades associated in the
+<br />* persistent object (JPA) are applied. If
+<br />* orphans are needed, you must brake the
+<br />* association first before deleting this
+<br />* entity.
+<br />* @param recnum - the primary key of the
+<br />* entry to delete.
+<br />*/
+<br />void deleteEntity(PK recnum);
+<br />}
+<br /></pre><br />This interface defines a generic contract for data access to an object of type <span style="font-family:courier new;">T</span> with a primary identifier (primary key, if you will) named <span style="font-family:courier new;">PK</span> that is of type <span style="font-family:courier new;">Serializable</span> (more on this on some other post). Now, consider the following hibernate implementation:<br /><br /><pre class="brush: java" code="foo">package sample; 
+<br />
+<br />public class HibernateGenericDaoImpl&lt;T, PK extends Serializable&gt;
+<br />      implements GenericDao&lt;T, PK&gt; {
+<br />  private HibernateTemplate m_hTemplate;
+<br />  private Class&lt;t&gt; m_type;
+<br />
+<br />/**
+<br />* Default Constructor for this implementation.
+<br />* @param type - the type of DAO to generate
+<br />* @param hibernateTemplate - the template to
+<br />* use.
+<br />*/
+<br />public HibernateGenericDaoImpl (Class&lt;T&gt; type,
+<br />         HibernateTemplate hibernateTemplate) {
+<br />  m_type = type;
+<br />  m_hTemplate = hibernateTemplate;
+<br />}
+<br />
+<br />/**
+<br />* {@inheritDoc}
+<br />*/
+<br />@Override
+<br />public PK createEntity(T newInstance) { 
+<br />  return (PK) m_hTemplate.save(newInstance);
+<br />}
+<br />
+<br />/**
+<br />* {@inheritDoc}
+<br />*/
+<br />@Override
+<br />public T getByRecnum(PK recnum) { 
+<br />  return (T) m_hTemplate.get(m_type, recnum);
+<br />}
+<br />
+<br />/**
+<br />* {@inheritDoc}
+<br />*/
+<br />@Override
+<br />public void deleteEntity(PK recnum) {
+<br />  T entity = getByRecnum(recnum);
+<br />  if (entity != null) {
+<br />    m_hTemplate.delete(entity);
+<br />  }
+<br />}
+<br />}
+<br /></pre><br />This implementation of the <span style="font-family:courier new;">GenericDao</span> contract uses Spring's <span style="font-family:courier new;">HibernateTemplate</span> which is a thin layer on top of Hibernate. It basically uses the template to perform operations on object model <span style="font-family:courier new;">T</span>.  Of course, you can add more generic methods as needed, but the idea is the same. Possibilities are endless.  Now, with the following Spring's configuration:<br /><script class="brush: html" type="syntaxhighlighter"><![CDATA[
+ <beans>
+   <bean name="fooDao" 
+        class="sample.HibernateGenericDaoImpl">
+     <constructor-arg value="sample.Foo"/><constructor-arg ref="hTemplate"/>
+   </bean>
+ 
+   <bean name="barService" class="sample.BarService">
+     <constructor-arg ref="fooDao"/>
+   </bean>
+ </beans>
+ ]]></script><br />And the following service code: <br /><br /><pre  class="brush: java">package sample;
+<br />
+<br />public class BarService {
+<br />private GenericDao&lt;Foo, Long&gt; m_fooDao;
+<br />
+<br />/**
+<br />* Default constructor with injected dao
+<br />* @param fooDao - the dao to inject.
+<br />*/
+<br />public BarService(GenericDao&lt;Foo, Long&gt; fooDao) {
+<br />m_fooDao = fooDao;
+<br />}
+<br />}
+<br /></pre>This means that the Service code can now have an injected dao that is generic. With these generic approach to DAOs, you now avoid writing custom code for each model object (in our case, of type sample.Foo). Now, my strategy for ensuring that my application will not turn into a critical state was to make sure that all our unit-test passed after the code refactoring process had finished. My code coverage percentage certainly decreased as I removed custom implementations of unneded DAO and encourage the use of the generic Dao<br /><br />Keep in mind that Generics are supported in other languages as well, so this approach can certainly be re-used (if at all).<br /></div>

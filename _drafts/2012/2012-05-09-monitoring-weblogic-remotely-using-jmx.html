@@ -1,0 +1,15 @@
+---
+layout: post
+title: Monitoring Weblogic remotely using JMX
+date: '2012-05-09T16:02:00.000-04:00'
+author: Alberto
+tags:
+- MBeans
+- JMX
+- java
+modified_time: '2012-05-09T22:36:20.425-04:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-6609755788996087263
+blogger_orig_url: https://alberto-flores.blogspot.com/2012/05/monitoring-weblogic-remotely-using-jmx.html
+---
+
+It has been a while since I had to use Weblogic for deployment. Furthermore, I wanted to monitor my application using MBeans. As I tried to do this, I encountered many problems (e.g. unknown host name,&nbsp; <span style="font-family: 'Courier New', Courier, monospace;">ClassNotFoundException</span>, ssh problems, etc). These are my notes about what I had in front of me and how I solved them.<br /><br /><a name='more'></a><br />First, the Weblogic instance was in a server with a number of firewall policies. This means that I had to use remoting over to an acceptable port (weblogic's non ssl port is fine). In addition, I kept on getting a <span style="font-family: 'Courier New', Courier, monospace;">ClassNotFoundException</span> as described below: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">WARNING: "IOP00810257: (MARSHAL) Could not find class" </span></blockquote>These made me look on the internet and here is what I did:<br /><ol><li>Ensure that Weblogic is started with the following flag: -Dcom.sun.management.jmxremote. This is actually important if you care to see things other than MBeans (e.g. memory management, etc).</li><li>On the client side, running JConsole (or VisualVM), ensure that wljmxclient.jar is in your classpath.</li></ol>After following these two steps, connect to the weblogic MBean server of choice:<br /><ul><li>weblogic.management.mbeanservers.domainruntime </li><li>weblogic.management.mbeanservers.runtime</li><li>weblogic.management.mbeanservers.edit </li></ul><div style="font-family: inherit;">So your remote connection will look something like (for the runtime mbean server):</div><div style="font-family: inherit;"><br /></div><div style="font-family: inherit;"><span style="font-family: 'Courier New', Courier, monospace;">service:jmx:rmi:///jndi/iiop://<server-host>:<non-ssl-port>/weblogic.management.mbeanservers.runtime</non-ssl-port></server-host></span> <br /><br />After setting this, I added it to my ant script to help me start jconsole directly to Weblogic. I'm happier than earlier today. </div>

@@ -1,0 +1,76 @@
+
+- title: Sprint
+  subtitle: How to Solve Big Problem and Test New Ideas in Just Five Days
+  author: Jane Knapp & John Zeratsky
+  notes: "Every organization looks to implement Agile, however the great majority fails.
+  If you are not delivering software every week, you are not going fast enough. If you want
+  too much control, you are going slow. What is the right balance? This book describes the
+  right habits that enables teams to stay focused in the outcomes"
+  thumbnail: /assets/img/books/sprint.jpg
+  tags:
+    - Available in Audible
+
+- title: Team Topologies
+  subtitle: Organizing Business And Technology teams for fast flow
+  author: Matthew Skelton & Manuel Pais
+  notes: "Team Topologies is a practical, step-by-step, adaptive model for organizational design and team interaction based on four
+  fundamental team types and three team interaction patterns. It is a model that treats teams as the fundamental means of delivery,
+  where team structures and communication pathways are able to evolve with technological and organizational maturity."
+  thumbnail: /assets/img/books/team_topologies.jpg
+  tags:
+    - Available in Audible
+
+- title: Dare To Lead
+  subtitle: Brave Work. Tough Conversations. Whole Hearts
+  author: Brene Brown
+  notes: "Leadership is not about titles, status, and wielding power. A leader is anyone who takes responsibility for recognizing the
+  potential in people and ideas, and has the courage to develop that potential. When we dare to lead, we don’t pretend to have the right
+  answers; we stay curious and ask the right questions. We don’t see power as finite and hoard it; we know that power becomes infinite
+  when we share it with others. We don’t avoid difficult conversations and situations; we lean into vulnerability when it’s necessary to
+  do good work."
+  thumbnail: /assets/img/books/dare-to-lead.jpg
+  tags:
+    - Available in Audible
+
+- title: The Lean Startup
+  subtitle: How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Business
+  author: Eric Ries
+  notes: "Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the
+  globe, changing the way companies are built and new products are launched."
+  thumbnail: /assets/img/books/the-lean-startup.jpg
+  tags:
+    - Available in Audible
+
+- title: Mindset
+  subtitle: The New Psychology of Success
+  author: Carol S. Dweck
+  notes: "Stanford University psychologist Carol S. Dweck, Ph.D., discovered a simple but groundbreaking idea: the power of mindset.
+  In this brilliant book, she shows how success in school, work, sports, the arts, and almost every area of human endeavor can be
+  dramatically influenced by how we think about our talents and abilities. People with a fixed mindset—those who believe that abilities
+  are fixed—are less likely to flourish than those with a growth mindset—those who believe that abilities can be developed. Mindset
+  reveals how great parents, teachers, managers, and athletes can put this idea to use to foster outstanding accomplishment."
+  thumbnail: /assets/img/books/mindset.jpg
+  tags:
+    - Available in Audible
+
+- title: Discovery
+  subtitle: Explore Behavior Using Examples
+  author: Gaspar Nagy
+  notes: "This book is written for everyone involved in the specification and delivery of software (including product owners, business
+  analysts, developers, and testers). The book starts by explaining the reasons BDD exists in the first place and describes techniques
+  for getting the most out of collaboration between business and delivery team members."
+  thumbnail: /assets/img/books/discovery.jpg
+  tags:
+    - Available in Audible
+
+- title: Accelerate
+  subtitle: "The Science of Lean Software and DevOps: Building And Scaling High Performing Technology Organizations"
+  author: Nicole Forsgren PhD, Jez Humble, Gene Kim
+  notes:  "How can we apply technology to drive business value? For years, we've been told that the performance of software delivery
+  teams doesn't matter ― that it can't provide a competitive advantage to our companies. Through four years of groundbreaking research to
+  include data collected from the State of DevOps reports conducted with Puppet, Dr. Nicole Forsgren, Jez Humble, and Gene Kim set out to
+  find a way to measure software delivery performance ― and what drives it ― using rigorous statistical methods. This book presents both the
+  findings and the science behind that research, making the information accessible for readers to apply in their own organizations."
+  thumbnail: /assets/img/books/accelerate.jpg
+  tags:
+    - Available in Audible

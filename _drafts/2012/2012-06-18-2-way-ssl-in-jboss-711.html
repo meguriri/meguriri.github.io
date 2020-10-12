@@ -1,0 +1,16 @@
+---
+layout: post
+title: 2-Way SSL in JBoss 7.1.1
+date: '2012-06-18T15:20:00.001-04:00'
+author: Alberto
+tags:
+- JBoss
+- PKI
+- XSD
+- SSL
+modified_time: '2012-06-21T10:25:13.868-04:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-1390413389497508797
+blogger_orig_url: https://alberto-flores.blogspot.com/2012/06/2-way-ssl-in-jboss-711.html
+---
+
+As I tried to setup 2-way SSL in JBOSS 7.1.1, the documentation kept on referring to 1-way SSL (even though it was not clearly stated so). I was looking for a simple configuration that will enable a certificate to be used as authentication and to be used in a 2-way SSL protocol. Given that the documentation was not properly describing how to do this, I found a post pointing to check XSD documents to see what other configuration options are available in JBOSS. As I was simply trying to configure in "standalone" mode, this is what I did:<br /><br /><a name='more'></a>First I looked for the XSD files available in the distribution:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">find -name *.xsd | grep 1.1</span></blockquote>Then I looked for the definition of the "sslType" within the XSD jboss-as-web_1.1.xsd (hopefully you can guess why I chose that one over the 1.0 xsd). Luckily, their XSD was well documented (using XSD comments) which allowed me to see how to setup a "truststore" for my ssl configuration. Here is a snippet of my "standalone.xml" file.:<br /><script src="https://gist.github.com/2950149.js?file=standalone.xml"></script><br />Hopefully this will help anyone looking for similar information. I took me a little bit to realize that this was not an easy search on Google, thus I had to look it up in the XSD file within the JBoss distribution.<br /><br />One additional note: The "alias" specified in the keystore-file is the one you defined when creating your keystore. In case you missed this, this can be done doing the following:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">keytool -genkey -alias foo -keyalg RSA -keystore dev-server.keystore</span></blockquote><br />What this will do is generate a keystore named "dev-server.keystore" with alias "foo" (as the sample SSL configuration defined above).&nbsp;<span style="background-color: white;">I'm not exactly sure why (although I can guess of a few) but if you have a keystore with more than one alias as keystore, JBOSS is going to complaint, so try to have one with a single alias.</span><br /><br />

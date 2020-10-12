@@ -1,0 +1,21 @@
+conwayWikipedia:
+  title: Conway's Law explained in Wikipedia
+  description: Wikipedia's description of Conway's Law
+  url: https://en.wikipedia.org/wiki/Conway%27s_law
+conwayAndLittle:
+  title: Conway is killing you and Little is helping
+  description: Good description of Conway's and Little's Law and their impact in scaling system designs.
+  url: https://hackernoon.com/conway-is-killing-you-and-little-is-helping-750f3acfb60e
+spotifyEngineringCultureVideo1:
+  title: Spotify Engineering Culture - Part 1
+  description: First part of the introduction of how Spotify redefine Agile internally.
+  url: https://www.youtube.com/watch?v=Yvfz4HGtoPc
+spotifyEngineringCultureVideo2:
+  title: Spotify Engineering Culture - Part 2
+  description: Second part of how Spotify redefine Agile internally.
+  url: https://www.youtube.com/watch?v=vOt4BbWLWQw
+dungeonMasterAntipattern:
+  title: The Rise And Fall Of The Dungeon Master
+  description: Antipattern in Software Development Teams
+  url: https://medium.com/@ziobrando/the-rise-and-fall-of-the-dungeon-master-c2d511eed12f
+

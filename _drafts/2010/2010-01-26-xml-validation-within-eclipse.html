@@ -1,0 +1,15 @@
+---
+layout: post
+title: XML Validation within Eclipse
+date: '2010-01-26T11:15:00.001-05:00'
+author: Alberto
+tags:
+- XSD
+- Eclipse
+- STS
+modified_time: '2010-01-26T11:16:44.999-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-4556608971783024282
+blogger_orig_url: https://alberto-flores.blogspot.com/2010/01/xml-validation-within-eclipse.html
+---
+
+&nbsp;&nbsp;Working with XML can be a wonderful experience. Most people I know (in the industry) don't consider XSD/DTD validation a task that is challenging enough so as to spend time and/or effort to either learning it or writing to it. This feeling changes rapidly as tooling support (e.g. IDEs) produces hiccups when XML validation generates errors that can not be understood by the same engineering staff. &nbsp;For example, have you ever had the infamous problem reported through Eclipse's console:<br /><br /><span style="color: #666666; font-weight: bold; line-height: 14px;"><span style="font-family: inherit;">cvc-complex-type.2.4.c: The matching wildcard is strict, but no declaration can be found for element 'custom-filter'.</span></span><br /><span style="color: #666666;"><span class="Apple-style-span" style="line-height: 14px;"><b><br /></b></span></span><br />&nbsp;&nbsp;By default Eclipse has XML validation on. This means that it will look for a DTD of XSD to validate your XML file. The message above indicates that there's an XML element named <span style="font-family: 'Courier New', Courier, monospace;">custom-filter</span>&nbsp;that can not be resolved with any of the XSD that Eclipse is aware within it's catalog registry.<br /><br /><a name='more'></a>&nbsp;&nbsp;Now, most people I know turn off XML validation so as to not to deal with this problem. This is simply a terrible idea and bad practice. XSD definitions provide much richer ways to describe XML constructs, including comments. When the setup is properly configured, it can be a very handy tool (even for learning purposes). Craig Walls wrote a blog with instructions in how to add a new Catalog entry in Eclipse. The post can be found&nbsp;<a href="http://www.jroller.com/habuma/entry/fixing_spring_modules_xsd_errors">here</a>.&nbsp;&nbsp;Note that you may find the same problem if you have an older version of Spring Source Tool Suite (STS) and are upgrading via the update site. &nbsp;The way I dealt with this is typically a full rebuild of my project so that STS (or Eclipse) can allow XML tooling to magically occur.<br /><br />Hope this helps!

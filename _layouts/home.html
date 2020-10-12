@@ -24,7 +24,7 @@ layout: default
     </li>
 
     {%- for post in site.posts -%}
-      <li>
+      <li class="posts-home-summary">
         {%- assign date_format = site.plainwhite.date_format | default: "%b %-d, %Y" -%}
         <a class="post-link" href="{{ post.url | relative_url }}">
           <h2 class="post-title">{{ post.title | escape }}</h2>
@@ -36,12 +36,27 @@ layout: default
           </div>
           {%- if post.categories.size > 0-%}
           <ul class="post-categories">
-            {%- for tag in post.categories -%}
-            <li>{{ tag }}</li>
+            {%- if post.draft -%}
+              <li class="post-draft">Draft</li>
+            {%- endif -%}
+
+            {%- for category in post.categories -%}
+            <li>{{ category | downcase }}</li>
             {%- endfor -%}
           </ul>
           {%- endif -%}
         </div>
+
+        {%- if post.tags.size > 0-%}
+          <div class="post-meta">
+            <ul class="post-tags">
+              {%- for tag in post.tags -%}
+              <li>{{ tag | downcase }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
         <div class="post">
           {%- if site.show_excerpts -%}
             {{ post.excerpt }}

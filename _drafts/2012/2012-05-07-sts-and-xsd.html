@@ -1,0 +1,15 @@
+---
+layout: post
+title: STS and XSD
+date: '2012-05-07T14:38:00.000-04:00'
+author: Alberto
+tags:
+- XSD
+- STS
+- Spring
+modified_time: '2012-05-07T14:38:04.735-04:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-6046677263357661434
+blogger_orig_url: https://alberto-flores.blogspot.com/2012/05/sts-and-xsd.html
+---
+
+It has been a while since I used SpringSource Tool Suite. This has been a terrible mistake on my side as I was forced to use other IDEs. As I was finally giving a choice to re-start using it, I came across an issue that I thought will write about. I'm sure most people already know about this: XSD (for the Spring beans) are no longer included in the distribution. This means that if you are using STS from version 2.7.0 and above, you have to include the proper jar (including the XSD inside the jar) into the classpath. I think this is a good move on SpringSource as I can see why it would make sense for the IDE to help you resolve based on your classpath (i.e. what you are building).<br /><br /><a name='more'></a>In order to ensure this works, make sure you also do the following:<br /><ol><li>Go to Properties/Spring/Beans Support/Namespaces</li><li>Check the "Use highest XSD version that is available on the project's classpath"</li><li>Check the "Load NamespaceHandlers and XSDs from project's classpath"</li></ol>These did the trick for me. Hope these helps!

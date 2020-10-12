@@ -1,0 +1,44 @@
+---
+layout: post
+title: Tiles2 with Spring without Spring MVC
+date: '2008-10-27T12:27:00.005-04:00'
+author: Alberto
+tags:
+- Struts2
+- Tiles2
+- Spring
+modified_time: '2010-01-07T08:53:57.190-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-7224626138055420217
+blogger_orig_url: https://alberto-flores.blogspot.com/2008/10/mixing-tiles2-with-spring.html
+---
+
+In the process of making my application OSGI enabled, I came to the conclusion that it would help me better to have Tiles2 to be managed by Spring. This is so as to have more control of the Tiles2 configuration instead of the configuration needed in web.xml. This is when I found the <code>TilesConfigurer</code> class from Spring. Here is a snippet of for my configuration. <br /><script class="brush: html" type="syntaxhighlighter">
+ <![CDATA[
+ <bean id="tilesConfigurer" 
+    class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+   <property name="useMutableTilesContainer" 
+            value="true"/>
+   <property name="definitionsFactoryClass" 
+            value="myPackage.MyTileDefinitionsFactory"/>
+   <property name="preparerFactoryClass"
+            value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory"/>
+   <property name="definitions">
+     <list>
+       <value>/WEB-INF/tiles/tiles.xml</value>
+     </list>;
+   </property>
+ </bean>
+ ]]></script><br /><a name='more'></a><br />Now, this means that web.xml no longer needs the Tiles2 listener but simply let Spring's Servlet configuration do the initializing for you. If you are using Spring MVC, this is already done, if you are not, you may need to use <code>RequestContextListener</code> or the <code>ContextLoaderListener</code> so that this <code>tilesConfigurer</code> bean is placed in application scope similar to what the Tiles2 configurer does out of the box.<br /><br /><b>Warning</b>: leaving the Tiles2 listener (along with the configuration above) will still try to load the tiles.xml from the default location (WEB-INF folder) so you may be overriding the work already done by Spring's <code>SpringBeanPreparerFactory</code>. Take a look at the generated logs for further detail. Once you have this, now you have control (in Spring) over Tiles2. I wanted to add a custom <code>TilesDefinitionsFactory</code> so I created my own as follows:<br /><pre class="brush: java">package myPackage.MyTileDefinitionsFactory;
+<br />
+<br />public class MyTileDefinitionsFactory extends UrlDefinitionsFactory {
+<br />  public Definition getDefinition(String name, 
+<br />                     TilesRequestContext ctx)
+<br />    throws DefinitionsFactoryException {
+<br />    Definition tileDefinition = super.getDefinition(name, ctx);
+<br />
+<br />    // add you own logic to modify/update template and/or tile
+<br />
+<br />    return tileDefinition;
+<br />  }
+<br />}
+<br /></pre>With this new factory, now we were able to introduce custom menus, tabs, and other widgets to screens based on roles and/or other business ruls (e.g. workflows). Furthermore, we were even able to change the backing template (eventhough the Tiles2 documentation says you can not change the template of a tile dynamically, this did the trick). There are many other possibilities opened with this approach that I'm sure some will find useful.<br /><br />One more thing to keep in mind, you need to setup the property <i>useMutableTilesContainer</i> to true so as to be able to great dynamic tiles.  As you read the Tiles API, you can potentially create your own tiles dynamically as well as simply modify existing ones. I found this approach to be a very powerful one when integrating Tiles2 with Struts2.<br /><br />Hope this helps!

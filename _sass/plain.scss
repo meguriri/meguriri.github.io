@@ -1,6 +1,7 @@
 @import "ext/fonts";
 @import "ext/normalize";
 @import "syntax";
+@import "books";
 
 $linkColor: #0a59b0;
 $mobileW: 768px;
@@ -23,6 +24,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+// All images in a post will be centered and with rounded corners
+img[src$="#imageInPost"] {
+  border-radius: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 img,
 embed,
 object,
@@ -40,9 +50,6 @@ a {
 
 h2 {
   margin: 0.7em 0;
-  @media screen and (max-width: $mobileW) {
-    margin: 0.3em 0;
-  }
 }
 main {
   margin: 0 90px;
@@ -81,14 +88,11 @@ main {
     padding-bottom: 15vh;
     @media screen and (max-width: $mobileW) {
       height: auto;
-      padding: 5vh 30px;
-    }
-    @media screen and (max-width: $smallMobileW) {
-      padding: 5vh 20px;
+      padding: 10vh 0;
     }
     @media screen and (min-width: $mobileW + 1) {
       position: fixed;
-      max-width: 280px;
+      max-width: 285px;
     }
     min-width: $leftWidth;
     justify-content: center;
@@ -102,28 +106,14 @@ main {
       font-weight: normal;
     }
     .tagline {
-      text-align: center;
       font-size: 22px;
-      margin-top: 0px;
+      margin-top: 17px;
       color: #aaa;
       white-space: pre-wrap;
       line-height: normal;
     }
     img {
       max-width: 150px;
-    }
-    img.dark {
-      display: none;
-    }
-    .about-header {
-      display: flex;
-      flex-direction: column;
-      .about-title {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 17px;
-      }
     }
   }
 }
@@ -135,6 +125,7 @@ main {
 .social {
   list-style-type: none;
   padding: 0;
+  margin-top: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -145,6 +136,43 @@ main {
     i {
       font-size: 34px;
     }
+  }
+}
+
+.pagination {
+  margin-top: 20px;
+  font: 8px Arial, sans-serif;
+
+  a {
+    text-decoration: none;
+  }
+  a.numberCircle {
+    background: #e3e3e3;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #6e6e6e;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-align: center;
+    width: 20px;
+  }
+  em {
+    background: #80f175;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #6e6e6e;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-align: center;
+    width: 20px;
   }
 }
 
@@ -183,6 +211,42 @@ main {
   padding-bottom: 1rem;
 }
 
+blockquote {
+  font-style: italic;
+}
+
+.footnotes {
+  font-size: 10px;
+  line-height: normal;
+  ol {
+    padding-inline-start: 20px;
+  }
+}
+
+.post-draft {
+  li {
+    background-color: #158606;
+    color: #fff;
+  }
+}
+
+.post-tags {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li {
+    font-size: 10px;
+    float: left;
+    background-color: #80f175;
+    color: #000;
+    padding: 0px 5px;
+    border-radius: 5px;
+    @media screen and (max-width: $mobileW) {
+      margin-top: 5px;
+    }
+    margin-right: 10px;
+  }
+}
 .post-categories {
   list-style-type: none;
   margin: 0;
@@ -192,11 +256,16 @@ main {
     float: left;
     background-color: #e3e3e3;
     padding: 5px 20px;
-    border-radius: 2px;
+    border-radius: 5px;
     @media screen and (max-width: $mobileW) {
       margin-top: 5px;
     }
     margin-right: 10px;
+  }
+  li.post-draft {
+    background-color: #fc8585;
+    color: #000;
+    font-weight: bold;
   }
 }
 .post-date {
@@ -274,6 +343,17 @@ main {
   border-bottom: 1px solid #eee;
 }
 
+.posts-labelgroupBottom {
+  //margin: 0 0 0.67em 0;
+  //display: flex;
+  //align-items: baseline;
+  border-top: 1px solid #eee;
+}
+
+.posts-home-summary {
+  margin: 0 0 2em 0;
+}
+
 #posts-label {
   font-size: 15px;
   color: #555;
@@ -288,49 +368,11 @@ main {
 table {
   th, td {
     padding: 8px 13px;
-    border: 1px solid #dfe2e5;
+//    border: 1px solid #dfe2e5;
+    border: none;
   }
   th {
     background-color: #eee;
     font-family: Raleway;
-  }
-}
-
-footer {
-  display: none;
-}
-@media screen and (max-width: $mobileW) {
-  .about {
-    .about-header.condensed {
-      align-items: start;
-      align-self: start;
-      .about-title {
-        flex-direction: row;
-        margin-bottom: 10px;
-        img {
-          max-height: 40px;
-        }
-        h2 {
-          margin: 0 10px;
-        }
-      }
-      .tagline {
-        font-size: 18px;
-        margin-bottom: 0px;
-      }
-    }
-    .about-footer.condensed {
-      display: none;
-    }
-  }
-  footer.condensed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 40px;
-    @media screen and (max-width: $smallMobileW){
-      margin: 0 20px;
-    }
-    border-top: 1px solid #eee;
   }
 }

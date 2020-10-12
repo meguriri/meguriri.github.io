@@ -1,0 +1,43 @@
+
+.book-collection {
+  font-size: 16px;
+  line-height: 1.2em;
+  hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+.book-summary {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  .image-thumbnail {
+    flex: 0 0 100px;
+  }
+  .book-info {
+    flex: 1;
+    padding-left: 15px;
+    h2 {
+      font-size: 18px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+    h3 {
+      font-size: 12px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+      font-style: italic;
+      font-weight: normal;
+    }
+    .book-metadata {
+      font-size: 10px;
+    }
+    .book-notes {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+  }
+}

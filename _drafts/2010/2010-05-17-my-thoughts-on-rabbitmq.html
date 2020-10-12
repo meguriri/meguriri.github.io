@@ -1,0 +1,15 @@
+---
+layout: post
+title: My thoughts on RabbitMQ
+date: '2010-05-17T22:48:00.000-04:00'
+author: Alberto
+tags:
+- RabbitMQ
+- Spring
+- AMQP
+modified_time: '2010-05-17T22:48:19.283-04:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-5053986864382526720
+blogger_orig_url: https://alberto-flores.blogspot.com/2010/05/my-thoughts-on-rabbitmq.html
+---
+
+<div>It is no mystery that I have been following the Spring Portfolio for sometime now. &nbsp;As I continue to observe the business decisions they are making, its exciting to see how SpringSource is positioning itself to be a powerful player in the Enterprise Development arena. &nbsp;Some months ago, SpringSource announced their acquisition of RabbitMQ and I thought I should get familiar with their choice for messaging solution.</div><div><a name='more'></a></div><div><br /></div><div>I'm not going to discuss the associated need for a messaging system as a solution to integration of systems (Message Oriented Middleware). Instead I will mention a couple of observations about RabbitMQ.&nbsp;</div><div><br /></div><div>First, the idea behing <a href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> (Advanced Messaging Queuing Protocol) seems to emphasize the idea of interoperability. &nbsp;I have worked in environments where .NET integration was always a requirement, hence WS-* was always a compelling solution in so many ways. The idea of having a standard to establish a messaging contract (as opposed to an API such as JMS) seems a very powerful one. Of course, this makes even more sense when you think that a messaging system in the cloud ought to support a heterogenous environment.</div><div><br /></div><div>In addition to this, there is already a trend about understanding comparisons between AMQP and XMPP (a favorite choice). &nbsp;I was very pleased to find these&nbsp;<a href="http://www.opensourcery.co.za/2009/04/19/to-amqp-or-to-xmpp-that-is-the-question/">remarks</a>&nbsp;favoring AMQP for many good reasons, which I'm yet digesting myself. And today I came across this <a href="http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html">article</a> explaining High Availability lessons learned in <a href="http://www.reddit.com/">Reddit</a> and how RabbitMQ was a "<i>key</i>" component in their architecture. I have a personal project I have been working on which I can disclose just yet, however I can't wait to start playing with more features from RabbitMQ client and server to implement some of my business requirements.</div><div><br /></div><div>So far, I just finished installing it in MacOSX (using macports):</div><div><br /></div><div>&nbsp;&nbsp; sudo port install rabbitmq-server</div><div><br /></div><div>And the install happened fairly fast. I'll try to post some of my findings as I go. Exciting times ahead!<br /></div>

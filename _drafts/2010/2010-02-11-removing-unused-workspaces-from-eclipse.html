@@ -1,0 +1,14 @@
+---
+layout: post
+title: Removing Unused Workspaces from Eclipse
+date: '2010-02-11T11:41:00.002-05:00'
+author: Alberto
+tags:
+- Eclipse
+- STS
+modified_time: '2010-02-11T11:44:23.157-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-1134282238805675439
+blogger_orig_url: https://alberto-flores.blogspot.com/2010/02/removing-unused-workspaces-from-eclipse.html
+---
+
+Workspaces in Eclipse is one of those features that are often unused or not used enough.&nbsp; Personally, I find it extremely helpful to use them, particularly when working on different branches. There are times when you need/want to delete some of these workspaces from your workspace list. Here is how you can do this:<br /><a name='more'></a><ol><li>Go to the Eclipse directory where you installed Eclipse (I'll refer to it as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ECLIPSE_HOME</span> from here on).</li><li>Open the file <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ECLIPSE_HOME/configuration/.settings/org.eclipse.ui.ide.prefs </span>with your favorite editor (obviously not Eclipse).</li><li>The key <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">RECENT_WORKSPACES</span> should have a comma separated list of all previous workspaces your IDE has used. Remove them as needed/wanted.</li></ol>Needless to say, this should be done while Eclipse is not running. At this point, you can safely remove the directory where the workspace resided. BTW, these instructions work well on the SpringSource Tool Suite (STS).

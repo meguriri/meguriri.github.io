@@ -1,0 +1,8 @@
+---
+layout: post
+title:  "A New Hope"
+author: alberto
+date:   2020-06-15 10:05:54 -0400
+categories: personal
+---
+After much planning and deliberation, I think I found a place for my blog entries. I have been a happy blogger user for several years, however I feel it is now time to join the many who are relying on git to keep record of entries. I expect this to be a great experience.

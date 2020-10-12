@@ -1,0 +1,14 @@
+---
+layout: post
+title: Monkey Patching in Flex
+date: '2010-03-10T15:23:00.001-05:00'
+author: Alberto
+tags:
+- Flex
+- Reflex
+modified_time: '2010-03-10T15:55:49.862-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-3038968322607348165
+blogger_orig_url: https://alberto-flores.blogspot.com/2010/03/monkey-patching-in-flex.html
+---
+
+I recently attended 360Flex. It was an excellent conference. I thought I knew some Flex, but I was certainly not aware of how much others are doing with Flex, Actionscript and the Flash Platform in general. Very interesting concepts. One of the nice concepts I recently learned while at San Jose was "<i>Monkey-Patching</i>". &nbsp;Fortunately, I had the chance to practice how to use it after the conference and learned so much about the internals of some Flex components. &nbsp;Here is what I did.<br /><br /><a name='more'></a>First, let me explain the obvious. "<i>Monkey-Patching</i>" is the concept where one can extend or modify runtime code (<span class="Apple-style-span" style="font-size: small;">for a further explanation, please refer to </span><a href="http://en.wikipedia.org/wiki/Monkey_patch"><span class="Apple-style-span" style="font-size: small;">wikipedia</span></a>). In this case, we are leveraging the dynamic nature of the ActionScript so as to learn some of the internal operations that occur in the Flash Platform, particularly as pertaining to our Flex code.<br /><br />As I've been working on Module loading using the ModuleManager class, I decided to try to "<i>Monkey-Patch</i>" the ModuleManager.as found in the mx.modules folder. I quickly learned more than I knew about the code. &nbsp;I decided to add <span class="Apple-style-span" style="font-family: 'Courier New', Courier, monospace;">trace()</span> calls before each method. Then my code revealed a lot nice goodies about the Module loading mechanism provided. I won't deprive you from the thrill of looking for these, but enough to say that there's some caching (internal) that happens should you try to load the same module twice. &nbsp;Needless to say, I was very excited to see what else can I do with this.<br /><br />Among other things worth mentioning (where I heard the term&nbsp;&nbsp;"<i>Monkey-Patch</i>"), I learned about this project <b>Reflex</b>. It's a framework that it's all about using the Flash Platform (not flex). It's an action-script framework that is meant to reduce the overhead generated (or introduced) with Flex and make component&nbsp;lightweight, thus making faster downloads of SWF files, possibly reducing power energy (so essential in this mobile revolution), etc. The possibilities are endless. I'm very excited to see where this project goes and will try to watch it.

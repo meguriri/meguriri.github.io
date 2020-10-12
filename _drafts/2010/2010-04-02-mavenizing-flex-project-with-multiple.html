@@ -1,0 +1,15 @@
+---
+layout: post
+title: Mavenizing a Flex Project with multiple artifacts
+date: '2010-04-02T00:15:00.001-04:00'
+author: Alberto
+tags:
+- Flex
+- Flexmojos
+- Maven
+modified_time: '2010-04-02T00:16:26.978-04:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-6362619480078662280
+blogger_orig_url: https://alberto-flores.blogspot.com/2010/04/mavenizing-flex-project-with-multiple.html
+---
+
+&nbsp;&nbsp;I was asked to include a Flex project within the current build process in place (maven2 based). Now, I like maven for many reasons which I'm not going to explain in this entry, however I would like to say a bit about my experience with such a "<i>mavenization</i>" if you will. Most Flex projects I've been involved are developed either directly in Flex Builder (Fb3) and/or compile using an Ant task. Nothing wrong with this approach, however Maven encourages a convention that may not necessarily be embraced in a traditional Flex Application. I hope to explain what I mean by this in the next paragraphs.<br /><a name='more'></a>&nbsp;&nbsp;In Flex, a project typically is composed of a default application (an MXML file) and possibly <span class="Apple-style-span" style="font-family: 'Courier New', Courier, monospace;">Module</span> components, stylesheets (compiled to SWF files), configuration files, etc. If some of these are within the same project, Fb3 will compile each of them and generate their SWF files properly. The "export" release feature of Fb3 is also a nice feature to do deployments from the IDE. Granted, this feature is nice to have, however following the "<i>maven way</i>", I quickly realized that this "<i>mavenization</i>" process will take longer. This was mostly due to the convention that each maven project aims to build ONE artifact and only one. The project I had was building 15 SWF files (some modules, some css files) as well as 17 XML files. This was simply not acceptable for maven standards.<br /><div><br /></div><div>&nbsp;&nbsp;As a first pass, I decided to make the project generate a zip file containing each artifact. This would at least ensure one artifact for this project and ensure users to have a corresponding unzip process where each SWF/XML file can be used in a deployment. &nbsp;Now, the next iteration, I moved from a one maven project style (zip file) to a multiple project (nested) style where each module compiles to and becomes a dependency of the main application project (yet another SWF file). &nbsp;All this setup was nicely done using <span class="Apple-style-span" style="font-family: inherit;">Flexmojos</span> integration with Maven. Flexmojos is a nice tool for using Flex within a maven setup, however it has bugs of it own (e.g. depending on the packaging style, Flexmojos may do weird things such as compile Modules to non-swf extensions, or compiling flex code twice, etc). When properly configured, using Flexmojos can be a pleasant experience for most maven setup.&nbsp;</div>

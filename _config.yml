@@ -1,60 +1,86 @@
-title: ccpc
-author: meguriri
-email: 1310500986@qq.com
-description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-show_excerpts: true # set to true to show excerpts on the homepage
-# Minima date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-sass:
-  sass_dir: _sass
+
+description: >- # this means to ignore newlines until "baseurl:"
+  A Journal about tech stack solutions for the enterprise. Most recently,
+  using Cloud-Native patterns, Big Data solutions and Open Source (OSS).
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+#remote_theme: albertoaflores/plainwhite-jekyll
+
+# Theme Info: https://github.com/thelehhman/plainwhite-jekyll
+#theme: plainwhite
+
 plainwhite:
-  paginate: 5
-  name: meguriri
-  tagline: 只要不停下来……道路就会不断延伸……
-  date_format: "%b %-d, %Y" 
-  sitemap: true # set to true to generate sitemap.xml content
-  search: true # set to true to enable searchbar
-  dark_mode: true # set to true to add dark mode toggle
-  portfolio_image: "assets/wallhaven-lmxm62 (2).png" # the path from the base directory of the site to the image to display (no / at the start)
-  html_lang: "en" # set the lang attribute of the <html> tag for the pages. See here for a list of codes: https://www.w3schools.com/tags/ref_country_codes.asp
-  condensed_mobile:
-    #- home
-    - page
-    - post
-  # generate social links in footer
+  name: Alberto A. Flores
+  tagline: Sr. Systems Architect
+  date_format: "%b %-d, %Y"
+  dark_mode: true
+  search: true
+  sitemap: true
+  #disqus_shortname: albertoaflores
+  navigation:
+    - title: Books
+      url: "/books"
+    - title: Homework
+      url: "/homework"
+    - title: About me
+      url: "/about"
+
   social_links:
-    #twitter: samarsault
-    github:  meguriri
-    #linkedIn: in/samarsault
-    #rss: rss
-    #dribbble: jekyll
-    #flickr:   jekyll
-    #instagram: jekyll
-    #pinterest: jekyll
-    #youtube: jekyll
-    #facebook: jekyll
-    #soundcloud: jekyll
-    #telegram: jekyll
-    #gitlab: jekyll
+    twitter: albertoaflores
+    github: albertoaflores
+    linkedIn: in/aflores\
+    facebook: albertoaflores37
+    youtube: albertoaflores
+    rss: rss
 
-    # Mastodon instances
-    # mastodon:
-    # - username: jekyll
-    #   instance: example.com
-    # - username: jekyll2
-    #   instance: example.com
+#Enable excerpts in blog entries
+show_excerpts: true
 
-# If you want to link only specific pages in your header, uncomment
-# this and add the path to the pages in order as they should show up
-#header_pages:
-# - about.md
+markdown: kramdown
 
-# Build settings
-theme: plainwhite
+# More › http://kramdown.gettalong.org/quickref.html
+# Options › http://kramdown.gettalong.org/options.html
+kramdown:
+  input: GFM
+  # https://github.com/jekyll/jekyll/pull/4090
+  syntax_highlighter: rouge
+
+  # Rouge Highlighter in Kramdown › http://kramdown.gettalong.org/syntax_highlighter/rouge.html
+  # span, block element options fall back to global
+  syntax_highlighter_opts:
+    # Rouge Options › https://github.com/jneen/rouge#full-options
+    css_class: 'highlight'
+    #line_numbers: true # bad idea, spans don't need linenos and would inherit this option
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+paginate: 10
 
 plugins:
+  - jekyll-feed
   - jekyll-seo-tag
-#  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

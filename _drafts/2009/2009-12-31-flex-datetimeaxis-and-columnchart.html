@@ -1,0 +1,24 @@
+---
+layout: post
+title: 'Flex: DateTimeAxis and ColumnChart components'
+date: '2009-12-31T07:25:00.027-05:00'
+author: Alberto
+tags:
+- Flex
+- Charts
+modified_time: '2010-01-19T07:51:09.662-05:00'
+blogger_id: tag:blogger.com,1999:blog-4831432806087932521.post-469547270357968556
+blogger_orig_url: https://alberto-flores.blogspot.com/2009/12/flex-datetimeaxis-and-columnchart.html
+---
+
+I love flex. It is a framework where you can do great things, however there are a number of "gotchas" as with every framework. Not necessarily a bad thing, so long as it is documented properly.  This is what I found when using the <span style="font-style: italic; font-weight: bold;">ColumnChart</span> component within the <span style="font-style: italic;">data-visualization</span> framework of flex in combination with the DateTimeAxis for the xField. I had an object using the following structure:<br /><pre class="brush: java">public class MyChartItem {
+<br />    public var time:Number;
+<br />    public var amount:int;
+<br />}
+<br /></pre>Notice that one of the properties represents the current time.  It's represented by a numeric field (<span style="font-family: courier new;">Number</span> type). This model should allow for an exact representations of time when serializing a remote object back to its counterpart in ActionScript. <br /><a name='more'></a> Of course, I choose to use a <span style="font-family: courier new;">DateTimeAxis</span> to let me render this numeric "<span style="font-family: courier new;">xField</span>" within the <span style="font-family: courier new;">ColumnSeries</span>. It was configured like this:<br /><script class="brush: html" type="syntaxhighlighter">
+ <![CDATA[
+ 
+ <mx:DateTimeAxis dataUnits="milliseconds" 
+                  labelUnits="seconds" />
+ ]]>
+ </script><br />I wanted to display data every second however the time property would be in milliseconds (epoch time). My surprise was that as the bound <span style="font-family: courier new;">dataProvider</span> object was updated, no chart was being displayed. I struggled with this for some time until I placed the mouse over the graph. Flex was showing the data points summary of the chart, but no graph!<br /><br />Upon further research, I found this piece of documentation which brought a lot of light to my development. From the Flex documentation.<br /><blockquote><br /><span style="font-style: italic;">"Some series use the value of the dataUnits property to affect their rendering. Specifically, most columnar series (such as Column, Bar, Candlestick, and HLOC controls) use the value of dataUnits to determine how wide to render their columns. If, for example, the ColumnChart control's horizontal axis has its labels set to weeks and dataUnits set to days, the ColumnChart control renders each column at one-seventh the distance between labels."</span> <span style="font-size: 85%;"><a href="http://livedocs.adobe.com/flex/3/html/help.html?content=charts_intro_7.html">(Flex Docs)</a></span><br /></blockquote><br />Ah! So it was a problem with the way the flash player was computing how to render the chart control. In particular, flash was thinking that each Column in the chart should be of one-thousandth distance. So I continued looking and found the "<span style="font-family: courier new;">dataInterval</span>" property in the "<span style="font-family: courier new;">DateTimeAxis</span>" API:<br /><blockquote><br />"<span style="font-style: italic;">If, for example, the dataUnits property is set to "hours", and dataInterval property is set to 4, the chart assumes your data occurs every four hours. This affects how some series (such as ColumnSeries and CandlestickSeries) render their data. It also affects how labels are automatically chosen.</span>" <span style="font-size: 85%;"><a href="http://www.adobe.com/livedocs/flex/3/langref/index.html?mx/charts/chartClasses/package-detail.html&amp;mx/charts/chartClasses/class-list.html">(Flex API)</a></span><br /></blockquote><br />After setting my "<span style="font-family: courier new;">dataInterval</span>" to 1000, I was back in business and my graph displaying properly again.  Lesson learned: never boast that I know Flex.  I can only say I can use flex and have found some tricks to make User Interfaces look fun.<br />
