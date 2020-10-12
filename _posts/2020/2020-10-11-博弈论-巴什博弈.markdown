@@ -3,7 +3,7 @@ layout:     post   				    # 使用的布局（不需要改）
 title:      '博弈论-巴什博弈'			# 标题 
 date:       '2020-10-11'			# 时间
 author:     meguriri						# 作者
-categories: 博弈论
+categories: 竞赛算法
 tags:		
 - 博弈论						#标签
 excerpt: '两个顶尖聪明的人在玩游戏，有n个石子，每人可以随便拿1~m个石子，不能拿的人为败者，问谁会胜利。
