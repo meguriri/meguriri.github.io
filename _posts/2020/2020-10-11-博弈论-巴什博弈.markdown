@@ -6,7 +6,7 @@ author:     meguriri						# 作者
 categories: 博弈论
 tags:		
 - 博弈论						#标签
-excerpt: mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+excerpt: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm'
 ---
 ## 博弈论-巴什博奕
 ### 一概述：
