@@ -12,6 +12,7 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 plainwhite:
+  paginate: 5
   name: meguriri
   tagline: 只要不停下来……道路就会不断延伸……
   date_format: "%b %-d, %Y" 
@@ -58,3 +59,10 @@ theme: plainwhite
 plugins:
   - jekyll-seo-tag
 #  - jekyll-feed
+links1:
+  - name: 博弈论
+    url： /blog/recent
+    type: recent
+    external:false
+blog_1: recent
+
