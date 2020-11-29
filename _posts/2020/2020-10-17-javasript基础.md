@@ -1,6 +1,6 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      '初识javascript'			# 标题 
+title:      'javascript基础'			# 标题 
 date:       '2020-10-17'			# 时间
 author:     meguriri						# 作者
 categories: javascript
