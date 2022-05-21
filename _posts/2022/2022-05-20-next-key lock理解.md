@@ -69,7 +69,7 @@ insert into t_test value(9,9,9);
 
 #### 记录不存在:
 
-```mysql
+```
 session 1：
 select * from t_test where id=10 for update;
 
@@ -90,7 +90,7 @@ update t_test set a=100 where id=16;
 
 等值与范围需要分看判断，比如id>=8,需要分为id=8和id>8分别判断。如果范围的右边界小于next-key lock的右边界，next-key lock将会退化成间隙锁。
 
-```mysql
+```
 session 1:
 select * from t_test where id>=8 && id<9 for update;
 
@@ -121,7 +121,7 @@ update t_test set a=100 where id=16;
 
 #### 记录存在
 
-```mysql
+```
 session 1：
 select id from t_test where b=8 for update;
 
@@ -147,7 +147,7 @@ update t_test set a=100 where b=16;
 
 #### 记录不存在
 
-```mysql
+```
 session 1:
 select * from t_test where b=10 for update;
 
@@ -168,7 +168,7 @@ update t_test set a=100 where b=16;
 
 非唯一索引和主键索引的范围查询的加锁也有所不同，不同之处在于**普通索引范围查询，next-key lock 不会退化为间隙锁和记录锁**。
 
-```mysql
+```
 session 1:
 select * from t_test where b>=8 and b<9 for update;
 
