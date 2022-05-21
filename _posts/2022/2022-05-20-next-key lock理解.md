@@ -49,7 +49,7 @@ t_test:
 
 #### 记录存在：
 
-```mysql
+```
 session 1:
 select * from t_test where id=16 for update;/*加 x锁*/
 
