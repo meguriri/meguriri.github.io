@@ -1,4 +1,4 @@
-\---
+---
 
 layout:   post        *# 使用的布局（不需要改）*
 
@@ -11,16 +11,14 @@ author:   meguriri       *# 作者*
 categories: 数据库
 
 tags:
-
-\- Mysql
-
-\- 锁
+- Mysql
+- 锁
 
  #标签
 
 excerpt: 'Mysql的一般事务隔离级别为可重复读，因为可串行化级别并发性过低。但是可重复读级别不能很好的解决幻读这一问题，因此在RR（可重复读）隔离级别中，Mysql默认使用一种叫做next-key lock的锁来解决幻读。对于不同的查询和索引类型，next-key lock会有不同的退化，达到锁的优化。'
 
-\---
+---
 
 ## next-key lock理解
 
