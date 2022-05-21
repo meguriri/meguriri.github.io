@@ -1,9 +1,8 @@
-
 ---
-layout:   post        *# 使用的布局（不需要改）*
-title:    'next-key lock理解'    *# 标题*
-date:    '2022-05-20'    *# 时间*
-author:   meguriri       *# 作者*
+layout:   post        # 使用的布局（不需要改）
+title:    'next-key lock理解'    # 标题
+date:    '2022-05-20'    # 时间
+author:   meguriri       # 作者
 categories: 数据库
 tags:
 - Mysql
