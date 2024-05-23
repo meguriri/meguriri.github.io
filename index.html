@@ -149,8 +149,8 @@
                 <div class="category-count">3</div>
             </a>
         
-            <a class="category-link" href="/categories/Blog/">
-                Blog
+            <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">
+                工具
                 <div class="category-count">1</div>
             </a>
         </div>
@@ -163,7 +163,7 @@
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">标签</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/code/" rel="tag">code</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/example/" rel="tag">example</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/hello/" rel="tag">hello</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag">使用方法</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/code/" rel="tag">code</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/example/" rel="tag">example</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/hello/" rel="tag">hello</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
     </div>
   </div>
 
@@ -257,24 +257,28 @@
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
   
-  <a class="meta-cate-link" href="/categories/Blog/">Blog</a>
+  <a class="meta-cate-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
    
 </div>
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            8 词 
+            281 词 
           </div>
         </div>
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag">使用方法</a></li></ul>
-
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
           <div class="truncate-text">
             
-              Hexo 使用方法
+              写文章使用hexo命令后，在./source/_posts目录中可以找到对应title的markdown文件
+1hexo new post &lt;TitleName&gt;
+
+⚠️ 可以给文章加上标签和类别，需要修改文章的Front-matter中的tags和categories，如：
+
+12345678 ---title: Mytitledate: 2024-05-23 23:43:22tags:  - test1  - test2categories: 测试---
+上传文章123hexo g //将.md文件转换成.html文件并存到./public中hexo c //清理缓存hexo d //部署文章
             
           </div>
         
