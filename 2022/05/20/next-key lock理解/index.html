@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Sans SC:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Mysql的一般事务隔离级别为可重复读，因为可串行化级别并发性过低。但是可重复读级别不能很好的解决幻读这一问题，因此在RR（可重复读）隔离级别中，Mysql默认使用一种叫做next-key lock的锁来解决幻读。对于不同的查询和索引类型，next-key lock会有不同的退化，达到锁的优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="next-key lock理解">
+<meta property="og:url" content="http://example.com/2022/05/20/next-key%20lock%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="cherry blessing">
+<meta property="og:description" content="Mysql的一般事务隔离级别为可重复读，因为可串行化级别并发性过低。但是可重复读级别不能很好的解决幻读这一问题，因此在RR（可重复读）隔离级别中，Mysql默认使用一种叫做next-key lock的锁来解决幻读。对于不同的查询和索引类型，next-key lock会有不同的退化，达到锁的优化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-20T15:43:22.000Z">
+<meta property="article:modified_time" content="2024-06-27T12:40:23.978Z">
+<meta property="article:author" content="meguriri">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/05/20/next-key%20lock%E7%90%86%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>next-key lock理解 | cherry blessing</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cherry blessing</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/20/next-key%20lock%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="meguriri">
+      <meta itemprop="description" content="惠天下第一">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cherry blessing">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          next-key lock理解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-20 23:43:22" itemprop="dateCreated datePublished" datetime="2022-05-20T23:43:22+08:00">2022-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-27 20:40:23" itemprop="dateModified" datetime="2024-06-27T20:40:23+08:00">2024-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Mysql的一般事务隔离级别为可重复读，因为可串行化级别并发性过低。但是可重复读级别不能很好的解决幻读这一问题，因此在RR（可重复读）隔离级别中，Mysql默认使用一种叫做next-key lock的锁来解决幻读。对于不同的查询和索引类型，next-key lock会有不同的退化，达到锁的优化。</p>
+<span id="more"></span>
+
+<h1 id="next-key-lock理解"><a href="#next-key-lock理解" class="headerlink" title="next-key lock理解"></a>next-key lock理解</h1><h2 id="几种锁"><a href="#几种锁" class="headerlink" title="几种锁"></a>几种锁</h2><h3 id="Record-Locks"><a href="#Record-Locks" class="headerlink" title="Record Locks"></a>Record Locks</h3><p>记录锁，锁定一个记录（行），也就是行锁，锁住的只是索引记录，而不是真正的数据。</p>
+<h3 id="Gap-Locks"><a href="#Gap-Locks" class="headerlink" title="Gap Locks"></a>Gap Locks</h3><p>间隙锁，锁定索引记录之间的间隙，不包括索引本身，左开右开</p>
+<h3 id="Next-Key-Locks"><a href="#Next-Key-Locks" class="headerlink" title="Next-Key Locks"></a>Next-Key Locks</h3><p>临键锁，他是Record Locks和Gap Locks的结合，左开右闭，</p>
+<h2 id="对于不同的查询next-key-lock的情况"><a href="#对于不同的查询next-key-lock的情况" class="headerlink" title="对于不同的查询next-key lock的情况"></a>对于不同的查询next-key lock的情况</h2><pre><code>首先，我们先构造一个简单的表，其中id为主键索引（唯一索引），b是普通索引（非唯一索引），a为普通数据。
+</code></pre>
+<p>t_test:</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+</tr>
+</tbody></table>
+<h2 id="唯一索引等值查询"><a href="#唯一索引等值查询" class="headerlink" title="唯一索引等值查询"></a>唯一索引等值查询</h2><p>当我们用唯一索引进行等值查询的时候，查询的记录存不存在，加锁的规则也会不同：</p>
+<ul>
+<li><strong>当查询的记录是存在的，在用「唯一索引进行等值查询」时，next-key lock 会退化成「记录锁」</strong>。</li>
+<li><strong>当查询的记录是不存在的，在用「唯一索引进行等值查询」时，next-key lock 会退化成「间隙锁」</strong>。</li>
+</ul>
+<h3 id="记录存在："><a href="#记录存在：" class="headerlink" title="记录存在："></a>记录存在：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">session 1:</span><br><span class="line">select * from t_test where id=16 for update;/*加 x锁*/</span><br><span class="line"></span><br><span class="line">session 2：</span><br><span class="line">update t_test set a=100 where id=16;</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">insert into t_test value(9,9,9);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于第一个会话，next-key lock加锁范围为**(8,16]<strong>。然而因为id为唯一索引且查询记录存在，因此next-key lock退化为记录锁，因此最终加锁范围仅为</strong>id&#x3D;16**这一行记录。</p>
+<p>因此会话2是更新id&#x3D;16会阻塞，而会话3插入id&#x3D;9的记录可以正常执行</p>
+<h3 id="记录不存在"><a href="#记录不存在" class="headerlink" title="记录不存在:"></a>记录不存在:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">session 1：</span><br><span class="line">select * from t_test where id=10 for update;</span><br><span class="line"></span><br><span class="line">session 2:</span><br><span class="line">insert into t_test value(9,9,9);</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">update t_test set a=100 where id=16;</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于第一个会话，next-key lock加锁范围为**(8,16]<strong>。然而因为id为唯一索引且查询记录不存在，因此next-key lock退化为间隙锁，因此最终加锁范围仅为</strong>(8,16)**这一行记录。</p>
+<p>因此会话2插入id&#x3D;9的记录会阻塞，而会话3修改id&#x3D;16这条记录可以正常更新。</p>
+<h2 id="唯一索引范围查询"><a href="#唯一索引范围查询" class="headerlink" title="唯一索引范围查询"></a>唯一索引范围查询</h2><p>等值与范围需要分看判断，比如id&gt;&#x3D;8,需要分为id&#x3D;8和id&gt;8分别判断。如果范围的右边界小于next-key lock的右边界，next-key lock将会退化成间隙锁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">session 1:</span><br><span class="line">select * from t_test where id&gt;=8 &amp;&amp; id&lt;9 for update;</span><br><span class="line"></span><br><span class="line">session 2:</span><br><span class="line">insert into t_test value(9,9,9);</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">update t_test set a=100 where id=8;</span><br><span class="line"></span><br><span class="line">session 4:</span><br><span class="line">update t_test set a=100 where id=16;</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于会话1，首先id&#x3D;8 ，因此next-key lock 为(4,8]，又因为id为唯一索引且id&#x3D;8存在，因此next-key lock退化为记录锁，也就只对<strong>id&#x3D;8</strong>这一行记录加锁。</p>
+<p>接下来，由于范围查找，需要找id&gt;8,且id&lt;9的范围，因此到id&#x3D;16就会结束,因此next-key lock 为(8,16]。因为id&#x3D;16不满足id&lt;9,next-key lock退化成间隙锁，加锁范围为**(8,16)<strong>。最终会话1的加锁范围为：</strong>[8,16)**。</p>
+<p>因此，会话2会阻塞，会话3会阻塞，而会话4可以正常执行。</p>
+<h2 id="非唯一索引等值查询"><a href="#非唯一索引等值查询" class="headerlink" title="非唯一索引等值查询"></a>非唯一索引等值查询</h2><p>当我们用非唯一索引进行等值查询的时候，查询的记录存不存在，加锁的规则也会不同：</p>
+<ul>
+<li><strong>当查询的记录存在时，除了会加 next-key lock 外，还额外加下一个范围的间隙锁，也就是会加两把锁，也就是查询记录左右两边的next-key lock</strong>。</li>
+<li><strong>当查询的记录不存在时，只会加 next-key lock，然后会退化为间隙锁，也就是只会加一把锁。</strong></li>
+</ul>
+<h3 id="记录存在"><a href="#记录存在" class="headerlink" title="记录存在"></a>记录存在</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">session 1：</span><br><span class="line">select id from t_test where b=8 for update;</span><br><span class="line"></span><br><span class="line">session 2：</span><br><span class="line">insert into t_test value(9,9,9);</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">insert into t_test value(5,5,5);</span><br><span class="line"></span><br><span class="line">session 4:</span><br><span class="line">update t_test set a=100 where b=8;</span><br><span class="line"></span><br><span class="line">session 5:</span><br><span class="line">update t_test set a=100 where b=16;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于会话1，先在b上加next-key lock ，范围**(4,8]<strong>。因为是非唯一索引，且查询记录存在，所以还会加上间隙锁，规则为向下遍历第一个符合的间隙才停止，因此间隙锁范围</strong>(8,16)<strong>。最终加锁范围为</strong>(4,16)**。</p>
+<p>因此会话2阻塞，会话3阻塞，会话4阻塞，而会话不在加锁范围可以正常执行。</p>
+<h3 id="记录不存在-1"><a href="#记录不存在-1" class="headerlink" title="记录不存在"></a>记录不存在</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">session 1:</span><br><span class="line">select * from t_test where b=10 for update;</span><br><span class="line"></span><br><span class="line">session 2:</span><br><span class="line">insert into t_test value(9,9,9);</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">update t_test set a=100 where b=16;</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于会话1，先在b上加next-key lock ，范围**(8,16]<strong>。由于记录不存在，因此next-key lock 退化为间隙锁，最终加锁范围为</strong>(8,16)**。</p>
+<p>因此会话2阻塞，而会话3正常执行。</p>
+<h3 id="非唯一索引范围查询"><a href="#非唯一索引范围查询" class="headerlink" title="非唯一索引范围查询"></a>非唯一索引范围查询</h3><p>非唯一索引和主键索引的范围查询的加锁也有所不同，不同之处在于<strong>普通索引范围查询，next-key lock 不会退化为间隙锁和记录锁</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">session 1:</span><br><span class="line">select * from t_test where b&gt;=8 and b&lt;9 for update;</span><br><span class="line"></span><br><span class="line">session 2:</span><br><span class="line">update t_test set a=100 where b=8;</span><br><span class="line"></span><br><span class="line">session 3:</span><br><span class="line">insert into t_test value(10,10,10);</span><br><span class="line"></span><br><span class="line">session 4:</span><br><span class="line">update t_test set a=100 where b=16;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<p>对于会话1，最开始要找b&#x3D;8，因此next-key lock 为**(4,8]<strong>。但是由于 b 不是唯一索引，并不会退化成记录锁。但是由于是范围查找，就会继续往后找存在的记录，也就是会找到 b &#x3D; 16 这一行停下来，然后加 next-key lock (8, 16]，因为是普通索引查询，所以并不会退化成间隙锁。最终加锁范围为</strong>(4,16]**。</p>
+<p>因此会话2，3，4全部阻塞。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>唯一索引等值查询：</p>
+<ul>
+<li>当查询的记录是存在的，next-key lock 会退化成「记录锁」。</li>
+<li>当查询的记录是不存在的，next-key lock 会退化成「间隙锁」。</li>
+</ul>
+<p>非唯一索引等值查询：</p>
+<ul>
+<li>当查询的记录存在时，除了会加 next-key lock 外，还额外加间隙锁。</li>
+<li>当查询的记录是不存在的，next-key lock 会退化成「间隙锁」。</li>
+</ul>
+<p>非唯一索引和主键索引的范围查询的加锁规则不同之处在于：</p>
+<ul>
+<li>唯一索引在满足一些条件的时候，next-key lock 退化为间隙锁和记录锁。</li>
+<li>非唯一索引范围查询，next-key lock 不会退化为间隙锁和记录锁。</li>
+</ul>
+<p>也就是说：</p>
+<ol>
+<li>唯一索引等值查询命中，next-key lock退化为记录锁</li>
+<li>非唯一索引等值命中，除了会加 next-key lock 外，还额外向后加间隙锁，也就是会加两把锁。</li>
+<li>无论是唯一还是非唯一索引等值查询未命中，均退化为间隙锁</li>
+<li>唯一索引的范围查询，需要分别看待等值和范围而且next-key lock可以退化为记录锁或者间隙锁</li>
+<li>非唯一索引的范围查询，需要分别看待等值和范围，但是next-key lock不会退化</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/Mysql%E7%B4%A2%E5%BC%95%E7%90%86%E8%A7%A3/" rel="prev" title="Mysql索引理解">
+      <i class="fa fa-chevron-left"></i> Mysql索引理解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/23/%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81/" rel="next" title="测试代码">
+      测试代码 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#next-key-lock%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">next-key lock理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E7%A7%8D%E9%94%81"><span class="nav-number">1.1.</span> <span class="nav-text">几种锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Record-Locks"><span class="nav-number">1.1.1.</span> <span class="nav-text">Record Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gap-Locks"><span class="nav-number">1.1.2.</span> <span class="nav-text">Gap Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Key-Locks"><span class="nav-number">1.1.3.</span> <span class="nav-text">Next-Key Locks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%B8%8D%E5%90%8C%E7%9A%84%E6%9F%A5%E8%AF%A2next-key-lock%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.2.</span> <span class="nav-text">对于不同的查询next-key lock的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.</span> <span class="nav-text">唯一索引等值查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%AD%98%E5%9C%A8%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">记录存在：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%8D%E5%AD%98%E5%9C%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">记录不存在:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">唯一索引范围查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.</span> <span class="nav-text">非唯一索引等值查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%AD%98%E5%9C%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">记录存在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%8D%E5%AD%98%E5%9C%A8-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">记录不存在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.3.</span> <span class="nav-text">非唯一索引范围查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meguriri"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">meguriri</p>
+  <div class="site-description" itemprop="description">惠天下第一</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/meguriri" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;meguriri" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meguriri</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

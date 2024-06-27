@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Sans SC:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能有两棵子树，且有左右之分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树的建立与遍历">
+<meta property="og:url" content="http://example.com/2020/10/13/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BB%BA%E7%AB%8B%E4%B8%8E%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:site_name" content="cherry blessing">
+<meta property="og:description" content="二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能有两棵子树，且有左右之分。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/11/04/cyeKCn6xDq8kmNZ.png">
+<meta property="article:published_time" content="2020-10-13T15:43:22.000Z">
+<meta property="article:modified_time" content="2024-06-27T12:40:07.848Z">
+<meta property="article:author" content="meguriri">
+<meta property="article:tag" content="树">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/04/cyeKCn6xDq8kmNZ.png">
+
+<link rel="canonical" href="http://example.com/2020/10/13/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BB%BA%E7%AB%8B%E4%B8%8E%E9%81%8D%E5%8E%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>二叉树的建立与遍历 | cherry blessing</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cherry blessing</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/13/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BB%BA%E7%AB%8B%E4%B8%8E%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="meguriri">
+      <meta itemprop="description" content="惠天下第一">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cherry blessing">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二叉树的建立与遍历
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-13 23:43:22" itemprop="dateCreated datePublished" datetime="2020-10-13T23:43:22+08:00">2020-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-27 20:40:07" itemprop="dateModified" datetime="2024-06-27T20:40:07+08:00">2024-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能有两棵子树，且有左右之分。</p>
+<span id="more"></span>
+<h1 id="先导知识"><a href="#先导知识" class="headerlink" title="先导知识"></a>先导知识</h1><h2 id="树的相关知识点："><a href="#树的相关知识点：" class="headerlink" title="树的相关知识点："></a>树的相关知识点：</h2><ol>
+<li>结点的度：结点拥有的子树个数</li>
+<li>叶子：度数为0的结点</li>
+<li>孩子：结点子树的根</li>
+<li>双亲：孩子结点的上层结点</li>
+<li>结点层次：根节点算起，根为第一层，他的孩子为第二层</li>
+<li>树的深度：树的层数</li>
+<li>完全二叉树：深度为k，有n个结点的二叉树当且仅当其每一个结点都与深度为k的满二叉树中编号从1到n的结点一一对应时，称为完全二叉树</li>
+<li>满二叉树：如果一棵二叉树只有度为0的结点和度为2的结点，并且度为0的结点在同一层上，则这棵二叉树为满二叉树。</li>
+</ol>
+<h2 id="二叉树的性质："><a href="#二叉树的性质：" class="headerlink" title="二叉树的性质："></a>二叉树的性质：</h2><ol>
+<li>二叉树的第i层上至多有2^(i-1)（i≥1）个节点</li>
+<li>深度为h的二叉树中至多含有2h-1个节点</li>
+<li>若在任意一棵二叉树中，有n0个叶子节点，有n2个度为2的节点，则必有n0&#x3D;n2+1</li>
+<li>具有n个节点的完全二叉树深为log2x+1（其中x表示不大于n的最大整数）</li>
+<li>对于编号为i（i≥1）的节点：当i&#x3D;1时，该节点为根，它无双亲节点</li>
+<li>对于编号为i（i≥1）的节点：当i&gt;1时，该节点的双亲节点的编号为i&#x2F;2</li>
+</ol>
+<h1 id="二叉树的建立"><a href="#二叉树的建立" class="headerlink" title="二叉树的建立"></a>二叉树的建立</h1><p>二叉树的建立有多种方法，例如数组建立或者链式存储的方法建立，这里我们用最常规的链式存储建立一颗二叉树。<br>一般题目中都是给一棵树的先序遍历。如：<br><strong>$<del>$A$</del>$B$<del>$C$</del>$*$<del>$*$</del>$*$<del>$D$</del>$*$<del>$E$</del>$*$~$*</strong><br>一般星号代表空节点，先序遍历的遍历过程是根左右，这对于这可树的任何一个子树都是成立的。所以这可树画出来就长这个亚子:</p>
+<p><img src="https://i.loli.net/2020/11/04/cyeKCn6xDq8kmNZ.png" alt="捕获.PNG"></p>
+<h2 id="结点的保存"><a href="#结点的保存" class="headerlink" title="结点的保存"></a>结点的保存</h2><p>树每一个的结点都有一个数据和两个分别指向左右子树的指针，显然需要一个结构体，这里我们用<strong>typedef</strong>来定义其指针。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">BiTNode</span>&#123;</span><br><span class="line">    <span class="type">char</span> data;</span><br><span class="line">    BiTNode *lchild,*rchild;</span><br><span class="line">&#125;BiTNode,*BiTree;</span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">显然，找到一个树的根，我们就能找到这一整棵树。所以我们可以在主函数中定义一个根结点，然后把它传到建树的函数中。</span><br><span class="line"></span><br><span class="line">&gt;注：传入函数的需要是指向指针的指针或指针的引用，否则出函数之后，这棵树就会消失。参考形参与实参。</span><br><span class="line"></span><br><span class="line">### 建立的函数：<span class="built_in">Creat_BiTree</span>()</span><br><span class="line"></span><br><span class="line">在建树的过程中，每次读入一个字符，当字符为*时，当前子树为空子树，也就不用继续往下遍历了。否则，将字符给当前结点，继续遍历它的左子树，左子树遍历完再遍历右子树。显然这个过程需要通过递归来实现。所以我们先要知道如何保存树的结点。</span><br><span class="line">``` c++</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Creat_BiTree</span><span class="params">(BiTree &amp;T)</span></span>&#123;</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    cin&gt;&gt;ch;</span><br><span class="line">    <span class="keyword">if</span>(ch==<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">        T=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        T=(BiTree)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(BiTNode));</span><br><span class="line">        T-&gt;data=ch;</span><br><span class="line">        <span class="built_in">Creat_BiTree</span>(T-&gt;lchild);</span><br><span class="line">        <span class="built_in">Creat_BiTree</span>(T-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="树的遍历-Traverse"><a href="#树的遍历-Traverse" class="headerlink" title="树的遍历 **_Traverse()"></a>树的遍历 **_Traverse()</h1><h2 id="树的遍历一共有4种："><a href="#树的遍历一共有4种：" class="headerlink" title="树的遍历一共有4种："></a>树的遍历一共有4种：</h2><blockquote>
+<ol>
+<li><strong>先序遍历</strong> 根 左 右</li>
+<li><strong>中序遍历</strong> 左 根 右</li>
+<li><strong>后序遍历</strong> 左 右 根</li>
+<li><strong>层序遍历</strong> 根据树的深度，一层一层遍历</li>
+</ol>
+</blockquote>
+<h2 id="先序中序后序"><a href="#先序中序后序" class="headerlink" title="先序中序后序"></a>先序中序后序</h2><p>对于一颗树来说，每一个结点都是其所在子树的根，所以它的左右孩子又是其所在左右子树的根。所以先序中序后序都可以通过递归的方式实现。只不过对于每一个结点先序是先访问根，再左子树，再右子树,遇到空子树就返回。而中序是先访问左子树，再访问根，再右子树，后序同理。所以只要在函数中调整一下语句的顺序即可得到三种遍历。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Front_Traverse</span><span class="params">(BiTree T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    cout&lt;&lt;T-&gt;data&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="built_in">Front_Traverse</span>(T-&gt;lchild);</span><br><span class="line">    <span class="built_in">Front_Traverse</span>(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//中序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Mid_Traverse</span><span class="params">(BiTree T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">Mid_Traverse</span>(T-&gt;lchild);</span><br><span class="line">    cout&lt;&lt;T-&gt;data&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="built_in">Mid_Traverse</span>(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Back_Traverse</span><span class="params">(BiTree T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">Back_Traverse</span>(T-&gt;lchild);</span><br><span class="line">    <span class="built_in">Back_Traverse</span>(T-&gt;rchild);</span><br><span class="line">    cout&lt;&lt;T-&gt;data&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="层序-BFS"><a href="#层序-BFS" class="headerlink" title="层序 BFS"></a>层序 BFS</h2><p>层序遍历比较特殊，因为不能通过指针的指向关系得到层序遍历。但是，可与发现每一次的结点都是上一层的结点的孩子。如果每一层的结点都找到，在通过这些结点找到他们的孩子结点，就相当于找到了下一层的全部结点，再把这些结点全部删除，不就到下一层了嘛。显然这是一种先进先出的过程。第一层进，找到第二层的点，第一层出，找到第三层的点，第二层出。所以这个过程可以看出是一种队列。所以我们可以用队列来实现树的层序遍历。</p>
+<p>先将根入队，之后对于每一个队首元素，先输出，再看他的左右孩子是否为空，如果不为空则入队，然后将队首出队。往复循环直到队列为空。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//层序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Floor_Traverse</span><span class="params">(BiTree T)</span></span>&#123;</span><br><span class="line">    queue&lt;BiTree&gt; q;</span><br><span class="line">    q.<span class="built_in">push</span>(T);</span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        cout&lt;&lt;q.<span class="built_in">front</span>()-&gt;data&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="keyword">if</span>(q.<span class="built_in">front</span>()-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">            q.<span class="built_in">push</span>(q.<span class="built_in">front</span>()-&gt;lchild);</span><br><span class="line">        <span class="keyword">if</span>(q.<span class="built_in">front</span>()-&gt;rchild!=<span class="literal">NULL</span>)</span><br><span class="line">            q.<span class="built_in">push</span>(q.<span class="built_in">front</span>()-&gt;rchild);</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于二叉树来说还有许多骚操作，可以说树是一种十分重要的数据结构。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91/" rel="tag"># 树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/11/%E5%8D%9A%E5%BC%88%E8%AE%BA-%E5%B7%B4%E4%BB%80%E5%8D%9A%E5%BC%88/" rel="prev" title="博弈论-巴什博弈">
+      <i class="fa fa-chevron-left"></i> 博弈论-巴什博弈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/04/%E6%95%B0%E8%AE%BA.%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86/" rel="next" title="数论.裴蜀定理">
+      数论.裴蜀定理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%88%E5%AF%BC%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">先导知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">树的相关知识点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%80%A7%E8%B4%A8%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">二叉树的性质：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="nav-number">2.</span> <span class="nav-text">二叉树的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E7%9A%84%E4%BF%9D%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">结点的保存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86-Traverse"><span class="nav-number">3.</span> <span class="nav-text">树的遍历 **_Traverse()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E4%B8%80%E5%85%B1%E6%9C%894%E7%A7%8D%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">树的遍历一共有4种：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E5%BA%8F%E4%B8%AD%E5%BA%8F%E5%90%8E%E5%BA%8F"><span class="nav-number">3.2.</span> <span class="nav-text">先序中序后序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E5%BA%8F-BFS"><span class="nav-number">3.3.</span> <span class="nav-text">层序 BFS</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="meguriri"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">meguriri</p>
+  <div class="site-description" itemprop="description">惠天下第一</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/meguriri" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;meguriri" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">meguriri</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
