@@ -27,6 +27,7 @@
 <meta property="og:site_name" content="cherry blessing">
 <meta property="og:description" content="OM3阅读笔记关键字渐进式可视化，交互式可视化，支持缩放，平移等操作，增量树，时间序列 问题背景几乎所有现有技术都需要将整个数据快速加载到客户端以实现高效渲染。然而，对于存储在远程数据库中的大型时间序列数据，延迟通常很高。这阻碍了在不同分辨率下对时序数据进行平滑的交互式探索。 减少延迟的方法： 数据降维：通过在可视化之前聚合数据以减小其大小。为了在降维过程中保留显著特征，已经提出了多种策略。然而，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-202511111.png">
 <meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251104201016981.png">
 <meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251104202211969.png">
 <meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105170728537.png">
@@ -37,12 +38,12 @@
 <meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251106000339500.png">
 <meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105184603440.png">
 <meta property="article:published_time" content="2025-11-05T13:48:57.000Z">
-<meta property="article:modified_time" content="2025-11-05T16:45:21.199Z">
+<meta property="article:modified_time" content="2025-11-05T17:25:23.356Z">
 <meta property="article:author" content="meguriri">
 <meta property="article:tag" content="可视化">
 <meta property="article:tag" content="渐进式查询">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://meguriri.github.io/images/2025/11/image-20251104201016981.png">
+<meta name="twitter:image" content="https://meguriri.github.io/images/2025/11/image-202511111.png">
   
     <link rel="alternate" href="/atom.xml" title="cherry blessing" type="application/atom+xml">
   
@@ -318,7 +319,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            4.9k 词 
+            6.3k 词 
           </div>
         </div>
         
@@ -334,7 +335,17 @@
 <li>渐进式可视化：可视化立即渲染用户可以潜在交互的中间结果，而不是等待缓慢的查询。它使用基于在线采样的技术来逐步揭示显著特征，每次更新都会发送一个新的结果集进行可视化，因此网络成本与更新次数呈线性关系。例子：IncVisage</li>
 </ul>
 <h3 id="本文实现："><a href="#本文实现：" class="headerlink" title="本文实现："></a>本文实现：</h3><p>OM3 是一种有序的多级最小-最大表示法。在每个时间间隔中维护最小值和最大值，这些值用于在显示窗口中以宽度为 2 的像素列中光栅化第 i 级（0 &lt; i &lt; ⌈log n⌉）的像素列。此外，它还跟踪叶级成对的最小值和最大值的时序顺序。为此，我们制定了前向 OM 变换，以递归地聚合不同时间间隔的不同分辨率的时间序列，构建通过聚合和差异获得的系数层次结构。<strong>本文适合均匀采样的时间序列。</strong></p>
-<h2 id="线段聚合"><a href="#线段聚合" class="headerlink" title="线段聚合"></a>线段聚合</h2><h3 id="定义1"><a href="#定义1" class="headerlink" title="定义1"></a>定义1</h3><h3 id="定义2"><a href="#定义2" class="headerlink" title="定义2"></a>定义2</h3><h3 id="定义3"><a href="#定义3" class="headerlink" title="定义3"></a>定义3</h3><h3 id="定义4"><a href="#定义4" class="headerlink" title="定义4"></a>定义4</h3><h3 id="定义5"><a href="#定义5" class="headerlink" title="定义5"></a>定义5</h3><h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>M4 在每个像素列中定位最大和最小时间戳的两个数据点以及最大和最小数据值的两个数据点。然后将这些点连接起来形成表示线形图的线段。图 1(c)显示了其结果。该结果与直接光栅化图 1(a)中显示的所有数据点产生的可视化完全匹配。然而，M4 形成的某些列间线段是冗余的（但虚线段是冗余且不必要的），对于生成无误差的可视化是不必要的。(b) 最小-最大聚合的可视化产生一个缺失像素；(d) 通过首先栅格化每个像素列中由最小-最大聚合结果定义的线（绿色），然后栅格化相邻像素列之间的必要列间线（L1，L2），所有像素都被正确设置。</p>
+<h2 id="线段聚合"><a href="#线段聚合" class="headerlink" title="线段聚合"></a>线段聚合</h2><h3 id="定义1"><a href="#定义1" class="headerlink" title="定义1"></a>定义1</h3><p>时间序列  $T &#x3D; {(t_i ,v_i ))}^n_{i&#x3D;1}$ 是一个均匀采样数据点的有序列表，</p>
+<p>其中 i 是索引，ti 是第 i 个时间戳 (ti &lt; ti+1)，vi 是时间 ti 的数据值。</p>
+<h3 id="定义2"><a href="#定义2" class="headerlink" title="定义2"></a>定义2</h3><p>时间序列的等距分组是指将时间序列 T 分割成 w 个宽度相同的组，且这些组之间互不重叠：</p>
+<p>G(T, w) &#x3D; {B1, B2, · · ·, Bw}，其中每个组Bi 包含时间间隔 [(i − 1) ∗ δ + 1, i ∗ δ] 内的数据点，δ 为 round(n&#x2F;w)，w 为显示窗口宽度。对于每个组，其值范围为 Oi &#x3D; [Gmin(T, w, i), Gmax(T, w, i)]，分别由最小值 Gmin(T, w, i) 和最大值 Gmax(T, w, i) 定义。</p>
+<h3 id="定义3"><a href="#定义3" class="headerlink" title="定义3"></a>定义3</h3><p>如果时间序列 T 的线可视化渲染出的前景像素集合与通过栅格化 T 中所有数据点的所有线段而渲染出的集合相同，则称该线可视化无误差。</p>
+<h3 id="定义4"><a href="#定义4" class="headerlink" title="定义4"></a>定义4</h3><p>对于每个组 Bi，列内线段由该组的 Gmin(T, w, i) 和 Gmax(T, w, i) 定义，而 Bi 与下一个组 Bi+1 之间的列间线段由连接 Bi 的最后一个数据记录和 Bi+1 的第一个数据记录定义。</p>
+<h3 id="定义5"><a href="#定义5" class="headerlink" title="定义5"></a>定义5</h3><p>对于给定的等距分组 T，其线段聚合 Gl(T, w) 由以下部分组成：</p>
+<p>每个分组内的一个列内线段，以及所有列间线段，这些列间线段包含的像素在 Oi 和 Oi+1 范围内完全被覆盖。</p>
+<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>通过对时间序列 T 的线段聚合 G(T, w)进行光栅化所产生的时间序列线可视化是无误差的。证明。如果一列间线段的值范围 Q &#x3D; [vj, vj+1]在 Oi∩Oi+1 内，则相应的列间像素将被列内像素集覆盖。因此，列间线（例如(d)中的线段 2）对于确保无误差可视化不是必需的。然而，如果其 Q 不在 Oi∩Oi+1 内（例如，图 1(d)中的线段 L1），则列间线段是不可或缺的，因为 L 可以光栅化为列内像素外的像素。将这些像素结合起来，我们就可以确保无误差可视化。对于在列 Bi 和列 Bi+1 之间缺少数据值的时间序列，使用两列之间的列间线段可以帮助确保生成无误差的可视化。</p>
+<p><img src="/images/2025/11/image-202511111.png" alt="image-2025110420101698"></p>
+<p>M4 在每个像素列中定位最大和最小时间戳的两个数据点以及最大和最小数据值的两个数据点。然后将这些点连接起来形成表示线形图的线段。图 1(c)显示了其结果。该结果与直接光栅化图 1(a)中显示的所有数据点产生的可视化完全匹配。然而，M4 形成的某些列间线段是冗余的（但虚线段是冗余且不必要的），对于生成无误差的可视化是不必要的。(b) 最小-最大聚合的可视化产生一个缺失像素；(d) 通过首先栅格化每个像素列中由最小-最大聚合结果定义的线（绿色），然后栅格化相邻像素列之间的必要列间线（L1，L2），所有像素都被正确设置。</p>
 <p><img src="/images/2025/11/image-20251104201016981.png" alt="image-20251104201016981"></p>
 <h2 id="系统图"><a href="#系统图" class="headerlink" title="系统图"></a>系统图</h2><h3 id="离线预处理"><a href="#离线预处理" class="headerlink" title="离线预处理"></a>离线预处理</h3><p>它由两个阶段组成：离线预处理和在线查询。离线预处理。应用 OM3 预处理程序将服务器上关系数据库中存储的每个时间序列通过正向变换转换为我们的 OM 3</p>
 <h3 id="在线查询"><a href="#在线查询" class="headerlink" title="在线查询"></a>在线查询</h3><p>一旦 OM 3可用，用户就可以在客户端通过从服务器检索必要的系数来交互式地探索数据，并通过逆变换重建原始数据记录。要从头开始生成可视化，服务器可以根据显示窗口的宽度和显示窗口中时间序列的可见时间范围自动生成查询语句来检索系数。然后，客户端从服务器接收系数流来生成可视化，同时将重建数据的 OM 3树作为缓存，以加速交互式探索期间后续的可视化生成。为了支持流畅的交互，服务器执行增量查询来按需请求数据，使客户端能够利用树层次结构平滑地平移、缩放、调整大小和查询时间序列。</p>
@@ -375,14 +386,29 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> minc, maxc <span class="keyword">where</span> [id<span class="operator">&gt;=</span> start_id <span class="keyword">and</span> index<span class="operator">&lt;=</span> end_id].</span><br></pre></td></tr></table></figure>
 
 <p>为了进一步降低查询延迟，引入以下三种附加策略来加速查询。</p>
-<h3 id="系数预取-Coefficients-Prefetching"><a href="#系数预取-Coefficients-Prefetching" class="headerlink" title="系数预取 Coefficients Prefetching"></a>系数预取 Coefficients Prefetching</h3><h3 id="树缓存-Tree-Cache"><a href="#树缓存-Tree-Cache" class="headerlink" title="树缓存 Tree Cache"></a>树缓存 Tree Cache</h3><p>在客户端缓存之前交互中重建的系数树，通过将树作为列表存储在内存中，我们采用最近最少使用（LRU）策略进行缓存替换。在交互过程中，较粗级别的系数（上层的树节点）经常被使用，但它们通常只占用很少的内存。因此，一个小缓存就足以支持流畅的交互。</p>
+<h3 id="系数预取-Coefficients-Prefetching"><a href="#系数预取-Coefficients-Prefetching" class="headerlink" title="系数预取 Coefficients Prefetching"></a>系数预取 Coefficients Prefetching</h3><p>为了更好的支持向下递归的操作，可以在 p 层和 p+1 层预加载系数。由于系数是连续存储的，从数据库中检索它们的开销很小。</p>
+<h3 id="树缓存-Tree-Cache"><a href="#树缓存-Tree-Cache" class="headerlink" title="树缓存 Tree Cache"></a>树缓存 Tree Cache</h3><p>在客户端缓存之前交互中重建的系数树，通过将树作为列表存储在内存中，我们采用最近最少使用（LRU）策略进行缓存替换。在交互过程中，较粗级别的系数（上层的树节点）经常被使用，但它们通常只占用很少的内存。因此，一个小缓存就足以支持流畅的交互。</p>
 <h3 id="查询合并-Query-Merging"><a href="#查询合并-Query-Merging" class="headerlink" title="查询合并 Query Merging"></a>查询合并 Query Merging</h3><p>在基于增量树形查询的交互过程中，我们需要使用以下查询从数据库中获取多个边界节点的信息：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> minc, maxc <span class="keyword">where</span> [condition1] <span class="keyword">or</span> ... <span class="keyword">or</span> [conditionN]</span><br></pre></td></tr></table></figure>
 
 <p>其中每个条件对应边界节点的起始和结束索引。为了提高查询速度，我们将多个具有连续记录的条件合并在一起，例如：图 5(b)中级别 2 的节点[6, 28]和[13, 35]的查询可以合并。这样做可以减少总体查询时间 40%。</p>
 <p>此外，使用两个线程：一个用于分析系数，另一个用于向数据库发出查询。一旦分析完成，更精细级别的查询系数可以高效地用于下一级别的分析。</p>
-<h2 id="支持的交互"><a href="#支持的交互" class="headerlink" title="支持的交互"></a>支持的交互</h2><h3 id="调整大小"><a href="#调整大小" class="headerlink" title="调整大小"></a>调整大小</h3><p>会在不改变时间序列范围的情况下，改变窗口大小。比如2-4-8-16。</p>
-<h3 id="平移和缩放"><a href="#平移和缩放" class="headerlink" title="平移和缩放"></a>平移和缩放</h3><p>会在同一个窗口下显示不同的时间范围。</p>
+<h2 id="支持的交互"><a href="#支持的交互" class="headerlink" title="支持的交互"></a>支持的交互</h2><h3 id="调整大小"><a href="#调整大小" class="headerlink" title="调整大小"></a>调整大小</h3><p>会在不改变时间序列范围的情况下，改变窗口大小。比如w &#x3D; 2-4-8-16。对于显示在宽度为 w ∈ (2^p−1, 2^p ] 的窗口中的时间序列，可以分四步高效地放大到时间区间 [ta , tb ]：</p>
+<ol>
+<li>计算与时间戳 ta 和 tb 分别关联的节点索引(时间序列中对应的位置) μa 和 μb，级别为 p；</li>
+<li>找到最小额外层ϵ ，使得|μb-μa+1|2^ϵ &gt;&#x3D; w</li>
+<li>获取索引范围 [μa, μb] 内的所有节点及其子节点（从第 p + 1 层到第 p + ϵ 层）的系数；</li>
+<li>执行基于树的搜索以找到边界数据点</li>
+</ol>
+<p>利用基于增量树的搜索方法，可以高效地执行此过程。对于缩放倍数为 2 的放大和缩小操作，当前视图中的一些边界数据点可以重用于下一个视图，从而进一步降低查询成本。</p>
+<h3 id="平移和缩放"><a href="#平移和缩放" class="headerlink" title="平移和缩放"></a>平移和缩放</h3><p>会在同一个窗口下显示不同的时间范围。对于显示在宽度为 w 的窗口 [2^p−1, 2^p ] 上的时间序列，以及当前时间间隔 [ta , tb ]，平移到可能重叠的时间间隔 [tc , td ] (tb − ta &#x3D; td − tc ) 相当于缩放步骤 1 和4。</p>
+<h3 id="时间框查询"><a href="#时间框查询" class="headerlink" title="时间框查询"></a>时间框查询</h3><p>用户可以选择由用户指定范围或给定矩形覆盖的线条。可以在树上BFS搜索找打破与范围框相关联的节点。有三种情况</p>
+<ol>
+<li>节点的值范围与框的值范围没有交集</li>
+<li>节点的值范围被框的值范围完全覆盖</li>
+<li>节点的值范围被框的值范围部分覆盖，因此需要进一步探索子节点以检查是否为情况 1或情况 2。</li>
+</ol>
+<p>由于此查询基于给定的可视化，其处理不需要与服务器通信，因此它可以在客户端单独运行得非常快。一旦查询的线条可用，用户可以通过平移、缩放和调整大小等操作进一步与查询的线条进行交互。</p>
 
         
       </div>
