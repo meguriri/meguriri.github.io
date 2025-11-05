@@ -308,7 +308,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            5.8k 词 
+            6.1k 词 
           </div>
         </div>
         
@@ -319,107 +319,227 @@
         
           <p>NEU 秋季学期专硕“<strong>机器学习原理与实践</strong>”简单考前整理</p>
 <span id="more"></span>
-<h1 id="ML"><a href="#ML" class="headerlink" title="ML"></a>ML</h1><h2 id="什么是机器学习"><a href="#什么是机器学习" class="headerlink" title="什么是机器学习"></a>什么是机器学习</h2><p>机器学习是一种让机器自己学习的技术，它可以让机器从数据中学习规律和模式，从而<br>能够自动地做出决策和预测。</p>
-<h2 id="人工智能的发展历程"><a href="#人工智能的发展历程" class="headerlink" title="人工智能的发展历程"></a>人工智能的发展历程</h2><ul>
+<h1 id="ml"><a class="markdownIt-Anchor" href="#ml"></a> ML</h1>
+<h2 id="什么是机器学习"><a class="markdownIt-Anchor" href="#什么是机器学习"></a> 什么是机器学习</h2>
+<p>机器学习是一种让机器自己学习的技术，它可以让机器从数据中学习规律和模式，从而<br />
+能够自动地做出决策和预测。</p>
+<h2 id="人工智能的发展历程"><a class="markdownIt-Anchor" href="#人工智能的发展历程"></a> 人工智能的发展历程</h2>
+<ul>
 <li>推理期</li>
 <li>知识期</li>
 <li>学习期</li>
 </ul>
-<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><h3 id="假设空间"><a href="#假设空间" class="headerlink" title="假设空间"></a>假设空间</h3><p>数据集中全部的可能数据，机器学习的过程可看作在所有的<br>假设组成的空间中进行搜索的过程，其目标是找到与训练集“匹配”（fit）的假设，<br>即能够将训练集中的数据判断正确的假设。</p>
-<h3 id="版本空间"><a href="#版本空间" class="headerlink" title="版本空间"></a>版本空间</h3><p>可能有多个假设与训练集匹配，那么将与训练集一致的“假设集合”称为“版本空间”。</p>
-<h3 id="归纳偏好"><a href="#归纳偏好" class="headerlink" title="归纳偏好"></a>归纳偏好</h3><p>归纳偏好是机器学习算法在学习过程中对某种类型假设的偏好。</p>
-<h3 id="奥卡姆剃刀（Ocam’s-razor）"><a href="#奥卡姆剃刀（Ocam’s-razor）" class="headerlink" title="奥卡姆剃刀（Ocam’s razor）"></a>奥卡姆剃刀（Ocam’s razor）</h3><p>若有多个假设与观察一致，则选最简单的那个。任何一个有效的机器学习算法必有其偏好。</p>
-<h3 id="NFL定理"><a href="#NFL定理" class="headerlink" title="NFL定理"></a>NFL定理</h3><p>一个算法a若在某些问题上比另一个算法b好，必存在另一些问题， b比a好。</p>
-<h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><p>‌代价函数（Cost Function）在机器学习和优化问题中<br>用于衡量模型预测值与实际观测值之间的差异。</p>
-<h3 id="过拟合与欠拟合"><a href="#过拟合与欠拟合" class="headerlink" title="过拟合与欠拟合"></a>过拟合与欠拟合</h3><ul>
-<li><strong>过拟合：</strong> ‌过拟合‌是指模型在训练数据上表现很好，<br>但在测试数据上表现不佳，通常是因为模型过于复杂，对训练数据进行了过度拟合。</li>
-<li><strong>欠拟合：</strong> 欠拟合是指模型在训练集和测试集上表现都不佳，<br>通常是因为模型过于简单或者训练不足。解决欠拟合的常用方法包括增加模型复杂度、<br>增加特征数、增加训练数据、使用正则化等。</li>
+<h2 id="基本术语"><a class="markdownIt-Anchor" href="#基本术语"></a> 基本术语</h2>
+<h3 id="假设空间"><a class="markdownIt-Anchor" href="#假设空间"></a> 假设空间</h3>
+<p>数据集中全部的可能数据，机器学习的过程可看作在所有的<br />
+假设组成的空间中进行搜索的过程，其目标是找到与训练集“匹配”（fit）的假设，<br />
+即能够将训练集中的数据判断正确的假设。</p>
+<h3 id="版本空间"><a class="markdownIt-Anchor" href="#版本空间"></a> 版本空间</h3>
+<p>可能有多个假设与训练集匹配，那么将与训练集一致的“假设集合”称为“版本空间”。</p>
+<h3 id="归纳偏好"><a class="markdownIt-Anchor" href="#归纳偏好"></a> 归纳偏好</h3>
+<p>归纳偏好是机器学习算法在学习过程中对某种类型假设的偏好。</p>
+<h3 id="奥卡姆剃刀ocams-razor"><a class="markdownIt-Anchor" href="#奥卡姆剃刀ocams-razor"></a> 奥卡姆剃刀（Ocam’s razor）</h3>
+<p>若有多个假设与观察一致，则选最简单的那个。任何一个有效的机器学习算法必有其偏好。</p>
+<h3 id="nfl定理"><a class="markdownIt-Anchor" href="#nfl定理"></a> NFL定理</h3>
+<p>一个算法a若在某些问题上比另一个算法b好，必存在另一些问题， b比a好。</p>
+<h3 id="代价函数"><a class="markdownIt-Anchor" href="#代价函数"></a> 代价函数</h3>
+<p>‌代价函数（Cost Function）在机器学习和优化问题中<br />
+用于衡量模型预测值与实际观测值之间的差异。</p>
+<h3 id="过拟合与欠拟合"><a class="markdownIt-Anchor" href="#过拟合与欠拟合"></a> 过拟合与欠拟合</h3>
+<ul>
+<li><strong>过拟合：</strong> ‌过拟合‌是指模型在训练数据上表现很好，<br />
+但在测试数据上表现不佳，通常是因为模型过于复杂，对训练数据进行了过度拟合。</li>
+<li><strong>欠拟合：</strong> 欠拟合是指模型在训练集和测试集上表现都不佳，<br />
+通常是因为模型过于简单或者训练不足。解决欠拟合的常用方法包括增加模型复杂度、<br />
+增加特征数、增加训练数据、使用正则化等。</li>
 </ul>
-<h3 id="机器学习的类别"><a href="#机器学习的类别" class="headerlink" title="机器学习的类别"></a>机器学习的类别</h3><h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><h4 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h4><h4 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h4><h2 id="监督学习-1"><a href="#监督学习-1" class="headerlink" title="监督学习"></a>监督学习</h2><p>监督学习（supervised learning）旨在通过训练样本<br>（trainingexample）进行学习，使用<strong>带有标注</strong>的数据集（labeled dataset）<br>来训练机器学习模型（model）。经过训练后，模型可基于<strong>无标注</strong>的输入数据，来预测其标注。</p>
-<h3 id="典型监督学习的任务："><a href="#典型监督学习的任务：" class="headerlink" title="典型监督学习的任务："></a>典型监督学习的任务：</h3><ul>
+<h3 id="机器学习的类别"><a class="markdownIt-Anchor" href="#机器学习的类别"></a> 机器学习的类别</h3>
+<h4 id="监督学习"><a class="markdownIt-Anchor" href="#监督学习"></a> 监督学习</h4>
+<h4 id="无监督学习"><a class="markdownIt-Anchor" href="#无监督学习"></a> 无监督学习</h4>
+<h4 id="半监督学习"><a class="markdownIt-Anchor" href="#半监督学习"></a> 半监督学习</h4>
+<h2 id="监督学习-2"><a class="markdownIt-Anchor" href="#监督学习-2"></a> 监督学习</h2>
+<p>监督学习（supervised learning）旨在通过训练样本<br />
+（trainingexample）进行学习，使用<strong>带有标注</strong>的数据集（labeled dataset）<br />
+来训练机器学习模型（model）。经过训练后，模型可基于<strong>无标注</strong>的输入数据，来预测其标注。</p>
+<h3 id="典型监督学习的任务"><a class="markdownIt-Anchor" href="#典型监督学习的任务"></a> 典型监督学习的任务：</h3>
+<ul>
 <li>回归（预测连续值）</li>
 <li>分类（预测离散值）</li>
 </ul>
-<h3 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h3><h4 id="1-线性回归"><a href="#1-线性回归" class="headerlink" title="1.线性回归"></a>1.线性回归</h4><p>根据各个训练样本拟合出一条直线，建立输入x与输出y之间的仿射关系，<br>然后我们就可以根据这个关系以及输入x，来计算出输出y，<br>并把这个计算出来的值作为回归输出的预测值。</p>
-<h5 id="线性回归确定系数"><a href="#线性回归确定系数" class="headerlink" title="线性回归确定系数"></a>线性回归确定系数</h5><ol>
+<h3 id="回归"><a class="markdownIt-Anchor" href="#回归"></a> 回归</h3>
+<h4 id="1线性回归"><a class="markdownIt-Anchor" href="#1线性回归"></a> 1.线性回归</h4>
+<p>根据各个训练样本拟合出一条直线，建立输入x与输出y之间的仿射关系，<br />
+然后我们就可以根据这个关系以及输入x，来计算出输出y，<br />
+并把这个计算出来的值作为回归输出的预测值。</p>
+<h5 id="线性回归确定系数"><a class="markdownIt-Anchor" href="#线性回归确定系数"></a> 线性回归确定系数</h5>
+<ol>
 <li>最小化平均绝对误差MAE</li>
-<li>凸优化：<strong>凸集</strong>:如果集合S中任意两点之间线段上的点都在S中，则S是凸集<br>如果目标函数和约束函数都是凸函数，这样的数学优化问题就是凸优化问题。<blockquote>
+<li>凸优化：<strong>凸集</strong>:如果集合S中任意两点之间线段上的点都在S中，则S是凸集<br />
+如果目标函数和约束函数都是凸函数，这样的数学优化问题就是凸优化问题。</li>
+</ol>
+<blockquote>
 <p>凸优化问题最优解的充分必要条件是：<strong>梯度为零</strong>，如果不可导，可以用<strong>均方误差MSE</strong>代替MAE</p>
 </blockquote>
-</li>
-<li>梯度下降法<ul>
+<ol start="3">
+<li>梯度下降法
+<ul>
 <li>梯度下降法</li>
 <li>随机梯度下降法</li>
 <li>小批量梯度下降法</li>
 </ul>
 </li>
 </ol>
-<h5 id="线性回归评估指标"><a href="#线性回归评估指标" class="headerlink" title="线性回归评估指标"></a>线性回归评估指标</h5><p>均方根误差（root mean square error）</p>
-<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>分类是指根据输入特征将每个样本都对应为一个类别（将样本分门别<br>类），其输出为离散的类别标注（class label）。分类问题的目的是预测<br>类别标注，从预先定义的一系列类别标注中选择一个（或多个）。</p>
+<h5 id="线性回归评估指标"><a class="markdownIt-Anchor" href="#线性回归评估指标"></a> 线性回归评估指标</h5>
+<p>均方根误差（root mean square error）</p>
+<h3 id="分类"><a class="markdownIt-Anchor" href="#分类"></a> 分类</h3>
+<p>分类是指根据输入特征将每个样本都对应为一个类别（将样本分门别<br />
+类），其输出为离散的类别标注（class label）。分类问题的目的是预测<br />
+类别标注，从预先定义的一系列类别标注中选择一个（或多个）。</p>
 <ul>
 <li>二分类（binary classification）问题</li>
 <li>多分类（multiclass classification）问题</li>
 </ul>
-<h4 id="1-逻辑回归（二分类）"><a href="#1-逻辑回归（二分类）" class="headerlink" title="1.逻辑回归（二分类）"></a>1.逻辑回归（二分类）</h4><p>‌逻辑回归（Logistic Regression）是一种广义的线性回归分析模型，<br>常用于二分类问题。‌它通过建立代价函数，然后通过优化方法迭代求解出最优的模型参数，<br>最终用于分类和预测。‌<br>逻辑回归(logistic regression)又称为“对数几率回归”</p>
+<h4 id="1逻辑回归二分类"><a class="markdownIt-Anchor" href="#1逻辑回归二分类"></a> 1.逻辑回归（二分类）</h4>
+<p>‌逻辑回归（Logistic Regression）是一种广义的线性回归分析模型，<br />
+常用于二分类问题。‌它通过建立代价函数，然后通过优化方法迭代求解出最优的模型参数，<br />
+最终用于分类和预测。‌<br />
+逻辑回归(logistic regression)又称为“对数几率回归”</p>
 <ol>
-<li>Sigmoid函数<br>$$y &#x3D; \frac{1}{1+e^(-z)}$$</li>
+<li>Sigmoid函数</li>
 </ol>
-<h4 id="2-线性判别分析（LDA）"><a href="#2-线性判别分析（LDA）" class="headerlink" title="2.线性判别分析（LDA）"></a>2.线性判别分析（LDA）</h4><p>LDA旨在找到一个线性组合，通过这个组合将多维数据投影到低维空间，<br>同时保持类别之间的区分度最大(用一条线划分分类)<br>由于将样例投影到一条直线（低维空间），因此也被视为一种“监督降维“技术。</p>
-<h4 id="3-支持向量机（SVM）"><a href="#3-支持向量机（SVM）" class="headerlink" title="3.支持向量机（SVM）"></a>3.支持向量机（SVM）</h4><p>线性模型：在样本空间中寻找一个超平面, 将不同类别的样本分开<br>应选择”正中间”, 容忍性好, 鲁棒性高, 泛化能力最强的超平面<br>超平面方程: $w^Tx+b&#x3D;0$</p>
-<h5 id="核技巧"><a href="#核技巧" class="headerlink" title="核技巧"></a>核技巧</h5><p>若不存在一个能正确划分两类样本的超平面, 将样本从原始空间映射到一个更高维的特征空间,<br>使得样本在这个特征空间内线性可分。</p>
-<h5 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h5><p>现实中, 很难确定合适的核函数使得训练样本在特征空间中线性可分;<br>同时一个线性可分的结果也很难断定是否是由过拟合造成的。<br>引入”软间隔”的概念, 允许支持向量机在一些样本上不满足约束<br>当数据量较小时，为减少过拟合风险，可使用k折交叉验证，使每个样本都<br>有机会被用于验证。</p>
-<h4 id="4-多分类逻辑回归"><a href="#4-多分类逻辑回归" class="headerlink" title="4.多分类逻辑回归"></a>4.多分类逻辑回归</h4><h5 id="One-hot编码"><a href="#One-hot编码" class="headerlink" title="One-hot编码"></a>One-hot编码</h5><p>向量的元素只有一个1，其余元素都是0。<br>向量长度为类别总数，1出现的位置表示输入特征所属的类别</p>
-<h5 id="SoftMax函数"><a href="#SoftMax函数" class="headerlink" title="SoftMax函数"></a>SoftMax函数</h5><p>Softmax函数可以将数据进行归一化，转化为(0,1)之间的数值，<br>这些数值可以被当做概率分布，用来作为多分类的目标预测值。<br>$$g(z_j) &#x3D;\frac{e^{z_j}}{\sum_{l&#x3D;1}^{c}e^{z_l}}$$</p>
-<h5 id="Relu激活函数"><a href="#Relu激活函数" class="headerlink" title="Relu激活函数"></a>Relu激活函数</h5><p>$$g(z) &#x3D; max(0,z)&#x3D;z[z&gt;0]$$</p>
-<h5 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h5><p>‌激活函数是神经网络中的关键组件，主要作用是引入非线性，<br>使神经网络能够学习和表示复杂的非线性关系。‌ 在神经网络中，<br>每个神经元的输入通过加权求和后，再通过一个激活函数来决定是否激活该神经元。<br>激活函数将线性组合的输入转换为非线性输出，从而提高模型的表达能力和性能。‌</p>
-<h5 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h5><p>神经网络的基本组成包括：<br>‌输入层‌：接收外部输入信号。<br>‌隐层‌：包含多个神经元，每个神经元对输入信号进行处理，并通过权重和激活函数输出结果。<br>‌输出层‌：输出最终结果。</p>
-<h4 id="5-决策树"><a href="#5-决策树" class="headerlink" title="5.决策树"></a>5.决策树</h4><p>决策树基于“树”结构进行决策</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mo stretchy="false">(</mo></msup><mo>−</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">y = \frac{1}{1+e^(-z)}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.2754399999999997em;vertical-align:-0.954em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.2960000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.814em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mopen mtight">(</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.954em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h4 id="2线性判别分析lda"><a class="markdownIt-Anchor" href="#2线性判别分析lda"></a> 2.线性判别分析（LDA）</h4>
+<p>LDA旨在找到一个线性组合，通过这个组合将多维数据投影到低维空间，<br />
+同时保持类别之间的区分度最大(用一条线划分分类)<br />
+由于将样例投影到一条直线（低维空间），因此也被视为一种“监督降维“技术。</p>
+<h4 id="3支持向量机svm"><a class="markdownIt-Anchor" href="#3支持向量机svm"></a> 3.支持向量机（SVM）</h4>
+<p>线性模型：在样本空间中寻找一个超平面, 将不同类别的样本分开<br />
+应选择”正中间”, 容忍性好, 鲁棒性高, 泛化能力最强的超平面<br />
+超平面方程: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>w</mi><mi>T</mi></msup><mi>x</mi><mo>+</mo><mi>b</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">w^Tx+b=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.924661em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></p>
+<h5 id="核技巧"><a class="markdownIt-Anchor" href="#核技巧"></a> 核技巧</h5>
+<p>若不存在一个能正确划分两类样本的超平面, 将样本从原始空间映射到一个更高维的特征空间,<br />
+使得样本在这个特征空间内线性可分。</p>
+<h5 id="软间隔"><a class="markdownIt-Anchor" href="#软间隔"></a> 软间隔</h5>
+<p>现实中, 很难确定合适的核函数使得训练样本在特征空间中线性可分;<br />
+同时一个线性可分的结果也很难断定是否是由过拟合造成的。<br />
+引入”软间隔”的概念, 允许支持向量机在一些样本上不满足约束<br />
+当数据量较小时，为减少过拟合风险，可使用k折交叉验证，使每个样本都<br />
+有机会被用于验证。</p>
+<h4 id="4多分类逻辑回归"><a class="markdownIt-Anchor" href="#4多分类逻辑回归"></a> 4.多分类逻辑回归</h4>
+<h5 id="one-hot编码"><a class="markdownIt-Anchor" href="#one-hot编码"></a> One-hot编码</h5>
+<p>向量的元素只有一个1，其余元素都是0。<br />
+向量长度为类别总数，1出现的位置表示输入特征所属的类别</p>
+<h5 id="softmax函数"><a class="markdownIt-Anchor" href="#softmax函数"></a> SoftMax函数</h5>
+<p>Softmax函数可以将数据进行归一化，转化为(0,1)之间的数值，<br />
+这些数值可以被当做概率分布，用来作为多分类的目标预测值。</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><msub><mi>z</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mfrac><msup><mi>e</mi><msub><mi>z</mi><mi>j</mi></msub></msup><mrow><munderover><mo>∑</mo><mrow><mi>l</mi><mo>=</mo><mn>1</mn></mrow><mi>c</mi></munderover><msup><mi>e</mi><msub><mi>z</mi><mi>l</mi></msub></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">g(z_j) =\frac{e^{z_j}}{\sum_{l=1}^{c}e^{z_l}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.335394em;vertical-align:-0.994002em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.341392em;"><span style="top:-2.305708em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.590392em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.04398em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.04398em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2818857142857143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.994002em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h5 id="relu激活函数"><a class="markdownIt-Anchor" href="#relu激活函数"></a> Relu激活函数</h5>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mi>z</mi><mo stretchy="false">[</mo><mi>z</mi><mo>&gt;</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">g(z) = max(0,z)=z[z&gt;0]
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mclose">]</span></span></span></span></span></p>
+<h5 id="激活函数"><a class="markdownIt-Anchor" href="#激活函数"></a> 激活函数</h5>
+<p>‌激活函数是神经网络中的关键组件，主要作用是引入非线性，<br />
+使神经网络能够学习和表示复杂的非线性关系。‌ 在神经网络中，<br />
+每个神经元的输入通过加权求和后，再通过一个激活函数来决定是否激活该神经元。<br />
+激活函数将线性组合的输入转换为非线性输出，从而提高模型的表达能力和性能。‌</p>
+<h5 id="神经网络"><a class="markdownIt-Anchor" href="#神经网络"></a> 神经网络</h5>
+<p>神经网络的基本组成包括：<br />
+‌输入层‌：接收外部输入信号。<br />
+‌隐层‌：包含多个神经元，每个神经元对输入信号进行处理，并通过权重和激活函数输出结果。<br />
+‌输出层‌：输出最终结果。</p>
+<h4 id="5决策树"><a class="markdownIt-Anchor" href="#5决策树"></a> 5.决策树</h4>
+<p>决策树基于“树”结构进行决策</p>
 <ul>
 <li>每个“内部结点”对应于某个属性上的“测试”(test)</li>
 <li>每个分支对应于该测试的一种可能结果（即该属性的某个取值）</li>
 <li>每个“叶结点”对应于一个“预测结果”</li>
 </ul>
-<h4 id="决策树算法种类："><a href="#决策树算法种类：" class="headerlink" title="决策树算法种类："></a>决策树算法种类：</h4><ol>
+<h4 id="决策树算法种类"><a class="markdownIt-Anchor" href="#决策树算法种类"></a> 决策树算法种类：</h4>
+<ol>
 <li><strong>CLS:</strong></li>
 <li><strong>ID3:</strong></li>
 <li><strong>C4.5:</strong></li>
 <li><strong>CART:</strong> 可用于回归</li>
 <li><strong>RF:</strong> （随机森林）</li>
 </ol>
-<h4 id="三种停止条件"><a href="#三种停止条件" class="headerlink" title="三种停止条件"></a>三种停止条件</h4><ol>
+<h4 id="三种停止条件"><a class="markdownIt-Anchor" href="#三种停止条件"></a> 三种停止条件</h4>
+<ol>
 <li>当前结点包含的样本全属于同一类别，无需划分。</li>
 <li>当前属性集为空, 或是所有样本在所有属性上取值相同，无法划分。</li>
 <li>当前结点包含的样本集合为空，不能划分。</li>
 </ol>
-<h4 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h4><p>信息熵 (entropy) 是度量样本集合“纯度”最常用的一种指标</p>
-<h4 id="信息增益率"><a href="#信息增益率" class="headerlink" title="信息增益率"></a>信息增益率</h4><h4 id="基尼系数"><a href="#基尼系数" class="headerlink" title="基尼系数"></a>基尼系数</h4><p>Gini(D) 越小，数据集D 的纯度越高</p>
-<h4 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h4><p>剪枝方法和程度对决策树泛化性能的影响更为显著，<br>剪枝 (pruning) 是决策树对付“过拟合”的主要手段！</p>
-<h5 id="预剪枝"><a href="#预剪枝" class="headerlink" title="预剪枝"></a>预剪枝</h5><p>提前终止某些分支的生长。</p>
-<h5 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h5><p>生成一棵完全树，再“回头”剪枝，后剪枝 通常优于预剪枝。</p>
-<h4 id="处理连续值"><a href="#处理连续值" class="headerlink" title="处理连续值"></a>处理连续值</h4><p>二分法（bi-partition），n 个属性值形成 n-1 个候选划分。算每个划分的信息增益，选信息增益大的</p>
-<h4 id="处理缺失值"><a href="#处理缺失值" class="headerlink" title="处理缺失值"></a>处理缺失值</h4><p>样本赋权，权重划分</p>
-<h4 id="6-随机森林"><a href="#6-随机森林" class="headerlink" title="6.随机森林"></a>6.随机森林</h4><p>随机森林是一种集成学习（ensemble learning）方法，<br>集成学习通过构建并结合多个学习器来提升性能。</p>
-<h5 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h5><ol>
-<li><strong>Boosting：</strong>个体学习器存在强依赖关系，串行生成，每次调整训练数据的样本分布</li>
-<li><strong>Bagging：</strong>个体学习器不存在强依赖关系，并行化生成，自助采样法</li>
+<h4 id="信息增益"><a class="markdownIt-Anchor" href="#信息增益"></a> 信息增益</h4>
+<p>信息熵 (entropy) 是度量样本集合“纯度”最常用的一种指标</p>
+<h4 id="信息增益率"><a class="markdownIt-Anchor" href="#信息增益率"></a> 信息增益率</h4>
+<h4 id="基尼系数"><a class="markdownIt-Anchor" href="#基尼系数"></a> 基尼系数</h4>
+<p>Gini(D) 越小，数据集D 的纯度越高</p>
+<h4 id="剪枝"><a class="markdownIt-Anchor" href="#剪枝"></a> 剪枝</h4>
+<p>剪枝方法和程度对决策树泛化性能的影响更为显著，<br />
+剪枝 (pruning) 是决策树对付“过拟合”的主要手段！</p>
+<h5 id="预剪枝"><a class="markdownIt-Anchor" href="#预剪枝"></a> 预剪枝</h5>
+<p>提前终止某些分支的生长。</p>
+<h5 id="后剪枝"><a class="markdownIt-Anchor" href="#后剪枝"></a> 后剪枝</h5>
+<p>生成一棵完全树，再“回头”剪枝，后剪枝 通常优于预剪枝。</p>
+<h4 id="处理连续值"><a class="markdownIt-Anchor" href="#处理连续值"></a> 处理连续值</h4>
+<p>二分法（bi-partition），n 个属性值形成 n-1 个候选划分。算每个划分的信息增益，选信息增益大的</p>
+<h4 id="处理缺失值"><a class="markdownIt-Anchor" href="#处理缺失值"></a> 处理缺失值</h4>
+<p>样本赋权，权重划分</p>
+<h4 id="6随机森林"><a class="markdownIt-Anchor" href="#6随机森林"></a> 6.随机森林</h4>
+<p>随机森林是一种集成学习（ensemble learning）方法，<br />
+集成学习通过构建并结合多个学习器来提升性能。</p>
+<h5 id="集成学习"><a class="markdownIt-Anchor" href="#集成学习"></a> 集成学习</h5>
+<ol>
+<li>**Boosting：**个体学习器存在强依赖关系，串行生成，每次调整训练数据的样本分布</li>
+<li>**Bagging：**个体学习器不存在强依赖关系，并行化生成，自助采样法</li>
 </ol>
-<h5 id="随机性"><a href="#随机性" class="headerlink" title="随机性"></a>随机性</h5><p>采样的随机性，属性选择的随机性</p>
-<h5 id="结合策略："><a href="#结合策略：" class="headerlink" title="结合策略："></a>结合策略：</h5><p>投票法，平均法</p>
-<h4 id="7-贝叶斯分类器"><a href="#7-贝叶斯分类器" class="headerlink" title="7.贝叶斯分类器"></a>7.贝叶斯分类器</h4><p>‌‌贝叶斯分类‌是一种基于‌贝叶斯定理的统计学分类方法，用于通过计算给定实例属于<br>某一特定类的概率来进行分类。贝叶斯分类算法利用概率统计知识进行分类，适用于大型数据库，<br>具有方法简单、分类准确率高、速度快的特点。‌</p>
-<p>$$P(c|X) &#x3D; \frac{P(c)P(X|c)}{P(X)}$$</p>
-<h5 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h5><p>直观上看，极大似然估计是试图在$\theta_c$所有可能的取值中，<br>找到一个使数据出现的“可能性”最大值。</p>
-<h5 id="朴素贝叶斯分类器"><a href="#朴素贝叶斯分类器" class="headerlink" title="朴素贝叶斯分类器"></a>朴素贝叶斯分类器</h5><p>$$P(c|x)&#x3D;\frac{P(c)P(x|c)}{P(x)}&#x3D;\frac{P(c)}{P(x)}\prod_{i&#x3D;1}^dP(x_i|c)$$<br>$$h_{nb}(x)&#x3D;argmaxP(c)\prod_{i&#x3D;1}^dP(x_i|c)$$<br>朴素贝叶斯分类器的训练器的训练过程就是基于<br>训练集D估计类先验概率P(c)，并为每个属性估计条件概率P(xi|c)。</p>
-<h5 id="拉普拉斯修正"><a href="#拉普拉斯修正" class="headerlink" title="拉普拉斯修正"></a>拉普拉斯修正</h5><p>若某个属性值在训练集中没有与某个类同时出现过，则直接计算会出现问题.<br> 因为训练集中没有该样例，因此连乘式计算的概率值为0，这显然不合理。<br>为了避免其他属性携带的信息被训练集中未出现的属性值“抹去<br>，在估计概率值时通常要进行“拉普拉斯修正。</p>
-<h5 id="半朴素贝叶斯"><a href="#半朴素贝叶斯" class="headerlink" title="半朴素贝叶斯"></a>半朴素贝叶斯</h5><h5 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h5><h2 id="无监督学习-1"><a href="#无监督学习-1" class="headerlink" title="无监督学习"></a>无监督学习</h2><p>‌无监督学习是一种机器学习算法，它<strong>不需要在已标记的</strong>数据上训练模型，<br>而是从数据中提取意义。</p>
-<h3 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h3><p>聚类在“无监督学习”任务中研究最多、应用最广<br>聚类目标：将数据集中的样本划分为若干个通常不相交的子集，<br>称为“簇”（cluster），每个簇可能对应一些潜在的概念。聚类既可以作为一个单独过程<br>（用于找寻数据内在的分布结构），也可作为分类等其他学习任务的前驱过程<br>（先通过聚类定义出类别，然后再基于这些类训练分类模型）</p>
-<h4 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h4><ul>
-<li><strong>外部指标：</strong>将聚类结果与某个“参考模型”进行比较。<ul>
+<h5 id="随机性"><a class="markdownIt-Anchor" href="#随机性"></a> 随机性</h5>
+<p>采样的随机性，属性选择的随机性</p>
+<h5 id="结合策略"><a class="markdownIt-Anchor" href="#结合策略"></a> 结合策略：</h5>
+<p>投票法，平均法</p>
+<h4 id="7贝叶斯分类器"><a class="markdownIt-Anchor" href="#7贝叶斯分类器"></a> 7.贝叶斯分类器</h4>
+<p>‌‌贝叶斯分类‌是一种基于‌贝叶斯定理的统计学分类方法，用于通过计算给定实例属于<br />
+某一特定类的概率来进行分类。贝叶斯分类算法利用概率统计知识进行分类，适用于大型数据库，<br />
+具有方法简单、分类准确率高、速度快的特点。‌</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mi mathvariant="normal">∣</mi><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mi mathvariant="normal">∣</mi><mi>c</mi><mo stretchy="false">)</mo></mrow><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(c|X) = \frac{P(c)P(X|c)}{P(X)}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mord">∣</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h5 id="极大似然估计"><a class="markdownIt-Anchor" href="#极大似然估计"></a> 极大似然估计</h5>
+<p>直观上看，极大似然估计是试图在<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\theta_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>所有可能的取值中，<br />
+找到一个使数据出现的“可能性”最大值。</p>
+<h5 id="朴素贝叶斯分类器"><a class="markdownIt-Anchor" href="#朴素贝叶斯分类器"></a> 朴素贝叶斯分类器</h5>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>c</mi><mo stretchy="false">)</mo></mrow><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo></mrow><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>d</mi></munderover><mi>P</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>c</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(c|x)=\frac{P(c)P(x|c)}{P(x)}=\frac{P(c)}{P(x)}\prod_{i=1}^dP(x_i|c)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.1137820000000005em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361130000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>h</mi><mrow><mi>n</mi><mi>b</mi></mrow></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>a</mi><mi>x</mi><mi>P</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>d</mi></munderover><mi>P</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>c</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h_{nb}(x)=argmaxP(c)\prod_{i=1}^dP(x_i|c)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.1137820000000005em;vertical-align:-1.277669em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361130000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span></span></p>
+<p>朴素贝叶斯分类器的训练器的训练过程就是基于<br />
+训练集D估计类先验概率P©，并为每个属性估计条件概率P(xi|c)。</p>
+<h5 id="拉普拉斯修正"><a class="markdownIt-Anchor" href="#拉普拉斯修正"></a> 拉普拉斯修正</h5>
+<p>若某个属性值在训练集中没有与某个类同时出现过，则直接计算会出现问题.<br />
+因为训练集中没有该样例，因此连乘式计算的概率值为0，这显然不合理。<br />
+为了避免其他属性携带的信息被训练集中未出现的属性值“抹去<br />
+，在估计概率值时通常要进行“拉普拉斯修正。</p>
+<h5 id="半朴素贝叶斯"><a class="markdownIt-Anchor" href="#半朴素贝叶斯"></a> 半朴素贝叶斯</h5>
+<h5 id="em算法"><a class="markdownIt-Anchor" href="#em算法"></a> EM算法</h5>
+<h2 id="无监督学习-2"><a class="markdownIt-Anchor" href="#无监督学习-2"></a> 无监督学习</h2>
+<p>‌无监督学习是一种机器学习算法，它<strong>不需要在已标记的</strong>数据上训练模型，<br />
+而是从数据中提取意义。</p>
+<h3 id="聚类"><a class="markdownIt-Anchor" href="#聚类"></a> 聚类</h3>
+<p>聚类在“无监督学习”任务中研究最多、应用最广<br />
+聚类目标：将数据集中的样本划分为若干个通常不相交的子集，<br />
+称为“簇”（cluster），每个簇可能对应一些潜在的概念。聚类既可以作为一个单独过程<br />
+（用于找寻数据内在的分布结构），也可作为分类等其他学习任务的前驱过程<br />
+（先通过聚类定义出类别，然后再基于这些类训练分类模型）</p>
+<h4 id="指标"><a class="markdownIt-Anchor" href="#指标"></a> 指标</h4>
+<ul>
+<li>**外部指标：**将聚类结果与某个“参考模型”进行比较。
+<ul>
 <li>Jaccard系数</li>
 <li>FM指数</li>
 <li>Rand指数</li>
 </ul>
 </li>
-<li><strong>内部指标：</strong>直接考察聚类结果而不用任何参考模型<ul>
+<li>**内部指标：**直接考察聚类结果而不用任何参考模型
+<ul>
 <li>簇C内样本间的平均距离</li>
 <li>簇C内样本间的最远距离</li>
 <li>簇Ci与簇Cj最近样本间的距离</li>
@@ -429,40 +549,95 @@
 </ul>
 </li>
 </ul>
-<h4 id="距离计算"><a href="#距离计算" class="headerlink" title="距离计算"></a>距离计算</h4><ul>
+<h4 id="距离计算"><a class="markdownIt-Anchor" href="#距离计算"></a> 距离计算</h4>
+<ul>
 <li>闵可夫斯基距离</li>
 <li>欧氏距离</li>
 <li>曼哈顿距离</li>
 </ul>
-<h4 id="1-K均值算法（k-means）"><a href="#1-K均值算法（k-means）" class="headerlink" title="1. K均值算法（k-means）"></a>1. K均值算法（k-means）</h4><p>给定数据集D，k均值算法针对聚类所得簇划分C最小化平方误差</p>
-<h4 id="2-学习向量化LVQ"><a href="#2-学习向量化LVQ" class="headerlink" title="2. 学习向量化LVQ"></a>2. 学习向量化LVQ</h4><p>LVQ假设数据样本带有类别标记，学习过程中利用样本的监督信息来辅助聚类。<br>LVQ通过聚类来实现类别子类结构，每个子类对应一个聚类簇</p>
-<h4 id="3-高斯混合聚类"><a href="#3-高斯混合聚类" class="headerlink" title="3. 高斯混合聚类"></a>3. 高斯混合聚类</h4><p>高斯混合（Mixture-of-Gaussian）聚类采用概率模型来表达聚类原型。</p>
-<h4 id="4-密度聚类-DBSCAN"><a href="#4-密度聚类-DBSCAN" class="headerlink" title="4. 密度聚类-DBSCAN"></a>4. 密度聚类-DBSCAN</h4><p>此类算法假设聚类结构能通过样本分布的紧密程度来确定。通常情况下，<br>密度聚类算法从样本密度的角度来考察样本之间的可连接性，<br>并基于可连接样本不断扩展聚类簇来获得最终的聚类结果。</p>
-<h4 id="5-层次聚类-ANGES算法"><a href="#5-层次聚类-ANGES算法" class="headerlink" title="5. 层次聚类-ANGES算法"></a>5. 层次聚类-ANGES算法</h4><p>层次聚类试图在不同层次对数据集进行划分，从而形成树形的聚类结构。<br>数据集划分既可采用“自底向上”的聚合策略，也可采用“自顶向下”的分拆策略。<br>首先，将样本中的每一个样本看做一个初始聚类簇；<br>然后，在算法运行的每一步中找出距离最近的两个聚类簇进行合并；<br>该过程不断重复，直到达到预设的聚类簇的个数。</p>
-<h3 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h3><p>数据在高维情形下出现的样本稀疏、距离计算困难等问题是<br>所有机器学习方法共同面临的严重障碍，被称为“维数灾难”<br>降维缓解维数灾难的一个重要途径，是指通过某种数学变换将原始高维属性空间转变<br>为一个低维“子空间”（subspace）。在这个子空间中，样本密度大幅提高，距离计算也变得更为容易。</p>
-<h4 id="1-多维缩放MDS"><a href="#1-多维缩放MDS" class="headerlink" title="1.多维缩放MDS"></a>1.多维缩放MDS</h4><p>若要求原始空间中样本之间的距离在低维空间中得以保持，即得到<strong>多维缩放</strong>。</p>
-<h4 id="2-线性降维"><a href="#2-线性降维" class="headerlink" title="2.线性降维"></a>2.线性降维</h4><p>一般来说，欲获得低维子空间，最简单的做法是对原始高维空间进行线性变换。</p>
-<h4 id="3-主成分分析PCA"><a href="#3-主成分分析PCA" class="headerlink" title="3.主成分分析PCA"></a>3.主成分分析PCA</h4><p>主成分分析（Principal Component Analysis），简称PCA，是一种极为常用的线性降维方法。</p>
-<h4 id="4-流形学习"><a href="#4-流形学习" class="headerlink" title="4.流形学习"></a>4.流形学习</h4><p>流形学习（manifold learning）是一类借鉴了拓扑流形概念的降维方法。</p>
-<h4 id="5-自编码器"><a href="#5-自编码器" class="headerlink" title="5.自编码器"></a>5.自编码器</h4><p>由于降维过程将较高维的输入特征映射为较低维的输入特征，<br>故可将其看作是一种数据压缩编码过程。自编码器是一类特殊的人工神经网络。<br>最基本的自编码器是一种<strong>前馈神经网络</strong>，其主要特点是输出层节点的数量等于输入层节点的数量，<br>并且最中间隐含层节点的数量通常小于输入层和输出层节点的数量。</p>
-<h2 id="半监督学习-1"><a href="#半监督学习-1" class="headerlink" title="半监督学习"></a>半监督学习</h2><p>‌半监督学习是机器学习中的一个重要分支，它结合了监督学习和无监督学习的特点。‌<br>半监督学习使用少量的标记数据和大量的未标记数据进行模型训练，<br>旨在通过挖掘未标记数据中的潜在信息和模式，提高学习的效率和准确性。</p>
-<h3 id="未标记样本假设"><a href="#未标记样本假设" class="headerlink" title="未标记样本假设"></a>未标记样本假设</h3><ul>
-<li><strong>聚类假设：</strong>假设数据存在簇结构，同一簇的样本属于同一类别。</li>
-<li><strong>流形假设：</strong>假设数据分布在一个流形结构上，邻近的样本具有相似的输出值。其适用范围比聚类假设更广。</li>
+<h4 id="1-k均值算法k-means"><a class="markdownIt-Anchor" href="#1-k均值算法k-means"></a> 1. K均值算法（k-means）</h4>
+<p>给定数据集D，k均值算法针对聚类所得簇划分C最小化平方误差</p>
+<h4 id="2-学习向量化lvq"><a class="markdownIt-Anchor" href="#2-学习向量化lvq"></a> 2. 学习向量化LVQ</h4>
+<p>LVQ假设数据样本带有类别标记，学习过程中利用样本的监督信息来辅助聚类。<br />
+LVQ通过聚类来实现类别子类结构，每个子类对应一个聚类簇</p>
+<h4 id="3-高斯混合聚类"><a class="markdownIt-Anchor" href="#3-高斯混合聚类"></a> 3. 高斯混合聚类</h4>
+<p>高斯混合（Mixture-of-Gaussian）聚类采用概率模型来表达聚类原型。</p>
+<h4 id="4-密度聚类-dbscan"><a class="markdownIt-Anchor" href="#4-密度聚类-dbscan"></a> 4. 密度聚类-DBSCAN</h4>
+<p>此类算法假设聚类结构能通过样本分布的紧密程度来确定。通常情况下，<br />
+密度聚类算法从样本密度的角度来考察样本之间的可连接性，<br />
+并基于可连接样本不断扩展聚类簇来获得最终的聚类结果。</p>
+<h4 id="5-层次聚类-anges算法"><a class="markdownIt-Anchor" href="#5-层次聚类-anges算法"></a> 5. 层次聚类-ANGES算法</h4>
+<p>层次聚类试图在不同层次对数据集进行划分，从而形成树形的聚类结构。<br />
+数据集划分既可采用“自底向上”的聚合策略，也可采用“自顶向下”的分拆策略。<br />
+首先，将样本中的每一个样本看做一个初始聚类簇；<br />
+然后，在算法运行的每一步中找出距离最近的两个聚类簇进行合并；<br />
+该过程不断重复，直到达到预设的聚类簇的个数。</p>
+<h3 id="降维"><a class="markdownIt-Anchor" href="#降维"></a> 降维</h3>
+<p>数据在高维情形下出现的样本稀疏、距离计算困难等问题是<br />
+所有机器学习方法共同面临的严重障碍，被称为“维数灾难”<br />
+降维缓解维数灾难的一个重要途径，是指通过某种数学变换将原始高维属性空间转变<br />
+为一个低维“子空间”（subspace）。在这个子空间中，样本密度大幅提高，距离计算也变得更为容易。</p>
+<h4 id="1多维缩放mds"><a class="markdownIt-Anchor" href="#1多维缩放mds"></a> 1.多维缩放MDS</h4>
+<p>若要求原始空间中样本之间的距离在低维空间中得以保持，即得到<strong>多维缩放</strong>。</p>
+<h4 id="2线性降维"><a class="markdownIt-Anchor" href="#2线性降维"></a> 2.线性降维</h4>
+<p>一般来说，欲获得低维子空间，最简单的做法是对原始高维空间进行线性变换。</p>
+<h4 id="3主成分分析pca"><a class="markdownIt-Anchor" href="#3主成分分析pca"></a> 3.主成分分析PCA</h4>
+<p>主成分分析（Principal Component Analysis），简称PCA，是一种极为常用的线性降维方法。</p>
+<h4 id="4流形学习"><a class="markdownIt-Anchor" href="#4流形学习"></a> 4.流形学习</h4>
+<p>流形学习（manifold learning）是一类借鉴了拓扑流形概念的降维方法。</p>
+<h4 id="5自编码器"><a class="markdownIt-Anchor" href="#5自编码器"></a> 5.自编码器</h4>
+<p>由于降维过程将较高维的输入特征映射为较低维的输入特征，<br />
+故可将其看作是一种数据压缩编码过程。自编码器是一类特殊的人工神经网络。<br />
+最基本的自编码器是一种<strong>前馈神经网络</strong>，其主要特点是输出层节点的数量等于输入层节点的数量，<br />
+并且最中间隐含层节点的数量通常小于输入层和输出层节点的数量。</p>
+<h2 id="半监督学习-2"><a class="markdownIt-Anchor" href="#半监督学习-2"></a> 半监督学习</h2>
+<p>‌半监督学习是机器学习中的一个重要分支，它结合了监督学习和无监督学习的特点。‌<br />
+半监督学习使用少量的标记数据和大量的未标记数据进行模型训练，<br />
+旨在通过挖掘未标记数据中的潜在信息和模式，提高学习的效率和准确性。</p>
+<h3 id="未标记样本假设"><a class="markdownIt-Anchor" href="#未标记样本假设"></a> 未标记样本假设</h3>
+<ul>
+<li>**聚类假设：**假设数据存在簇结构，同一簇的样本属于同一类别。</li>
+<li>**流形假设：**假设数据分布在一个流形结构上，邻近的样本具有相似的输出值。其适用范围比聚类假设更广。</li>
 </ul>
-<h3 id="1-主动学习"><a href="#1-主动学习" class="headerlink" title="1.主动学习"></a>1.主动学习</h3><p>在主动学习的过程中，由学习器挑选未标记样本，<br>并请求外界提供标记信息，进而将部分未标记样本转变为有标记样本。</p>
-<h3 id="2-生成式方法"><a href="#2-生成式方法" class="headerlink" title="2.生成式方法"></a>2.生成式方法</h3><p>生成式方法（generative methods）是直接基于生成式模型的方法。<br>由于存在未标记数据，通常可基于EM算法进行极大似然估计求解。</p>
-<h4 id="生成式方法-高斯混合模型"><a href="#生成式方法-高斯混合模型" class="headerlink" title="生成式方法-高斯混合模型"></a>生成式方法-高斯混合模型</h4><p>此类方法简单、易于实现，在有标记数据极少的情形下往往比其他方法性能更好。<br>然而，此类方法有一个关键：模型假设必须准确，即假设的生成式模型必须与真实数据分布吻合。</p>
-<h3 id="3-半监督SVM"><a href="#3-半监督SVM" class="headerlink" title="3.半监督SVM"></a>3.半监督SVM</h3><p>半监督支持向量机（Semi-Supervised Support Vector Machine，简称S3VM）<br>是SVM在半监督学习上的推广。在考虑未标记样本后，S3VM试图找到能将两类有标记样本分开，<br>且穿过数据低密度区域的划分超平面。</p>
-<h3 id="4-图半监督学习"><a href="#4-图半监督学习" class="headerlink" title="4.图半监督学习"></a>4.图半监督学习</h3><p>给定一个数据集，我们可将其映射为一个图，数据集中每个样本对应于图中一个结点，<br>若两个样本之间的相似度很高（或相关性很强）， 则对应的结点之间存在一条边，<br>边的“强度”（strength）正比于样本之间的相似度（或相关性）。<br>我们可将有标记样本所对应的结点想象为染过色，而未标记样本所对应的结点则尚未染色。<br>于是，半监督学习就对应于“颜色”在图上扩散或传播的过程。</p>
-<h3 id="5-基于分歧的方法"><a href="#5-基于分歧的方法" class="headerlink" title="5.基于分歧的方法"></a>5.基于分歧的方法</h3><p>基于分歧的方法使用多学习器,而学习器之间的“分歧”，对未标记数据的利用至关重要。<br>协同训练（co-training）是基于分歧的方法的重要代表。</p>
-<h4 id="协同训练算法"><a href="#协同训练算法" class="headerlink" title="协同训练算法"></a>协同训练算法</h4><p>是一种基于多视角学习的半监督学习方法，旨在利用未标记数据来提高模型的分类性能。<br>其基本原理是通过多个分类器（或称为视图）相互协作，<br>利用不同特征子集对数据进行训练和分类，从而提升整体的学习效果‌。</p>
-<h3 id="6-半监督聚类"><a href="#6-半监督聚类" class="headerlink" title="6. 半监督聚类"></a>6. 半监督聚类</h3><p>聚类是一种典型的无监督学习任务, 然而在现实聚类任务中我们往往能获得一些额外的监督信息,<br>于是可通过“<strong>半监督聚类</strong>”，来利用监督信息以获得更好的聚类效果。</p>
-<h5 id="聚类任务中获得的监督信息大致有两种类型："><a href="#聚类任务中获得的监督信息大致有两种类型：" class="headerlink" title="聚类任务中获得的监督信息大致有两种类型："></a>聚类任务中获得的监督信息大致有两种类型：</h5><ul>
-<li>第一种类型是“<strong>必连</strong>”与“<strong>勿连</strong>”约束，前者是指样本必属于同一个簇,<br>后者则是指样本必不属于同一个簇。</li>
+<h3 id="1主动学习"><a class="markdownIt-Anchor" href="#1主动学习"></a> 1.主动学习</h3>
+<p>在主动学习的过程中，由学习器挑选未标记样本，<br />
+并请求外界提供标记信息，进而将部分未标记样本转变为有标记样本。</p>
+<h3 id="2生成式方法"><a class="markdownIt-Anchor" href="#2生成式方法"></a> 2.生成式方法</h3>
+<p>生成式方法（generative methods）是直接基于生成式模型的方法。<br />
+由于存在未标记数据，通常可基于EM算法进行极大似然估计求解。</p>
+<h4 id="生成式方法-高斯混合模型"><a class="markdownIt-Anchor" href="#生成式方法-高斯混合模型"></a> 生成式方法-高斯混合模型</h4>
+<p>此类方法简单、易于实现，在有标记数据极少的情形下往往比其他方法性能更好。<br />
+然而，此类方法有一个关键：模型假设必须准确，即假设的生成式模型必须与真实数据分布吻合。</p>
+<h3 id="3半监督svm"><a class="markdownIt-Anchor" href="#3半监督svm"></a> 3.半监督SVM</h3>
+<p>半监督支持向量机（Semi-Supervised Support Vector Machine，简称S3VM）<br />
+是SVM在半监督学习上的推广。在考虑未标记样本后，S3VM试图找到能将两类有标记样本分开，<br />
+且穿过数据低密度区域的划分超平面。</p>
+<h3 id="4图半监督学习"><a class="markdownIt-Anchor" href="#4图半监督学习"></a> 4.图半监督学习</h3>
+<p>给定一个数据集，我们可将其映射为一个图，数据集中每个样本对应于图中一个结点，<br />
+若两个样本之间的相似度很高（或相关性很强）， 则对应的结点之间存在一条边，<br />
+边的“强度”（strength）正比于样本之间的相似度（或相关性）。<br />
+我们可将有标记样本所对应的结点想象为染过色，而未标记样本所对应的结点则尚未染色。<br />
+于是，半监督学习就对应于“颜色”在图上扩散或传播的过程。</p>
+<h3 id="5基于分歧的方法"><a class="markdownIt-Anchor" href="#5基于分歧的方法"></a> 5.基于分歧的方法</h3>
+<p>基于分歧的方法使用多学习器,而学习器之间的“分歧”，对未标记数据的利用至关重要。<br />
+协同训练（co-training）是基于分歧的方法的重要代表。</p>
+<h4 id="协同训练算法"><a class="markdownIt-Anchor" href="#协同训练算法"></a> 协同训练算法</h4>
+<p>是一种基于多视角学习的半监督学习方法，旨在利用未标记数据来提高模型的分类性能。<br />
+其基本原理是通过多个分类器（或称为视图）相互协作，<br />
+利用不同特征子集对数据进行训练和分类，从而提升整体的学习效果‌。</p>
+<h3 id="6-半监督聚类"><a class="markdownIt-Anchor" href="#6-半监督聚类"></a> 6. 半监督聚类</h3>
+<p>聚类是一种典型的无监督学习任务, 然而在现实聚类任务中我们往往能获得一些额外的监督信息,<br />
+于是可通过“<strong>半监督聚类</strong>”，来利用监督信息以获得更好的聚类效果。</p>
+<h5 id="聚类任务中获得的监督信息大致有两种类型"><a class="markdownIt-Anchor" href="#聚类任务中获得的监督信息大致有两种类型"></a> 聚类任务中获得的监督信息大致有两种类型：</h5>
+<ul>
+<li>第一种类型是“<strong>必连</strong>”与“<strong>勿连</strong>”约束，前者是指样本必属于同一个簇,<br />
+后者则是指样本必不属于同一个簇。</li>
 <li>第二种类型的监督信息则是少量的有标记样本。</li>
 </ul>
-<h4 id="约束k均值算法"><a href="#约束k均值算法" class="headerlink" title="约束k均值算法"></a>约束k均值算法</h4><p>少量有标记样本，即假设少量有标记样本属于k个聚类簇。<br>这样的监督信息利用起来很容易: 直接将它们作为“种子”, 用它们初始化k均值算法的k个聚类中心,<br>并且在聚类簇迭代更新过程中不改变种子样本的簇隶属关系. 这样就得到了约束种子k均值。</p>
+<h4 id="约束k均值算法"><a class="markdownIt-Anchor" href="#约束k均值算法"></a> 约束k均值算法</h4>
+<p>少量有标记样本，即假设少量有标记样本属于k个聚类簇。<br />
+这样的监督信息利用起来很容易: 直接将它们作为“种子”, 用它们初始化k均值算法的k个聚类中心,<br />
+并且在聚类簇迭代更新过程中不改变种子样本的簇隶属关系. 这样就得到了约束种子k均值。</p>
 
         
       </div>
