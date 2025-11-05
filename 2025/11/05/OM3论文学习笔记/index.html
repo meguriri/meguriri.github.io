@@ -27,22 +27,22 @@
 <meta property="og:site_name" content="cherry blessing">
 <meta property="og:description" content="OM3阅读笔记关键字渐进式可视化，交互式可视化，支持缩放，平移等操作，增量树，时间序列 问题背景几乎所有现有技术都需要将整个数据快速加载到客户端以实现高效渲染。然而，对于存储在远程数据库中的大型时间序列数据，延迟通常很高。这阻碍了在不同分辨率下对时序数据进行平滑的交互式探索。 减少延迟的方法： 数据降维：通过在可视化之前聚合数据以减小其大小。为了在降维过程中保留显著特征，已经提出了多种策略。然而，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251104201016981.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251104202211969.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251105170728537.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251105172237754.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251104202718600.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251105174828508.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251105182459625.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251106000339500.png">
-<meta property="og:image" content="https://meguriri.github.io/source/images/2025/11/image-20251105184603440.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251104201016981.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251104202211969.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105170728537.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105172237754.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251104202718600.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105174828508.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105182459625.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251106000339500.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/image-20251105184603440.png">
 <meta property="article:published_time" content="2025-11-05T13:48:57.000Z">
-<meta property="article:modified_time" content="2025-11-05T16:42:08.191Z">
+<meta property="article:modified_time" content="2025-11-05T16:45:21.199Z">
 <meta property="article:author" content="meguriri">
 <meta property="article:tag" content="可视化">
 <meta property="article:tag" content="渐进式查询">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://meguriri.github.io/source/images/2025/11/image-20251104201016981.png">
+<meta name="twitter:image" content="https://meguriri.github.io/images/2025/11/image-20251104201016981.png">
   
     <link rel="alternate" href="/atom.xml" title="cherry blessing" type="application/atom+xml">
   
@@ -162,13 +162,13 @@
     <div class="widget">
       <h3 class="widget-title">分类</h3>
       <div class="category-box">
-            <a class="category-link" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
-                论文笔记
+            <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">
+                工具
                 <div class="category-count">1</div>
             </a>
         
-            <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">
-                工具
+            <a class="category-link" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+                论文笔记
                 <div class="category-count">1</div>
             </a>
         
@@ -335,41 +335,41 @@
 </ul>
 <h3 id="本文实现："><a href="#本文实现：" class="headerlink" title="本文实现："></a>本文实现：</h3><p>OM3 是一种有序的多级最小-最大表示法。在每个时间间隔中维护最小值和最大值，这些值用于在显示窗口中以宽度为 2 的像素列中光栅化第 i 级（0 &lt; i &lt; ⌈log n⌉）的像素列。此外，它还跟踪叶级成对的最小值和最大值的时序顺序。为此，我们制定了前向 OM 变换，以递归地聚合不同时间间隔的不同分辨率的时间序列，构建通过聚合和差异获得的系数层次结构。<strong>本文适合均匀采样的时间序列。</strong></p>
 <h2 id="线段聚合"><a href="#线段聚合" class="headerlink" title="线段聚合"></a>线段聚合</h2><h3 id="定义1"><a href="#定义1" class="headerlink" title="定义1"></a>定义1</h3><h3 id="定义2"><a href="#定义2" class="headerlink" title="定义2"></a>定义2</h3><h3 id="定义3"><a href="#定义3" class="headerlink" title="定义3"></a>定义3</h3><h3 id="定义4"><a href="#定义4" class="headerlink" title="定义4"></a>定义4</h3><h3 id="定义5"><a href="#定义5" class="headerlink" title="定义5"></a>定义5</h3><h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>M4 在每个像素列中定位最大和最小时间戳的两个数据点以及最大和最小数据值的两个数据点。然后将这些点连接起来形成表示线形图的线段。图 1(c)显示了其结果。该结果与直接光栅化图 1(a)中显示的所有数据点产生的可视化完全匹配。然而，M4 形成的某些列间线段是冗余的（但虚线段是冗余且不必要的），对于生成无误差的可视化是不必要的。(b) 最小-最大聚合的可视化产生一个缺失像素；(d) 通过首先栅格化每个像素列中由最小-最大聚合结果定义的线（绿色），然后栅格化相邻像素列之间的必要列间线（L1，L2），所有像素都被正确设置。</p>
-<p><img src="/source/images/2025/11/image-20251104201016981.png" alt="image-20251104201016981"></p>
+<p><img src="/images/2025/11/image-20251104201016981.png" alt="image-20251104201016981"></p>
 <h2 id="系统图"><a href="#系统图" class="headerlink" title="系统图"></a>系统图</h2><h3 id="离线预处理"><a href="#离线预处理" class="headerlink" title="离线预处理"></a>离线预处理</h3><p>它由两个阶段组成：离线预处理和在线查询。离线预处理。应用 OM3 预处理程序将服务器上关系数据库中存储的每个时间序列通过正向变换转换为我们的 OM 3</p>
 <h3 id="在线查询"><a href="#在线查询" class="headerlink" title="在线查询"></a>在线查询</h3><p>一旦 OM 3可用，用户就可以在客户端通过从服务器检索必要的系数来交互式地探索数据，并通过逆变换重建原始数据记录。要从头开始生成可视化，服务器可以根据显示窗口的宽度和显示窗口中时间序列的可见时间范围自动生成查询语句来检索系数。然后，客户端从服务器接收系数流来生成可视化，同时将重建数据的 OM 3树作为缓存，以加速交互式探索期间后续的可视化生成。为了支持流畅的交互，服务器执行增量查询来按需请求数据，使客户端能够利用树层次结构平滑地平移、缩放、调整大小和查询时间序列。</p>
 <p>OM3 天生要求时间序列是完整的（即没有缺失值），并且长度是 2 的幂。它还要求窗口宽度是 2 的幂。然而，在交互式数据探索过程中，这些要求对于一般时间序列数据都无法保证。因此，我们进一步<strong>扩展 OM3</strong> 来解决这些问题。</p>
-<p><img src="/source/images/2025/11/image-20251104202211969.png" alt="image-20251104202211969"></p>
+<p><img src="/images/2025/11/image-20251104202211969.png" alt="image-20251104202211969"></p>
 <h2 id="OM3变换"><a href="#OM3变换" class="headerlink" title="OM3变换"></a>OM3变换</h2><p>给定长度n为2的时间序列T，通过两种操作获得分层的线段聚合：</p>
 <ul>
 <li>分层min-max聚合：构造min-max线段</li>
 <li>在最细粒度层对min-max结果的排序：构造像素列间的线段</li>
 </ul>
 <h3 id="前向变换"><a href="#前向变换" class="headerlink" title="前向变换"></a>前向变换</h3><p>首先把长度为n每个时间序列的数据复制一份（为了确保min-max准确无误），然后得到A4i，A4i+1，A4i+2，A4i+3 其中0&lt;&#x3D;i&lt;n&#x2F;2。 这是第j&#x3D;logn层的数据。接着生成j-1层的数据。使用如下的策略：</p>
-<p>​	<img src="/source/images/2025/11/image-20251105170728537.png" alt="image-20251105170728537"></p>
+<p>​	<img src="/images/2025/11/image-20251105170728537.png" alt="image-20251105170728537"></p>
 <p>接着计算差分值，这个有助于判断min-max的位置。也就是D</p>
 <p>以min举例如果D值是个正数，说明这个min值在4i+2的位置，另一个为min+D在4i的位置，同理max的话如果D是正数，说明max值在4i+1的位置，另一个值为max-D在4i+3的位置。</p>
 <p>递归的向上建立树。直到第0层。接下来就可以把他们呢存储在数据库的表中，由于差分值的存在，只需要存第0层的A0和A1与所有的差分值就可以重建这个树。注意，到第logn-1层的时候其实就已经可以得到数据了，因为logn层为每个数据复制一次的。现在有一个问题就是，不知道logn-1层的顺序，因为min和max都是从i和i+1中选的数，因此数据库中还有一个表记录他们的顺序。false代表顺序是反的，true代表顺序是对的。因此只需要n+n&#x2F;2的数据表大小的数据就可以把数据存储起来，而原始数据每个点需要存ti和vi，这是2n的大小。存储的系数大小大约是原来的3&#x2F;4。</p>
 <h3 id="逆向变换"><a href="#逆向变换" class="headerlink" title="逆向变换"></a>逆向变换</h3><p>如下面所示，如果D是负数，说明A4i小于A4i+2，那么min应该是A4i，也就是A2i&#x3D;A4i，</p>
 <p>D为正数，则A4i大于A4i+2，则min应该是A4i+2，也就是A2i &#x3D; A4i+2。</p>
-<p><img src="/source/images/2025/11/image-20251105172237754.png" alt="image-20251105172237754"></p>
+<p><img src="/images/2025/11/image-20251105172237754.png" alt="image-20251105172237754"></p>
 <p>同样可以分析max，也就是A4i+1和A4i+3，重建后可以直接得到每个像素内的min max点并渲染。（d）为2像素宽度的，对应第1层；（e）为4像素宽度的，对应第2层。可以看到这些线段并不是连接在一起的，因为min-maxj聚合无法确认一些列间像素。</p>
-<p><img src="/source/images/2025/11/image-20251104202718600.png" alt="image-20251104202718600"></p>
+<p><img src="/images/2025/11/image-20251104202718600.png" alt="image-20251104202718600"></p>
 <h3 id="非规范数据的转换"><a href="#非规范数据的转换" class="headerlink" title="非规范数据的转换"></a>非规范数据的转换</h3><p>上述的条件都要求时序数据长度为2的幂。当有缺失值或者长度不是的情况下，可以用估计值或者0填充将其长度扩展到幂次方。然而，值填充和零填充会影响最小值和最大值的计算，从而阻碍 OM3 变换。为每个节点分配一个id。当有空子节点的时候，我们把D分配为[0,null]或[null,0]，null的位置表示null在左子节点还是右子节点。如果两个子节点都为null，则定义该节点也为空，空的节点不会存储在数据库中。因此数据库中的表的id可能是不连续的。对于判断顺序的表，从一个bool值改成用一个2bit的结构去表示。（0,0）表示false，（1,1）表示true，(0,1)表示左边的是null，(1,0)表示右边的是空，null表示两边都是空。</p>
-<p><img src="/source/images/2025/11/image-20251105174828508.png" alt="image-20251105174828508"></p>
+<p><img src="/images/2025/11/image-20251105174828508.png" alt="image-20251105174828508"></p>
 <h2 id="增量树的查询"><a href="#增量树的查询" class="headerlink" title="增量树的查询"></a>增量树的查询</h2><p>为了让OM3适应任意的大小，而不局限于像素列为2的幂。一种简单的想法是渲染更细的聚合，然后在重建到对应的窗口上，比如需要6列的，就建8列的，然后再渲染到6列上。而，这种方法可能会在生成的可视化中遗漏一些像素。图a显示，一个3列的窗口，构造了四列但是渲染到3列，可以看到遗漏列3个像素的内容。因为四像素宽的线形图没有为三像素宽的窗口提供适当的数据样本，尤其是在像素-列边界附近。此外，当使用正确的min-max系数时，只有一些像素被遗漏（参见图 3(d,e)）。可以通过一些列间线来恢复这些像素。</p>
-<p><img src="/source/images/2025/11/image-20251105182459625.png" alt="image-20251105182459625"></p>
+<p><img src="/images/2025/11/image-20251105182459625.png" alt="image-20251105182459625"></p>
 <h3 id="两步增量查询"><a href="#两步增量查询" class="headerlink" title="两步增量查询"></a>两步增量查询</h3><p>假设显示窗口的宽度 w 在某个正整数 p 的范围内为[2^p-1, 2^p]，我们首先从服务器数据库中检索宽度为 2^p 的窗口的系数，并通过逆变换重建 2^p 个数据点。在进行此两步查询之前，首先将服务器的全部排序系数发送到客户端。通过在目标窗口的每个像素列中查找最小和最大数据值，并在单个查询中获取不可或缺的列间样本，可以获得精确的聚合结果，以生成无错误的可视化。</p>
 <p>然而，遍历系数树直到叶节点并从服务器传输所有信息会导致计算时间和网络带宽的额外成本。 此外，一些列间线是不必要的，如定理 1 所示。</p>
 <h3 id="剪枝策略的广度优先搜索方法"><a href="#剪枝策略的广度优先搜索方法" class="headerlink" title="剪枝策略的广度优先搜索方法"></a>剪枝策略的广度优先搜索方法</h3><p>​	为了避免穷举树遍历，引入了一种带有效剪枝策略的广度优先搜索方法，以避免不必要的遍历。在遍历每一层时，初始化一个空列表 B 来存储那些包含靠近相邻像素列边界的数据点的边界节点。然后，对于每个节点，我们检查其时间范围与目标窗口中附近像素列的时间范围。如果一个节点的时间范围完全位于某个像素列的时间范围内，该节点本身就可以为更新像素列的数据值范围（即[vmin, vmax]）提供适当的信息，因此不需要进一步访问其子节点来探索更细粒度的时间范围。否则，我们将它添加到列表 B 中。</p>
 <p>​	对于大于 p 层的边界节点，如果其数据值范围已经被当前两个相关像素列的数据范围所覆盖，将其从 B 中移除。一旦所有节点都被检查完毕，加载 B 中所有剩余节点的系数，并在下一层重建相应的数据点。 通过剪枝策略逐层递归地仅访问必要的子节点，可以高效地找到目标窗口中每个像素列的数据值范围，并通过相关像素列的数据值范围对内部列像素进行光栅化。</p>
 <p>​	在最后一层，光栅化所有内部列像素以及由从 B 和 O 收集的有序边界样本定义的列间像素。通过这种方式，实现了渐进式可视化，其中可视化可以在逐层遍历时逐步细化。</p>
-<p><img src="/source/images/2025/11/image-20251106000339500.png" alt="image-20251106000339500"></p>
+<p><img src="/images/2025/11/image-20251106000339500.png" alt="image-20251106000339500"></p>
 <p>​	以图 5(c)中的节点[12, 20]为例。其时间范围[0, 15]完全落在目标三像素宽窗口中第一像素列的时间范围[0, 21]内，因此我们无需访问其子节点，可以将第一像素列的数据值范围（最小值和最大值）初始化为[12, 20]；参见图 5(d)中第 2 层结果的左侧列。</p>
 <p>​	对于节点[6, 28]，其时间范围[16, 31]与目标窗口中的前两像素列重叠，因此我们将其添加到边界节点列表中，并在第 3 层访问其子节点[7, 19]（时间范围[16, 23]）和[6, 28]（时间范围[24, 31]）。之后，对于第 4 层的节点[14, 17]，其值范围被相邻的两个像素列[7, 20]和[6, 29]的值范围所覆盖，因此我们无需访问其子节点。</p>
 <p>​	对于某些像素列，仅考虑每个像素列可能不足以精确地光栅化其像素。例如，叶节点[14, 22]（时间范围[42, 43]）跨越了第二个像素列（时间范围[22, 42]）和第三个像素列（时间范围[43, 63]），形成了一条不可或缺的列间线（见图 5(b)中高亮部分）。因此，将它放入边界节点列表，并将其数据点连接起来，以光栅化第 5 级结果中第 3 列的底部灰度像素（见图 5(d)）。</p>
 <p>​	图 5(b)显示了穷举树遍历的情况，一次性加载所有边界节点的相关系数。图 5(c)显示了系数树中需要通过我们的剪枝策略访问的节点，图 5(d)显示了如何逐步更新每个像素列的数据值范围和光栅化（灰度像素）。请注意，剪枝策略仅搜索必要的值，正如在定理 1 中所描述的，并自动跳过值范围同时被相应连续组覆盖的列间样本。由于相邻像素列的值范围相互依赖，顺序剪除节点。</p>
-<p><img src="/source/images/2025/11/image-20251105184603440.png" alt="image-20251105184603440"></p>
+<p><img src="/images/2025/11/image-20251105184603440.png" alt="image-20251105184603440"></p>
 <h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><p>给定一个宽度为 w 的窗口，在最坏情况下，需要遍历所有边界节点，因此时间复杂度为 O(w log(n))。OM3大部分查询可以提前终止，无论时间序列的长度如何，因此时间复杂度接近 O(w)。</p>
 <h2 id="额外的加速策略"><a href="#额外的加速策略" class="headerlink" title="额外的加速策略"></a>额外的加速策略</h2><p>系数存储在数据表中为：（id，minc，maxc）,对于宽度w ∈ [2^p-1, 2^p]的窗口，其中 p 是一个正整数，我们只需通过执行以下查询来加载 p-1 级别的系数：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> minc, maxc <span class="keyword">where</span> [id<span class="operator">&gt;=</span> start_id <span class="keyword">and</span> index<span class="operator">&lt;=</span> end_id].</span><br></pre></td></tr></table></figure>
