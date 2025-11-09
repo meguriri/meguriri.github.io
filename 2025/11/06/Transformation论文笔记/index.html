@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>Visualization-Oriented Progressive Time Series Transformation论文笔记 | cherry blessing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="关键字渐进式可视化，交互式可视化，查询优化，时间序列 问题背景在很多场景（金融、交通、制造等）中，我们都会有海量时间序列数据。 分析者往往要做一些点对点的变换（point-wise transformation），比如：  单序列操作：对每个时间点取对数、标准化； 跨序列操作：两个时间序列相减，看它们的差； 聚合操作：计算累积收益（如股票例子）。  这些变换之后还要马上可视化来观察趋势。但是数据太">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Visualization-Oriented Progressive Time Series Transformation论文笔记">
+<meta property="og:url" content="https://meguriri.github.io/2025/11/06/Transformation%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="cherry blessing">
+<meta property="og:description" content="关键字渐进式可视化，交互式可视化，查询优化，时间序列 问题背景在很多场景（金融、交通、制造等）中，我们都会有海量时间序列数据。 分析者往往要做一些点对点的变换（point-wise transformation），比如：  单序列操作：对每个时间点取对数、标准化； 跨序列操作：两个时间序列相减，看它们的差； 聚合操作：计算累积收益（如股票例子）。  这些变换之后还要马上可视化来观察趋势。但是数据太">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-081.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-082.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-083.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-084.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-085.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-086.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-087.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-091.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-092.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-093.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-094.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-095.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-096.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-097.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-098.png">
+<meta property="og:image" content="https://meguriri.github.io/images/2025/11/2025-11-099.png">
+<meta property="article:published_time" content="2025-11-06T10:47:40.000Z">
+<meta property="article:modified_time" content="2025-11-09T11:42:02.501Z">
+<meta property="article:author" content="meguriri">
+<meta property="article:tag" content="可视化">
+<meta property="article:tag" content="渐进式查询">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://meguriri.github.io/images/2025/11/2025-11-081.png">
+  
+    <link rel="alternate" href="/atom.xml" title="cherry blessing" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/banner.png" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>cherry blessing </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS 订阅">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS 订阅">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/meguriri.png></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">meguriri </div>
+      <div class="dot"></div>
+      <div class="subtitle">Blessing SoftWare🌸 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://steamcommunity.com/profiles/76561198147007541/" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/meguriri" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">分类</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">
+                工具
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+                论文笔记
+                <div class="category-count">2</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">
+                分布式系统
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                机器学习
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">
+                测试
+                <div class="category-count">1</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">标签</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/code/" rel="tag">code</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">可视化</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">复习笔记</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%B8%90%E8%BF%9B%E5%BC%8F%E6%9F%A5%E8%AF%A2/" rel="tag">渐进式查询</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">归档</h3>
+      
+      
+        <a class="archive-link" href="/archives/2025/11 ">
+          十一月 2025 
+          <div class="archive-count">3 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/11 ">
+          十一月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/09 ">
+          九月 2024 
+          <div class="archive-count">2 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/05 ">
+          五月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/04 ">
+          四月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">最新文章</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2025/11/06/Transformation%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="Visualization-Oriented Progressive Time Series Transformation论文笔记" >
+            <div class="recent-link-text">
+              Visualization-Oriented Progressive Time Series Transformation论文笔记
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2025/11/06/Series/" title="Series" >
+            <div class="recent-link-text">
+              Series
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2025/11/05/OM3%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="OM3论文学习笔记" >
+            <div class="recent-link-text">
+              OM3论文学习笔记
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/11/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="机器学习复习笔记" >
+            <div class="recent-link-text">
+              机器学习复习笔记
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/09/10/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/" title="二阶段提交" >
+            <div class="recent-link-text">
+              二阶段提交
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-Transformation论文笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        Visualization-Oriented Progressive Time Series Transformation论文笔记
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2025-11-06T10:47:40.000Z" itemprop="datePublished">2025-11-06</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            7.8k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">可视化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B8%90%E8%BF%9B%E5%BC%8F%E6%9F%A5%E8%AF%A2/" rel="tag">渐进式查询</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>渐进式可视化，交互式可视化，查询优化，时间序列</p>
+<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在很多场景（金融、交通、制造等）中，我们都会有<strong>海量时间序列数据</strong>。</p>
+<p>分析者往往要做一些<strong>点对点的变换（point-wise transformation）</strong>，比如：</p>
+<ul>
+<li>单序列操作：对每个时间点取对数、标准化；</li>
+<li>跨序列操作：两个时间序列相减，看它们的差；</li>
+<li>聚合操作：计算累积收益（如股票例子）。</li>
+</ul>
+<p>这些变换之后还要马上可视化来观察趋势。但是<strong>数据太大（百万甚至十亿级），每次完整计算变换都非常耗时；</strong> <strong>而可视分析要求实时交互</strong>（几百毫秒内响应）。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="可视化驱动的聚合方法：M4，OM3等"><a href="#可视化驱动的聚合方法：M4，OM3等" class="headerlink" title="可视化驱动的聚合方法：M4，OM3等"></a>可视化驱动的聚合方法：M4，OM3等</h3><ul>
+<li>原理：图像是由像素组成的，比如一张 1000 像素宽的图，就算原数据有 1 亿点，也只需要每个像素列里能代表形状的极值（最小值、最大值、起点、终点）。</li>
+<li>这样就能快速画出「完全一致」的图形，不用处理全部数据。</li>
+</ul>
+<p><strong>问题</strong>：</p>
+<p>它们只能用于原始时间序列，无法处理变换后的时间序列。这类方法必须先算出变换后的完整数据，才能再聚合绘图，复杂度O(n)，仍然慢。当需要可视化转换后的时间序列时，它们在渲染之前需要完整的转换结果。因此，用户必须等待昂贵的计算完成才能获得任何可视化洞察。</p>
+<h3 id="2-渐进式可视分析（Progressive-Visual-Analytics-PVA）"><a href="#2-渐进式可视分析（Progressive-Visual-Analytics-PVA）" class="headerlink" title="2. 渐进式可视分析（Progressive Visual Analytics, PVA）"></a><strong>2.</strong> 渐进式可视分析（Progressive Visual Analytics, PVA）</h3><ul>
+<li>这类方法会<strong>逐步生成部分结果</strong>，让用户先看到大致趋势。</li>
+<li>常用于聚合查询（SUM、AVG）等。</li>
+</ul>
+<p><strong>问题</strong>：</p>
+<p>这些方法不适合<strong>点对点变换</strong>，因为要高精度还得遍历全数据。所以仍然算得慢。</p>
+<h2 id="问题公理化"><a href="#问题公理化" class="headerlink" title="问题公理化"></a>问题公理化</h2><p>设 X &#x3D; {𝑋1, . . . , 𝑋m} 为一个多元时间序列数据集，其中每个时间序列 𝑋 包含 𝑛 个元素，且 𝑋i[𝑡] 表示 𝑋 i在时间戳 𝑡 的值。交互式可视化分析通常涉及对一个或多个时间序列属性应用逐点转换，其中转换在每个时间戳处独立计算：𝑌 [𝑡] &#x3D; 𝑓 (𝑋𝑖 [𝑡], 𝑋𝑗 [𝑡], . . . , 𝑋𝑘 [𝑡]),时间序列 𝑌 通常在宽度为 𝑤 和高度为 ℎ 的画布上渲染为折线图，其中每个点 (𝑡, 𝑌 [𝑡]) 被映射到画布坐标。</p>
+<p><img src="/images/2025/11/2025-11-081.png" alt="image-20251108154613676"></p>
+<h3 id="问题1-无误差可视化"><a href="#问题1-无误差可视化" class="headerlink" title="问题1 无误差可视化"></a>问题1 无误差可视化</h3><p>给定一个多元时间序列数据集 X 和一个变换函数 𝑓 : X → 𝑌 ，设计一个查询机制 𝑄 ，该机制选择一个子集 𝑄 (X) ⊆ X ，使得渲染的可视化满足对于任何画布分辨率，都有 V(𝑓 (𝑄 (X))) &#x3D; V(𝑓 (X)) ，其中 V 表示光栅化。说白了，就是给一组数据集X，找一个子集Q(X) 让他们在光栅化后屏幕显示效果是等价的。</p>
+<p>但这是理想的，大部分早期的可视化反馈，具有有界感知误差的近似可视化是可以接受的。</p>
+<h3 id="问题2-近似可视化（有界误差可视化）"><a href="#问题2-近似可视化（有界误差可视化）" class="headerlink" title="问题2 近似可视化（有界误差可视化）"></a>问题2 近似可视化（有界误差可视化）</h3><p>给定一个多元时间序列数据集 X，一个函数𝑓 : X → 𝑌 ，以及用户定义的像素误差阈值𝜏，设计一个查询机制𝑄，该机制逐步细化一个子集𝑄 (X)，使得可视化 V(𝑓 (𝑄 (X)))的像素误差率上限𝜀满足𝜀 ≤ 𝜏。</p>
+<h2 id="TAT-时间序列聚合树"><a href="#TAT-时间序列聚合树" class="headerlink" title="TAT 时间序列聚合树"></a>TAT 时间序列聚合树</h2><p>如果𝑓(x)是单调函数，那么可以利用之前的方法，因为所有值的相对位置是一样的或者反转的。像素列中 𝑓 (𝑋) 的最小值和最大值可以直接从原始序列 𝑋 的最小值和最大值中得出。同样，每个像素列中 𝑓 (𝑋) 的第一个值和最后一个值由 𝑋 的第一个值和最后一个值决定。因此，在 𝑓 (𝑋) 的可视化中光栅化的像素完全由 𝑋 的 M4 聚合样本决定。比如𝑓(x) &#x3D; lnx。但是如果𝑓(x) 不是单调的，比如𝑓(x)  &#x3D; xsinx，那么M4的聚合值就没有意义了。</p>
+<p><img src="/images/2025/11/2025-11-082.png" alt="image-20251108160952499"></p>
+<p>与其在原始序列上操作，本论文构建了一个分层数据结构时间序列聚合树（TAT）</p>
+<p>一个完整的 TAT 是一个完全二叉树，其中每个节点都与以下属性相关联：</p>
+<ul>
+<li>Id 唯一标识节点，从上到下的索引</li>
+<li>⟨𝑡start, 𝑡end⟩：节点所表示区间的开始&#x2F;结束时间戳。</li>
+<li>𝑥min, 𝑥max: 节点区间内观察到的最小&#x2F;最大值。</li>
+</ul>
+<p>底层为原始时间序列，每个数据点是叶节点。在构建 TAT 之前，通过添加空值将叶节点数量填充到下一个 2 的幂次方。</p>
+<p><img src="/images/2025/11/2025-11-083.png" alt="image-20251108161316817"></p>
+<p>对于任何父节点𝑝，其时间和值范围是从其两个子节点𝑐<em>l</em>和𝑐<em>r</em>递归计算得出的：</p>
+<p>​	<img src="/images/2025/11/2025-11-084.png" alt="image-20251108161901623"></p>
+<p>由于时间序列数据是有序的，𝑝.𝑡start必须等于𝑐l.𝑡start，且𝑝.𝑡end必须等于𝑐r.𝑡end。相比之下，𝑝.𝑥min和𝑝.𝑥max是通过从两个子节点中取最小值和最大值来计算的。</p>
+<p><strong>定理 1</strong>：对于一个在给定域内有界的函数，父节点𝑝的子域中的最小值总是小于或等于其子节点𝑐l和𝑐r的子域中的最小值。类似地，𝑝的最大值总是大于或等于𝑐l和𝑐r的最大值。</p>
+<p><strong>证明：</strong></p>
+<p>TAT 的一个基本性质是父节点𝑝与其子节点𝑐和𝑐之间的最小值和最大值的传递性：</p>
+<p><img src="/images/2025/11/2025-11-085.png" alt="image-20251108164230062"></p>
+<p>对于有界函数𝑓，在区间[𝑝.𝑥<em>min</em>, 𝑝.𝑥𝑚𝑎𝑥]内存在最小值𝑠&#x3D; 𝑓 ( ˆ𝑥)。如果ˆ𝑥在[𝑐l.𝑥<em>min</em>, 𝑐l.𝑥𝑚𝑎𝑥]内，那么𝑠𝑚𝑖𝑛也是这个区间的最小值。此外，由于[𝑐r、.𝑥min, 𝑐r.𝑥max] ⊆ [𝑝.𝑥min, 𝑝.𝑥max]，𝑠min必须小于或等于[𝑐r.𝑥min, 𝑐r.𝑥max]内的最小值。类似地，如果ˆ𝑥在[𝑐r.𝑥min, 𝑐r.𝑥max]内，那么𝑠min是这个区间的最小值，并且必须小于或等于[𝑐l.𝑥min, 𝑐l.𝑥max]内的最小值。最大值也满足相同的关系。</p>
+<p>因此，对于任何在 TAT 定义域内有界的函数𝑓，以下传递关系成立：</p>
+<p><img src="/images/2025/11/2025-11-086.png" alt="image-20251108162300296"></p>
+<p>当函数 𝑓 应用于多个对齐的时间序列时，𝑝 代表在不同 TATs 中具有相同 ID 的一组节点，𝑐l 和 𝑐r 也同样适用。 基于该定理，如果将 𝑓 应用于节点 𝑝 不会得到当前像素列中的最小值或最大值，则可以剪除节点 𝑐 l和 𝑐r。</p>
+<p>例如，在图 d 中，上面是x1，下面是x2，𝑓 (𝑥) &#x3D; x1-x2，值范围为 [6, 10] 和 [0, 1] 的右子节点被跳过，因为左子节点产生的函数值分别为 7 − 4 &#x3D; 3 和 8 − (−3) &#x3D; 11，这些值超出了右子节点的可能函数值范围。此外，我们利用该定理来计算每个节点的理论下界和上界，这指导了查询处理过程中的遍历顺序。如果 𝑓 在定义域上可微，根据费马定理，定义域内的最小值和最大值要么出现在定义域的边界上，要么出现在驻点处，即𝑓’ (𝑥) &#x3D; 0。通过预先计算这些驻点处的函数值，我们可以在遍历过程中减少对𝑓的冗余评估，从而提高整体效率。</p>
+<p><img src="/images/2025/11/2025-11-087.png" alt="image-20251108165447739"></p>
+<p>然而，这个定理不适用于无界函数，在这些函数中，基于节点值𝑥和𝑥定义的闭区间无法计算理论上的下界和上界。例如，函数𝑓 (𝑥1, 𝑥2) &#x3D; 𝑥1&#x2F;𝑥2在𝑥2 &#x3D; 0 处趋近于无穷大，当𝑥min&lt; 0 和𝑥max&gt; 0 时，边界变得无定义。</p>
+<p>虽然 TAT 可以通过使用节点的开始和结束时间戳作为查询条件，并应用“MIN()”和“MAX()”等聚合函数来计算其值范围，通过范围查询动态构建，但这种方法存在一些局限性。对于无序时间序列数据，每次范围扫描的时间复杂度为𝑂 (𝑛)，导致构建效率低下。此外，它导致父节点和子节点之间存在冗余计算，因为在构建父节点时，为子区间计算的最小值和最大值会被丢弃并重新计算。完全实现树结构也会导致显著的存储开销，需要大约 2𝑛 的空间。</p>
+<h2 id="PIVOT"><a href="#PIVOT" class="headerlink" title="PIVOT"></a>PIVOT</h2><p>PIVOT 建立在 TAT 之上，TAT 是在服务器上运行时构建的层次结构。通过避免重复的全数据扫描，PIVOT 支持高效的复用，并在交互过程中支持 TAT 的动态更新。系统遵循客户端-服务器模型，分为两个阶段：离线预处理和在线查询。</p>
+<p><img src="/images/2025/11/2025-11-091.png" alt="image-20251109150159239"></p>
+<h3 id="离线预处理"><a href="#离线预处理" class="headerlink" title="离线预处理"></a>离线预处理</h3><p> OM3 预处理器将每个时间序列通过正向变换转换为有序的多级最小-最大系数树。通过使用 ALP 算法压缩细节系数来减少存储量，该算法也被 DuckDB采用。</p>
+<h3 id="在线查询"><a href="#在线查询" class="headerlink" title="在线查询"></a>在线查询</h3><p>PIVOT 使用可视化参数（例如画布宽度𝑤、高度ℎ、时间范围⟨𝑡start, 𝑡end⟩以及用户指定的分析函数𝑓，从预计算的 OM3系数中重建关键的 TAT 节点，一旦获取必要的系数，它们将被解压缩并反转，通过逆变换恢复原始值。然后PIVOT 在服务器上应用请求的逐点变换。并按像素列聚合结果，然后逐步将其传输到客户端。为了保持交互式性能，PIVOT 会按需增量查询节点，以便用户可以无缝地平移、缩放、调整大小或以其他方式浏览数据。</p>
+<p>在查询执行过程中，PIVOT 动态构建部分 TAT 以快速访问相关的转换样本。通过执行基于树的转换感知查询，PIVOT 选择性地检索每个像素列中关于函数𝑓可能包含感知重要样本的 TAT 节点。TAT 中的每个非叶节点携带两个分数：其定义域上的理论最小值和最大函数值。叶节点存储𝑌中的实际函数值。这些分数指导查询到下一个感兴趣的节点，而分数和叶节点值共同决定查询过程何时停止。如后续章节所述，我们的转换感知查询逐步收集用于无错误和有错误限制可视化的所需聚合函数值𝑌k,start, 𝑌k,end, 𝑌k,min, 𝑌k,max。</p>
+<h2 id="使用TAT的转换感知查询"><a href="#使用TAT的转换感知查询" class="headerlink" title="使用TAT的转换感知查询"></a>使用TAT的转换感知查询</h2><p>对于一个宽度为w的显示窗口，服务器通过执行转换查询机制Q来处理请求，这个机制包含三个阶段：</p>
+<ol>
+<li>识别每个像素列的边界点</li>
+<li>对当前TAT结构中的节点进行评分</li>
+<li>执行DFS来查询和插入所需的为节点</li>
+</ol>
+<h3 id="识别边界"><a href="#识别边界" class="headerlink" title="识别边界"></a>识别边界</h3><p>服务器用画布宽度w和时间范围tstart,tend识别每个像素列k的边界时间戳对应的TAT节点：</p>
+<p><img src="/images/2025/11/2025-11-092.png" alt="image-20251109152359826"></p>
+<p>其中，𝛿 &#x3D;( tend-tstart)&#x2F;w（每个时间区间的时间长度）。由于TAT是一个完全二叉树，节点ID可以通过时间戳唯一确定，这使得边界节点的检测既是确定的也是准确的。对于这些时间戳在所有层级的相关节点 ID 被合并为一个查询，排除全局𝑡start和𝑡end，因为它们不会对列间线的生成做出贡献。从检索到的节点中，服务器为输入多变量数据集中的每个属性对应的时间序列构建一个部分 TAT。由于父节点的两个子节点是同时重建的，因此区分了两种类型的节点：<strong>包含至少一个边界时间戳（𝑡k,start或𝑡k,end）的节点被定义为边界节点</strong>，而覆盖列内时间戳的其余节点被称为列内节点。</p>
+<p>边界节点可以是叶节点，对应位于像素列边界的数据点。例如，在图 5a 中，一个w为3的画布上，边界值为：[0,20],[21,41],[42,62] 所有用红色轮廓线标出的检索到的节点都是在这一阶段构建的。其中，红色虚线框表示边界节点，具有时间戳 21 的最低节点是叶节点，对应于像素列𝐶1的最后一个数据点。</p>
+<p><img src="/images/2025/11/2025-11-093.png" alt="image-20251109153753585"></p>
+<p>在设计上，本阶段获得的内部列节点精确地覆盖了边界之间的时间间隔。因此，识别出的节点不仅足以推导出 𝑥 k,start和 𝑥k,end，还足以为每个像素列推导出 𝑥k,min 和 𝑥k,max。它们共同足以实现输入时间序列的无误差可视化。然而，与 OM3 不同，OM3 在某些边界节点值范围完全包含在相邻像素列范围的重叠区域内时会剪除这些边界节点时，我们保留所有边界叶节点，以确保所有列间段保持连接，因为应用的转换可能导致它们的实际函数值范围超出相邻内部列段的范围。(虽然x值在范围内，但是函数值y不一定，所以要全部保留，不能剪枝。)</p>
+<h3 id="评分节点"><a href="#评分节点" class="headerlink" title="评分节点"></a>评分节点</h3><p>在本阶段，对于每个边界叶节点，我们直接计算函数 𝑓 以获得有效结果，这些结果作为聚合函数值Y的起始值和结束值。这些有效结果初始化每个像素列 k 的最小值和最大值，分别记为 αk,min 和 αk,max。</p>
+<p>对于每个<strong>内部列非叶节点</strong>，我们将 𝑓 应用于其域以确定该节点的最小值和最大值分数。每个得分节点然后进入候选列表，存储在堆中，首先<strong>按分数排序，然后按节点 ID 排序</strong>。在相应的最小值和最大值列表中，每个列表的顶部条目表示最值分数，𝛽 k,min和 𝛽k,max。基于这些值，转换数据的真实最小值和最大值，𝛾𝑘,𝑚𝑖𝑛 和 𝛾𝑘,𝑚𝑎𝑥 ，必须满足:</p>
+<p><img src="/images/2025/11/2025-11-094.png" alt="image-20251109160854312"></p>
+<p>𝛼k,min和 𝛼k,max 来自已计算的边界叶节点，根据定理 1，未查询的节点无法在 𝛽 k,min下方或 𝛽 k,max上方提供有效结果。对于单变量单调函数，可以简单地设置 𝛾min&#x3D; 𝛽min 和 𝛾max&#x3D; 𝛽max，从而无需查询附加数据点即可获得精确的聚合结果 𝑌。</p>
+<p>例如，具有 𝜆 &#x3D; 3、𝑓(𝑥) &#x3D; (𝑥^𝜆− 1)&#x2F;𝜆 的 Box–Cox 变换可以直接应用于图 5a 中第一像素列的 M4 聚合样本 。 𝜂4.𝑥𝑚𝑖𝑛 &#x3D; −7, 𝜂20.𝑥𝑚𝑎𝑥 &#x3D; 7, 𝑥1,𝑒𝑛𝑑 &#x3D; 6,最终𝑌1,𝑚𝑖𝑛 &#x3D; −114, 𝑌1,𝑚𝑎𝑥 &#x3D; 114, 𝑌1,𝑒𝑛𝑑 &#x3D; 71.67</p>
+<p>相比之下，对于仍然满足定理 1 的非单调或多变量函数，仍需进行树遍历来检索附加节点并迭代更新𝛼和𝛽，逐步优化客户端可视化，直至收敛到正确结果。例如，在图 5a 的第一列像素中，从最小值-7 和最大值 7 计算出的函数值均为 24.00，这不足以确定转换结果的真正范围；因此需要进一步遍历。为减少冗余计算和数据传输，TAT 结构在服务器上缓存以供重用。</p>
+<h3 id="DFS遍历"><a href="#DFS遍历" class="headerlink" title="DFS遍历"></a>DFS遍历</h3><p>为了确定每个像素列𝑘的实际最小和最大函数值𝛾𝑘,𝑚𝑖𝑛和𝛾𝑘,𝑚<em>ax</em>，我们根据当前的 TATs 和两个列表（一个用于最小值，一个用于最大值）进行深度优先遍历。以查找𝛾𝑘,𝑚𝑖𝑛为例。在每次迭代中，我们从最小值列表中弹出顶部节点，查询数据库以重建其两个子节点并计算它们的分数。如果一个子节点的最小分数更高，或者分数相同但 ID 更小，则将其插入候选列表；否则，我们继续扩展其子节点，直到达到叶节点，在那里可以计算有效结果。之后，我们更新𝛼𝑘,𝑚𝑖𝑛和𝛽𝑘,𝑚𝑖𝑛。一旦𝛼𝑘,𝑚𝑖𝑛 ≤ 𝛽𝑘,𝑚𝑖𝑛，最小聚合结果𝛾𝑘,𝑚𝑖𝑛由𝛼确定，因为𝛽𝑘,𝑚𝑖𝑛是候选列表中的最小分数，并且所有未查询的节点都是无法产生更低分数的后代，根据定理 1。相同的步骤用于更新𝛼k,max和𝛽k,max以确定每个像素列的𝛾k,max。 在整个过程中，我们将所有列中的有效结果𝛼min和𝛼max与𝑌start和𝑌𝑒𝑛𝑑进行组合，以生成渐进式转换结果。查询机制将持续进行，直到所有像素列中的𝛼和𝛽收敛于𝛾，从而确保满足问题 I 中的要求。</p>
+<p>图 5 展示了在查询过程中，第一个像素列𝐶1的候选节点列表的演变过程。在评分节点阶段（迭代 1），边界叶节点的函数值用于初始化𝛼1,min&#x3D; 1.50 和𝛼1,max&#x3D; 17.50，并将内列节点𝜂4和𝜂20推入两个列表中。在迭代 2 中，从最小列表中弹出𝜂4，引入𝜂4，𝜂8和𝜂17被分割以形成一条通往新有效结果路径，在𝜂34处更新𝛼1,min为 0.00，在𝜂16处更新𝛽1,min为-0.50。对于最大值，由于𝜂20的 ID 更大而被弹出，导致𝛼1,𝑚𝑎𝑥和𝛽1,𝑚𝑎𝑥在𝛾1,max&#x3D; 24.00 处收敛。然而，确定𝛾1,min需要再进行一次迭代以弹出并分割𝜂16，确保𝛼1,min≤ 𝛽1,min。在整个过程中，𝜂9保持未分割，留下六个节点未被查询。</p>
+<p><img src="/images/2025/11/2025-11-095.png" alt="image-20251109164143469"></p>
+<h3 id="加速策略"><a href="#加速策略" class="headerlink" title="加速策略"></a>加速策略</h3><p>虽然为了清晰起见分步展示，但为每个节点扩展进行单独的数据库查询是昂贵的。通过两种方式解决这种低效问题。首先，将子节点的检索批量处理，通过将来自𝑙min和𝑙max像素列的所有拆分候选 ID 聚合到一个查询中。其次，我们通过使用三级缓存来平衡性能和内存使用。由于树的顶层被更频繁地遍历，最顶层的 2 ^12个节点都被解压缩和解码，以实现快速访问。接下来的 2 ^20个节点被解压缩为系数但保持未解码，而其余节点在内存中保持完全压缩状态，按需解压缩。这种缓存设计支持对十亿规模时间序列数据集进行高效的内存处理。</p>
+<h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><p>给定画布宽度𝑤，查询过程的时间复杂度为𝑂 (𝑖 · 𝑤 · log 𝑛)，其中𝑛是全局时间范围内数据点的数量，𝑖是迭代次数，由输入时间序列的分布决定。在最坏情况下，所有内列节点可能具有比实际极值𝛾更高的分数，触发完全拆分，导致时间复杂度为𝑂 (𝑛)。尽管这种情况很少发生，但它们突出了引入误差界限保证以平衡视觉精度和响应延迟的重要性。</p>
+<h2 id="具有像素误差界限保证的查询"><a href="#具有像素误差界限保证的查询" class="headerlink" title="具有像素误差界限保证的查询"></a>具有像素误差界限保证的查询</h2><p>像素误差界限保证。基于分数的深度优先遍历自然支持渐进式细化，逐渐收敛到实际极值𝛾。然而，它缺乏提前终止的机制，因为没有指标来评估中间可视化的精度。例如，在图 5b 的第一次迭代中，𝛼被初始化为 1.50，它与𝛾,𝑚𝑖𝑛 &#x3D; 0.00 在同一像素内重叠，但用户无法看到这些信息。为了解决这个问题针，提供了一种基于所有像素列中的 𝛼 和 𝛽 值提出了一种误差界限保证。在介绍保证之前，<strong>首先将实际像素误差率 𝜁 定义为与无错误可视化不同的错误像素数量与画布上像素总数的比例。</strong> 定义每个像素列的值范围Rk和画布y轴限制的范围gR。这些估计共同决定了数据点如何映射到可视化中，并影响像素误差。</p>
+<p>为了在 w × h 画布上渲染结果时间序列 Y，客户端可以接收每个像素列的(𝛼𝑘,𝑚𝑖𝑛, 𝛼𝑘,𝑚𝑎𝑥 ) 、(𝛽𝑘,𝑚𝑖𝑛, 𝛽𝑘,𝑚𝑎𝑥 ) 对。gR的范围必须位于：</p>
+<p><img src="/images/2025/11/2025-11-096.png" alt="image-20251109174457073"></p>
+<p>同样的，每个像素列，Rk的范围必须为于𝑅𝑘,𝛼 &#x3D; [𝛼𝑘,𝑚𝑖𝑛, 𝛼𝑘,𝑚𝑎𝑥 ] and 𝑅𝑘,𝛽 &#x3D;[𝛽𝑘,𝑚𝑖𝑛, 𝛽𝑘,𝑚𝑎𝑥 ]</p>
+<p>因此，有四种可能的极端方式来光栅化画布，由 𝑔𝑅 和 𝑅 值的不同组合决定：(𝑔𝑅𝛼 , 𝑅𝑘,𝛼 ), (𝑔𝑅𝛽 , 𝑅𝑘,𝛼 ), (𝑔𝑅𝛼 , 𝑅𝑘,𝛽 ),  (𝑔𝑅𝛽 , 𝑅𝑘,𝛽 )。鉴于 𝛼≤ 𝛾≤ 𝛽，情况 (𝑔𝑅𝛼 , 𝑅𝑘,𝛽 ) 和 (𝑔𝑅𝛽 , 𝑅𝑘,𝛽) 可能引入错误的前景像素，而情况 (𝑔𝑅𝛽 , 𝑅𝑘,𝛼) 可能导致像素丢失。相比之下，情况 (𝑔𝑅𝛼 , 𝑅𝑘,𝛼 )) 可能导致错误和像素丢失，其中 𝑔𝑅 和 𝑅 同时被压缩。图 6(a-d) 显示了一个示例，其中在图 5b 的第一次迭代中获得了 𝛼 和 𝛽。将图 5b 右下角最终的可视化结果作为真实情况，用红色框突出显示每个情况的错误像素以供比较。</p>
+<p><img src="/images/2025/11/2025-11-097.png" alt="image-20251109174951097"></p>
+<p>在视觉分析的进程中，每个像素列𝛾k,min和𝛾k,max的准确最小值和最大值仍然未知。因此，无法获得准确的参考可视化，潜在的错误像素被识别为不确定性高的像素，这些像素在某些极端情况下会被光栅化，而在其他情况下则不会被，具体定义如下。</p>
+<p><strong>定义 2：</strong> 像素误差 𝐸u 表示由 𝑔𝑅 和 𝑅k 的四种组合所栅格化的像素范围并集与交集之间的差异。</p>
+<p><strong>定理 2：</strong> 𝐸u 包含线图可视化中的所有错误像素，确保无论实际最大和最小函数值 𝛾k 如何，都不会出现 𝐸 u外部的错误。(只有这四种错误)</p>
+<p>除了提供严格的误差界限外，最小化中间结果的实际误差率𝜁对于有效的渐进式可视化至关重要[7]。一个关键挑战在于估计每个像素列中𝑌的值范围。我们没有使用图 6(a–d)中所示的任何四种𝑔𝑅和𝑅值的组合，而是采用了平均估计器：</p>
+<p><img src="/images/2025/11/2025-11-098.png" alt="image-20251109175713903"></p>
+<p>因为均值通常比端点（𝛼和𝛽）为未知分布提供更好的估计。因此，值范围变成：</p>
+<p><img src="/images/2025/11/2025-11-099.png" alt="image-20251109175804895"></p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2025/11/06/Series/"
+      title="Series"
+     >
+
+    <p class="title-text">
+      
+        Series
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2025 meguriri<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
