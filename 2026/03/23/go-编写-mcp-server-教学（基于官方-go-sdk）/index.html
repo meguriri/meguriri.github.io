@@ -14,20 +14,25 @@
   
 
   
-  <title>paxos理解 | cherry blessing</title>
+  <title>Go 编写 MCP Server 教学（基于官方 go-sdk） | cherry blessing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="paxos理解">
-<meta property="og:url" content="https://meguriri.github.io/2024/09/09/paxos%E7%90%86%E8%A7%A3/index.html">
+  <meta name="description" content="Go 编写 MCP Server 教学（基于官方 go-sdk）1. MCP 是什么MCP（Model Context Protocol）可以理解为让大模型通过标准协议调用你程序能力的一套规范。 你写一个 MCP Server，本质就是：  声明自己是谁（服务名、版本） 注册可调用能力（Tool） 在 Tool 被调用时返回结构化结果 通过某种传输方式对外提供服务（最常见是 stdio）   2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 编写 MCP Server 教学（基于官方 go-sdk）">
+<meta property="og:url" content="https://meguriri.github.io/2026/03/23/go-%E7%BC%96%E5%86%99-mcp-server-%E6%95%99%E5%AD%A6%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%AE%98%E6%96%B9-go-sdk%EF%BC%89/index.html">
 <meta property="og:site_name" content="cherry blessing">
+<meta property="og:description" content="Go 编写 MCP Server 教学（基于官方 go-sdk）1. MCP 是什么MCP（Model Context Protocol）可以理解为让大模型通过标准协议调用你程序能力的一套规范。 你写一个 MCP Server，本质就是：  声明自己是谁（服务名、版本） 注册可调用能力（Tool） 在 Tool 被调用时返回结构化结果 通过某种传输方式对外提供服务（最常见是 stdio）   2.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-09T05:38:04.000Z">
-<meta property="article:modified_time" content="2024-09-09T05:41:04.000Z">
+<meta property="article:published_time" content="2026-03-23T09:24:21.000Z">
+<meta property="article:modified_time" content="2026-03-23T09:25:36.058Z">
 <meta property="article:author" content="meguriri">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="教程">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="cherry blessing" type="application/atom+xml">
@@ -287,7 +292,7 @@
        
 
 
-<article id="post-paxos理解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+<article id="post-go-编写-mcp-server-教学（基于官方-go-sdk）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   
     
    
@@ -300,7 +305,7 @@
   
     
       <h1 class="p-name article-title" itemprop="headline name">
-        paxos理解
+        Go 编写 MCP Server 教学（基于官方 go-sdk）
       </h1>
     
   
@@ -308,26 +313,178 @@
 
         <div class='meta-info-bar'>
           <div class="meta-info">
-  <time class="dt-published" datetime="2024-09-09T05:38:04.000Z" itemprop="datePublished">2024-09-09</time>
+  <time class="dt-published" datetime="2026-03-23T09:24:21.000Z" itemprop="datePublished">2026-03-23</time>
 </div>
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
   
-    未分类 
+  <a class="meta-cate-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
    
 </div>
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            0 词 
+            2.9k 词 
           </div>
         </div>
         
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Go/" rel="tag">Go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MCP/" rel="tag">MCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
+
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <span id="more"></span>
+          <h1 id="Go-编写-MCP-Server-教学（基于官方-go-sdk）"><a href="#Go-编写-MCP-Server-教学（基于官方-go-sdk）" class="headerlink" title="Go 编写 MCP Server 教学（基于官方 go-sdk）"></a>Go 编写 MCP Server 教学（基于官方 go-sdk）</h1><h2 id="1-MCP-是什么"><a href="#1-MCP-是什么" class="headerlink" title="1. MCP 是什么"></a>1. MCP 是什么</h2><p>MCP（Model Context Protocol）可以理解为让大模型通过标准协议调用你程序能力的一套规范。</p>
+<p>你写一个 MCP Server，本质就是：</p>
+<ol>
+<li>声明自己是谁（服务名、版本）</li>
+<li>注册可调用能力（Tool）</li>
+<li>在 Tool 被调用时返回结构化结果</li>
+<li>通过某种传输方式对外提供服务（最常见是 stdio）</li>
+</ol>
+<hr>
+<h2 id="2-Go-里推荐用哪个库"><a href="#2-Go-里推荐用哪个库" class="headerlink" title="2. Go 里推荐用哪个库"></a>2. Go 里推荐用哪个库</h2><p>官方 Go SDK：</p>
+<ul>
+<li>github.com&#x2F;modelcontextprotocol&#x2F;go-sdk&#x2F;mcp</li>
+</ul>
+<p>安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/modelcontextprotocol/go-sdk/mcp</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h2 id="3-写一个-MCP-Server-需要哪些核心组件"><a href="#3-写一个-MCP-Server-需要哪些核心组件" class="headerlink" title="3. 写一个 MCP Server 需要哪些核心组件"></a>3. 写一个 MCP Server 需要哪些核心组件</h2><h3 id="3-1-Server-实例"><a href="#3-1-Server-实例" class="headerlink" title="3.1 Server 实例"></a>3.1 Server 实例</h3><p>作用：承载所有功能（tools&#x2F;resources&#x2F;prompts）。</p>
+<p>核心函数：</p>
+<ul>
+<li>mcp.NewServer(impl *mcp.Implementation, options *mcp.ServerOptions) *mcp.Server</li>
+</ul>
+<p>关键参数：</p>
+<ul>
+<li>impl.Name<ul>
+<li>服务名，客户端会看到</li>
+</ul>
+</li>
+<li>impl.Version<ul>
+<li>服务版本，方便维护和排错</li>
+</ul>
+</li>
+<li>options<ul>
+<li>可选高级配置（中间件、初始化钩子等），最小实现可传 nil</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-Tool-定义"><a href="#3-2-Tool-定义" class="headerlink" title="3.2 Tool 定义"></a>3.2 Tool 定义</h3><p>作用：告诉客户端你提供了什么能力。</p>
+<p>核心函数：</p>
+<ul>
+<li>mcp.AddTool(server, tool, handler)</li>
+</ul>
+<p>关键参数：</p>
+<ul>
+<li>server<ul>
+<li>由 NewServer 创建出来的服务对象</li>
+</ul>
+</li>
+<li>tool.Name<ul>
+<li>工具唯一标识，客户端通过它调用</li>
+</ul>
+</li>
+<li>tool.Description<ul>
+<li>给模型看的说明，越清楚越容易被正确调用</li>
+</ul>
+</li>
+<li>handler<ul>
+<li>工具执行逻辑</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-3-Tool-Handler（处理函数）"><a href="#3-3-Tool-Handler（处理函数）" class="headerlink" title="3.3 Tool Handler（处理函数）"></a>3.3 Tool Handler（处理函数）</h3><p>作用：真正处理请求并返回结果。</p>
+<p>常见签名：</p>
+<ul>
+<li>func(ctx context.Context, req *mcp.CallToolRequest, args T) (*mcp.CallToolResult, any, error)</li>
+</ul>
+<p>参数意义：</p>
+<ul>
+<li>ctx<ul>
+<li>请求上下文，可用于超时、取消、链路控制</li>
+</ul>
+</li>
+<li>req<ul>
+<li>原始调用请求，可拿到调用级信息</li>
+</ul>
+</li>
+<li>args<ul>
+<li>解析后的参数对象（由 SDK 根据 JSON 入参映射）</li>
+</ul>
+</li>
+</ul>
+<p>返回值意义：</p>
+<ul>
+<li>*mcp.CallToolResult<ul>
+<li>返回给客户端的结果主体，通常放 Content</li>
+</ul>
+</li>
+<li>any<ul>
+<li>结构化返回（可选），最小实现可用 nil</li>
+</ul>
+</li>
+<li>error<ul>
+<li>Go 层错误；最小实现一般返回 nil</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-4-传输层（Transport）"><a href="#3-4-传输层（Transport）" class="headerlink" title="3.4 传输层（Transport）"></a>3.4 传输层（Transport）</h3><p>作用：让客户端与服务通信。</p>
+<p>最小实现常用：</p>
+<ul>
+<li>&amp;mcp.StdioTransport{}</li>
+</ul>
+<p>配合函数：</p>
+<ul>
+<li>server.Run(context.Background(), &amp;mcp.StdioTransport{})</li>
+</ul>
+<p>含义：</p>
+<ul>
+<li>使用当前进程的标准输入输出作为通信通道</li>
+<li>非常适合 Claude Code &#x2F; Claude Desktop 这类通过子进程启动 MCP Server 的场景</li>
+</ul>
+<hr>
+<h2 id="4-参数结构体怎么写"><a href="#4-参数结构体怎么写" class="headerlink" title="4. 参数结构体怎么写"></a>4. 参数结构体怎么写</h2><p>如果 Tool 需要参数，定义一个结构体并加 json 标签：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> questionArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">    Question <span class="type">string</span> <span class="string">`json:&quot;question&quot; jsonschema:&quot;用户问题&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>标签意义：</p>
+<ul>
+<li>json<ul>
+<li>指定请求 JSON 的字段名</li>
+</ul>
+</li>
+<li>jsonschema<ul>
+<li>字段语义说明，帮助自动生成更友好的工具 schema</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-一个最小实现例子（可直接运行）"><a href="#5-一个最小实现例子（可直接运行）" class="headerlink" title="5. 一个最小实现例子（可直接运行）"></a>5. 一个最小实现例子（可直接运行）</h2><p>下面示例实现了一个工具：</p>
+<ul>
+<li>名称：ask_saekano_heroine</li>
+<li>行为：无论输入什么，返回 加藤惠</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;context&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/modelcontextprotocol/go-sdk/mcp&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    serverName    = <span class="string">&quot;saekano-mcp-go&quot;</span></span><br><span class="line">    serverVersion = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line">    toolName      = <span class="string">&quot;ask_saekano_heroine&quot;</span></span><br><span class="line">    answerText    = <span class="string">&quot;加藤惠&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> questionArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">    Question <span class="type">string</span> <span class="string">`json:&quot;question&quot; jsonschema:&quot;用户问题&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">askSaekanoHeroine</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    ctx context.Context,</span></span></span><br><span class="line"><span class="params"><span class="function">    req *mcp.CallToolRequest,</span></span></span><br><span class="line"><span class="params"><span class="function">    args questionArgs,</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span> (*mcp.CallToolResult, any, <span class="type">error</span>) &#123;</span><br><span class="line">    _ = ctx</span><br><span class="line">    _ = req</span><br><span class="line">    _ = args</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &amp;mcp.CallToolResult&#123;</span><br><span class="line">        Content: []mcp.Content&#123;</span><br><span class="line">            &amp;mcp.TextContent&#123;Text: answerText&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;, <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    server := mcp.NewServer(&amp;mcp.Implementation&#123;</span><br><span class="line">        Name:    serverName,</span><br><span class="line">        Version: serverVersion,</span><br><span class="line">    &#125;, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">    mcp.AddTool(server, &amp;mcp.Tool&#123;</span><br><span class="line">        Name:        toolName,</span><br><span class="line">        Description: <span class="string">&quot;回答《路人女主的养成方法》女主是谁&quot;</span>,</span><br><span class="line">    &#125;, askSaekanoHeroine)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err := server.Run(context.Background(), &amp;mcp.StdioTransport&#123;&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Printf(<span class="string">&quot;server failed: %v&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-运行步骤"><a href="#6-运行步骤" class="headerlink" title="6. 运行步骤"></a>6. 运行步骤</h2><ol>
+<li>构建</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go build -o saekano-mcp main.go</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 MCP 客户端中把 command 指向这个可执行文件</li>
+</ol>
+<p>示意：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;saekano-go-mcp&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/你的路径/saekano-mcp&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-进阶建议（下一步）"><a href="#7-进阶建议（下一步）" class="headerlink" title="7. 进阶建议（下一步）"></a>7. 进阶建议（下一步）</h2><ol>
+<li>在 handler 中读取 args.Question，按条件返回不同答案</li>
+<li>对参数做校验，非法输入返回业务错误</li>
+<li>给工具增加更准确的 Description，提升模型调用命中率</li>
+<li>再新增一个工具，练习多个 Tool 的组织方式</li>
+</ol>
 
         
       </div>
@@ -340,27 +497,22 @@
   
     
 <nav id="article-nav">
-  <a class="article-nav-btn left "
-    
-      href="/2024/09/10/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4/"
-      title="二阶段提交"
+  <a class="article-nav-btn left  disabled "
      >
     <i class="fa-solid fa-angle-left"></i>
     <p class="title-text">
-      
-        二阶段提交
         
     </p>
   </a>
   <a class="article-nav-btn right "
     
-      href="/2024/05/23/Hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
-      title="Hexo使用方法"
+      href="/2026/03/23/ollama%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"
+      title="ollama使用教程"
      >
 
     <p class="title-text">
       
-        Hexo使用方法
+        ollama使用教程
         
     </p>
     <i class="fa-solid fa-angle-right"></i>
