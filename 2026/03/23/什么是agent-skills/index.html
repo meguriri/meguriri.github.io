@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>什么是agent skills | cherry blessing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="什么是agent skills 在AI协作开发的时代，如何让Claude从一个”通用助手”变成”专业专家”？答案就隐藏在Agent Skills技术中。  引言：当AI遇到专业技能想象一下，你有一个全能的AI助手，它能写代码、调试、文档整理，但每次遇到复杂任务时，你都需要详细解释整个流程。这就是传统AI协作的痛点——缺乏专业性和一致性。 Claude Code的Agent Skills技术应运而生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是agent skills">
+<meta property="og:url" content="https://meguriri.github.io/2026/03/23/%E4%BB%80%E4%B9%88%E6%98%AFagent-skills/index.html">
+<meta property="og:site_name" content="cherry blessing">
+<meta property="og:description" content="什么是agent skills 在AI协作开发的时代，如何让Claude从一个”通用助手”变成”专业专家”？答案就隐藏在Agent Skills技术中。  引言：当AI遇到专业技能想象一下，你有一个全能的AI助手，它能写代码、调试、文档整理，但每次遇到复杂任务时，你都需要详细解释整个流程。这就是传统AI协作的痛点——缺乏专业性和一致性。 Claude Code的Agent Skills技术应运而生">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-23T09:46:57.000Z">
+<meta property="article:modified_time" content="2026-03-23T09:50:37.444Z">
+<meta property="article:author" content="meguriri">
+<meta property="article:tag" content="llm">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="skill">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="cherry blessing" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/banner.png" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>cherry blessing </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS 订阅">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS 订阅">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/meguriri.png></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">meguriri </div>
+      <div class="dot"></div>
+      <div class="subtitle">Blessing SoftWare🌸 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://steamcommunity.com/profiles/76561198147007541/" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/meguriri" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">分类</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">
+                工具
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+                论文笔记
+                <div class="category-count">2</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E7%BC%96%E7%A8%8B/">
+                编程
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/llm/">
+                llm
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">
+                分布式系统
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/agent/">
+                agent
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                机器学习
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E6%B5%8B%E8%AF%95/">
+                测试
+                <div class="category-count">1</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">标签</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Go/" rel="tag">Go</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/MCP/" rel="tag">MCP</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/agent/" rel="tag">agent</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/code/" rel="tag">code</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/llm/" rel="tag">llm</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/skill/" rel="tag">skill</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">可视化</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">复习笔记</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%B8%90%E8%BF%9B%E5%BC%8F%E6%9F%A5%E8%AF%A2/" rel="tag">渐进式查询</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">归档</h3>
+      
+      
+        <a class="archive-link" href="/archives/2026/03 ">
+          三月 2026 
+          <div class="archive-count">3 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2025/11 ">
+          十一月 2025 
+          <div class="archive-count">2 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/11 ">
+          十一月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/09 ">
+          九月 2024 
+          <div class="archive-count">2 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/05 ">
+          五月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/04 ">
+          四月 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">最新文章</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2026/03/23/%E4%BB%80%E4%B9%88%E6%98%AFagent-skills/" title="什么是agent skills" >
+            <div class="recent-link-text">
+              什么是agent skills
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2026/03/23/go-%E7%BC%96%E5%86%99-mcp-server-%E6%95%99%E5%AD%A6%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%AE%98%E6%96%B9-go-sdk%EF%BC%89/" title="Go 编写 MCP Server 教学（基于官方 go-sdk）" >
+            <div class="recent-link-text">
+              Go 编写 MCP Server 教学（基于官方 go-sdk）
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2026/03/23/ollama%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="ollama使用教程" >
+            <div class="recent-link-text">
+              ollama使用教程
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2025/11/06/Transformation%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="Visualization-Oriented Progressive Time Series Transformation论文笔记" >
+            <div class="recent-link-text">
+              Visualization-Oriented Progressive Time Series Transformation论文笔记
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2025/11/05/OM3%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="OM3论文学习笔记" >
+            <div class="recent-link-text">
+              OM3论文学习笔记
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-什么是agent-skills" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        什么是agent skills
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2026-03-23T09:46:57.000Z" itemprop="datePublished">2026-03-23</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/agent/">agent</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            6k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agent/" rel="tag">agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/llm/" rel="tag">llm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/" rel="tag">skill</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="什么是agent-skills"><a href="#什么是agent-skills" class="headerlink" title="什么是agent skills"></a>什么是agent skills</h1><blockquote>
+<p>在AI协作开发的时代，如何让Claude从一个”通用助手”变成”专业专家”？答案就隐藏在Agent Skills技术中。</p>
+</blockquote>
+<h2 id="引言：当AI遇到专业技能"><a href="#引言：当AI遇到专业技能" class="headerlink" title="引言：当AI遇到专业技能"></a>引言：当AI遇到专业技能</h2><p>想象一下，你有一个全能的AI助手，它能写代码、调试、文档整理，但每次遇到复杂任务时，你都需要详细解释整个流程。这就是传统AI协作的痛点——缺乏专业性和一致性。</p>
+<p>Claude Code的<strong>Agent Skills</strong>技术应运而生，它允许你将专业知识、工作流程和最佳实践封装成可复用的”技能包”，让AI助手能够按照专业标准执行特定领域任务。</p>
+<h2 id="什么是Agent-Skills？"><a href="#什么是Agent-Skills？" class="headerlink" title="什么是Agent Skills？"></a>什么是Agent Skills？</h2><h3 id="核心定义"><a href="#核心定义" class="headerlink" title="核心定义"></a>核心定义</h3><p><strong>Agent Skills</strong>是一套模块化的能力包，包含指令集、脚本和参考文件，用于教会Claude如何专业地完成特定任务。每个Skill都是一个独立的文件夹，核心是<code>SKILL.md</code>文件，它用YAML定义元数据，用Markdown提供详细执行指令。</p>
+<h3 id="技能结构解剖"><a href="#技能结构解剖" class="headerlink" title="技能结构解剖"></a>技能结构解剖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my-skill/</span><br><span class="line">├── SKILL.md          # 核心技能定义文件</span><br><span class="line">├── examples/         # 使用示例</span><br><span class="line">├── templates/        # 模板文件</span><br><span class="line">└── scripts/          # 辅助脚本</span><br></pre></td></tr></table></figure>
+
+<h3 id="SKILL-md文件结构"><a href="#SKILL-md文件结构" class="headerlink" title="SKILL.md文件结构"></a>SKILL.md文件结构</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">&quot;code-review&quot;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&quot;专业代码审查技能&quot;</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"><span class="attr">triggers:</span> [<span class="string">&quot;/review&quot;</span>, <span class="string">&quot;/code-review&quot;</span>]</span><br><span class="line"><span class="attr">requires:</span> [<span class="string">&quot;Bash&quot;</span>, <span class="string">&quot;Read&quot;</span>, <span class="string">&quot;Edit&quot;</span>]</span><br><span class="line"><span class="attr">priority:</span> <span class="string">&quot;normal&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 代码审查技能</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 概述</span></span><br><span class="line"><span class="string">本技能提供专业级的代码审查功能...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 执行流程</span></span><br><span class="line"><span class="number">1</span><span class="string">.</span> <span class="string">检查代码风格...</span></span><br><span class="line"><span class="number">2</span><span class="string">.</span> <span class="string">安全漏洞扫描...</span></span><br><span class="line"><span class="number">3</span><span class="string">.</span> <span class="string">性能优化建议...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Agent-Skills的工作原理"><a href="#Agent-Skills的工作原理" class="headerlink" title="Agent Skills的工作原理"></a>Agent Skills的工作原理</h2><h3 id="1-技能加载机制"><a href="#1-技能加载机制" class="headerlink" title="1. 技能加载机制"></a>1. 技能加载机制</h3><p>Claude Code采用<strong>渐进式加载</strong>策略：</p>
+<ul>
+<li><strong>元数据加载</strong>：首先读取YAML头部，了解技能基本信息</li>
+<li><strong>动态指令加载</strong>：根据任务需求加载相关指令段落</li>
+<li><strong>上下文感知</strong>：根据当前工作环境调整执行逻辑</li>
+</ul>
+<p>这种设计避免了上下文窗口浪费，确保复杂技能也能高效运行。</p>
+<h3 id="2-执行引擎"><a href="#2-执行引擎" class="headerlink" title="2. 执行引擎"></a>2. 执行引擎</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码展示技能执行流程</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">execute_skill</span>(<span class="params">skill, context, arguments</span>):</span><br><span class="line">    <span class="comment"># 1. 验证权限和依赖</span></span><br><span class="line">    validate_permissions(skill.requires)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. 解析参数</span></span><br><span class="line">    parsed_args = parse_arguments(arguments)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3. 加载执行计划</span></span><br><span class="line">    execution_plan = load_execution_plan(skill, context)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 4. 逐步执行</span></span><br><span class="line">    <span class="keyword">for</span> step <span class="keyword">in</span> execution_plan:</span><br><span class="line">        execute_step(step, parsed_args)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 5. 生成输出</span></span><br><span class="line">    <span class="keyword">return</span> generate_output()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-工具集成体系"><a href="#3-工具集成体系" class="headerlink" title="3. 工具集成体系"></a>3. 工具集成体系</h3><p>Agent Skills可以访问Claude Code的所有工具，但通过权限控制确保安全：</p>
+<table>
+<thead>
+<tr>
+<th>工具类别</th>
+<th>典型用途</th>
+<th>技能示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>文件操作</strong></td>
+<td>读写代码文件</td>
+<td><code>/simplify</code>代码优化</td>
+</tr>
+<tr>
+<td><strong>Git操作</strong></td>
+<td>版本控制</td>
+<td><code>/review</code>代码审查</td>
+</tr>
+<tr>
+<td><strong>系统命令</strong></td>
+<td>构建部署</td>
+<td><code>/deploy</code>部署脚本</td>
+</tr>
+<tr>
+<td><strong>MCP集成</strong></td>
+<td>外部服务</td>
+<td>博客发布、Bangumi查询</td>
+</tr>
+</tbody></table>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="场景一：代码审查自动化"><a href="#场景一：代码审查自动化" class="headerlink" title="场景一：代码审查自动化"></a>场景一：代码审查自动化</h3><p><strong>技能名称</strong>：<code>/security-review</code><br><strong>功能</strong>：自动安全漏洞扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用方式</span></span><br><span class="line">/security-review path/to/code</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行结果</span></span><br><span class="line">✅ 检查了15个文件</span><br><span class="line">⚠️ 发现3个潜在安全问题：</span><br><span class="line">1. SQL注入风险 (user_service.py:42)</span><br><span class="line">2. 硬编码密钥 (config.py:18)</span><br><span class="line">3. XSS漏洞 (template.html:33)</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景二：开发工作流标准化"><a href="#场景二：开发工作流标准化" class="headerlink" title="场景二：开发工作流标准化"></a>场景二：开发工作流标准化</h3><p><strong>技能名称</strong>：<code>/new-feature</code><br><strong>功能</strong>：标准化新功能开发流程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动创建功能分支、模板文件、测试框架</span></span><br><span class="line">/new-feature user-authentication</span><br><span class="line"></span><br><span class="line">创建完成：</span><br><span class="line">📁 src/auth/ - 认证模块</span><br><span class="line">📄 tests/test_auth.py - 测试文件</span><br><span class="line">📋 docs/auth-spec.md - 设计文档</span><br><span class="line">🔗 PR <span class="comment">#42 - 自动创建PR</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="场景三：部署流水线"><a href="#场景三：部署流水线" class="headerlink" title="场景三：部署流水线"></a>场景三：部署流水线</h3><p><strong>技能名称</strong>：<code>/deploy-pipeline</code><br><strong>功能</strong>：一键式部署流程</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SKILL.md中的部署配置</span></span><br><span class="line"><span class="attr">deploy_stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;代码检查&quot;</span></span><br><span class="line">    <span class="attr">commands:</span> [<span class="string">&quot;npm test&quot;</span>, <span class="string">&quot;security-scan&quot;</span>]</span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;构建打包&quot;</span></span><br><span class="line">    <span class="attr">commands:</span> [<span class="string">&quot;npm run build&quot;</span>, <span class="string">&quot;docker build .&quot;</span>]</span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;部署上线&quot;</span></span><br><span class="line">    <span class="attr">commands:</span> [<span class="string">&quot;kubectl apply&quot;</span>, <span class="string">&quot;health-check&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何创建自定义技能"><a href="#如何创建自定义技能" class="headerlink" title="如何创建自定义技能"></a>如何创建自定义技能</h2><h3 id="步骤1：创建技能骨架"><a href="#步骤1：创建技能骨架" class="headerlink" title="步骤1：创建技能骨架"></a>步骤1：创建技能骨架</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.claude/skills/my-custom-skill</span><br><span class="line"><span class="built_in">cd</span> ~/.claude/skills/my-custom-skill</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤2：编写SKILL-md"><a href="#步骤2：编写SKILL-md" class="headerlink" title="步骤2：编写SKILL.md"></a>步骤2：编写SKILL.md</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: &quot;api-doc-generator&quot;</span><br><span class="line">description: &quot;自动生成API文档&quot;</span><br><span class="line">version: &quot;1.0.0&quot;</span><br><span class="line">triggers: [&quot;/api-doc&quot;, &quot;/generate-docs&quot;]</span><br><span class="line">requires: [&quot;Read&quot;, &quot;Write&quot;, &quot;Bash&quot;]</span><br><span class="line"><span class="section">priority: &quot;normal&quot;</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># API文档生成器</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 功能描述</span></span><br><span class="line">自动扫描代码中的API端点，生成OpenAPI/Swagger文档...</span><br><span class="line"></span><br><span class="line"><span class="section">## 参数说明</span></span><br><span class="line"><span class="bullet">-</span> <span class="code">`$1`</span>: 项目路径 (默认: 当前目录)</span><br><span class="line"><span class="bullet">-</span> <span class="code">`$2`</span>: 输出格式 (json/yaml/markdown)</span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"><span class="bullet">1.</span> 扫描源代码中的路由定义</span><br><span class="line"><span class="bullet">2.</span> 提取参数和响应格式</span><br><span class="line"><span class="bullet">3.</span> 生成OpenAPI规范</span><br><span class="line"><span class="bullet">4.</span> 创建文档页面</span><br><span class="line"></span><br><span class="line"><span class="section">## 示例</span></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">/api-doc ./src --format markdown</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="模板文件"><a href="#模板文件" class="headerlink" title="模板文件"></a>模板文件</h2><p>[include: templates&#x2F;api-doc-template.md]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 步骤3：添加辅助文件</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line"># 创建模板文件</span><br><span class="line">echo &quot;# API文档&quot; &gt; templates/api-doc-template.md</span><br><span class="line"></span><br><span class="line"># 创建示例</span><br><span class="line">mkdir examples</span><br><span class="line">echo &quot;示例用法...&quot; &gt; examples/usage.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤4：测试技能"><a href="#步骤4：测试技能" class="headerlink" title="步骤4：测试技能"></a>步骤4：测试技能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Claude Code中测试</span></span><br><span class="line">/api-doc test-project</span><br></pre></td></tr></table></figure>
+
+<h2 id="高级技巧与最佳实践"><a href="#高级技巧与最佳实践" class="headerlink" title="高级技巧与最佳实践"></a>高级技巧与最佳实践</h2><h3 id="1-参数解析策略"><a href="#1-参数解析策略" class="headerlink" title="1. 参数解析策略"></a>1. 参数解析策略</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 支持多种参数格式</span></span><br><span class="line"><span class="attr">argument_patterns:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pattern:</span> <span class="string">&quot;/(\\w+)/(\\d+)&quot;</span></span><br><span class="line">    <span class="attr">example:</span> <span class="string">&quot;/users/123&quot;</span></span><br><span class="line">    <span class="attr">mapping:</span> [<span class="string">&quot;resource&quot;</span>, <span class="string">&quot;id&quot;</span>]</span><br><span class="line">  <span class="bullet">-</span> <span class="attr">pattern:</span> <span class="string">&quot;--env=(\\w+)&quot;</span></span><br><span class="line">    <span class="attr">example:</span> <span class="string">&quot;--env=production&quot;</span></span><br><span class="line">    <span class="attr">mapping:</span> [<span class="string">&quot;environment&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-条件执行逻辑"><a href="#2-条件执行逻辑" class="headerlink" title="2. 条件执行逻辑"></a>2. 条件执行逻辑</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 智能执行流程</span></span><br><span class="line"></span><br><span class="line">&#123;% if context.language == &quot;python&quot; %&#125;</span><br><span class="line">执行Python特定检查：</span><br><span class="line"><span class="bullet">-</span> 类型注解验证</span><br><span class="line"><span class="bullet">-</span> 导入规范检查</span><br><span class="line"><span class="bullet">-</span> PEP8合规性</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if context.project<span class="emphasis">_type == &quot;web&quot; %&#125;</span></span><br><span class="line"><span class="emphasis">执行Web应用检查：</span></span><br><span class="line"><span class="emphasis">- 安全头部验证</span></span><br><span class="line"><span class="emphasis">- CSP配置检查</span></span><br><span class="line"><span class="emphasis">- 性能优化建议</span></span><br><span class="line"><span class="emphasis">&#123;% endif %&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-错误处理与回退"><a href="#3-错误处理与回退" class="headerlink" title="3. 错误处理与回退"></a>3. 错误处理与回退</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">error_handling:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&quot;file_not_found&quot;</span></span><br><span class="line">    <span class="attr">action:</span> <span class="string">&quot;create_template&quot;</span></span><br><span class="line">    <span class="attr">template:</span> <span class="string">&quot;default-file.txt&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&quot;permission_denied&quot;</span></span><br><span class="line">    <span class="attr">action:</span> <span class="string">&quot;suggest_fix&quot;</span></span><br><span class="line">    <span class="attr">message:</span> <span class="string">&quot;请检查文件权限...&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-技能组合模式"><a href="#4-技能组合模式" class="headerlink" title="4. 技能组合模式"></a>4. 技能组合模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 技能链式调用</span></span><br><span class="line">/debug | /simplify | /review</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这相当于：</span></span><br><span class="line"><span class="comment"># 1. 运行debug技能定位问题</span></span><br><span class="line"><span class="comment"># 2. 使用simplify优化代码</span></span><br><span class="line"><span class="comment"># 3. 通过review进行最终审查</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="企业级应用案例"><a href="#企业级应用案例" class="headerlink" title="企业级应用案例"></a>企业级应用案例</h2><h3 id="案例：电商团队技能套件"><a href="#案例：电商团队技能套件" class="headerlink" title="案例：电商团队技能套件"></a>案例：电商团队技能套件</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .claude/skills/ecommerce/</span></span><br><span class="line"><span class="attr">ecommerce-skills:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">inventory-manager:</span>   <span class="comment"># 库存管理</span></span><br><span class="line">    <span class="attr">triggers:</span> [<span class="string">&quot;/inventory&quot;</span>]</span><br><span class="line">    <span class="attr">features:</span> [<span class="string">&quot;stock-check&quot;</span>, <span class="string">&quot;reorder-alert&quot;</span>]</span><br><span class="line">    </span><br><span class="line">  <span class="bullet">-</span> <span class="attr">order-processor:</span>     <span class="comment"># 订单处理</span></span><br><span class="line">    <span class="attr">triggers:</span> [<span class="string">&quot;/process-order&quot;</span>]</span><br><span class="line">    <span class="attr">features:</span> [<span class="string">&quot;payment-validation&quot;</span>, <span class="string">&quot;shipping-label&quot;</span>]</span><br><span class="line">    </span><br><span class="line">  <span class="bullet">-</span> <span class="attr">analytics-dashboard:</span> <span class="comment"># 数据分析</span></span><br><span class="line">    <span class="attr">triggers:</span> [<span class="string">&quot;/analytics&quot;</span>]</span><br><span class="line">    <span class="attr">features:</span> [<span class="string">&quot;sales-report&quot;</span>, <span class="string">&quot;customer-insights&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例：DevOps流水线技能"><a href="#案例：DevOps流水线技能" class="headerlink" title="案例：DevOps流水线技能"></a>案例：DevOps流水线技能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 完整的CI/CD技能链</span></span><br><span class="line">/ci-check        <span class="comment"># 代码质量检查</span></span><br><span class="line">↓</span><br><span class="line">/security-scan   <span class="comment"># 安全扫描</span></span><br><span class="line">↓</span><br><span class="line">/build-artifact  <span class="comment"># 构建产物</span></span><br><span class="line">↓</span><br><span class="line">/deploy-staging  <span class="comment"># 部署到测试环境</span></span><br><span class="line">↓</span><br><span class="line">/run-tests       <span class="comment"># 自动化测试</span></span><br><span class="line">↓</span><br><span class="line">/deploy-prod     <span class="comment"># 生产环境部署</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="技术优势与挑战"><a href="#技术优势与挑战" class="headerlink" title="技术优势与挑战"></a>技术优势与挑战</h2><h3 id="✅-优势"><a href="#✅-优势" class="headerlink" title="✅ 优势"></a>✅ 优势</h3><ol>
+<li><strong>知识持久化</strong>：专家经验不再依赖个人记忆</li>
+<li><strong>质量一致性</strong>：每次执行都符合相同标准</li>
+<li><strong>新人快速上手</strong>：无需完整培训即可使用专业工具</li>
+<li><strong>可扩展性</strong>：技能库随团队成长而丰富</li>
+<li><strong>版本控制</strong>：技能可以像代码一样版本管理</li>
+</ol>
+<h3 id="⚠️-挑战"><a href="#⚠️-挑战" class="headerlink" title="⚠️ 挑战"></a>⚠️ 挑战</h3><ol>
+<li><strong>技能维护成本</strong>：需要定期更新以适应技术变化</li>
+<li><strong>技能间兼容性</strong>：多个技能可能产生冲突</li>
+<li><strong>安全边界</strong>：需要严格控制技能权限</li>
+<li><strong>学习曲线</strong>：团队需要适应技能化工作流</li>
+</ol>
+<h3 id="🔧-解决方案"><a href="#🔧-解决方案" class="headerlink" title="🔧 解决方案"></a>🔧 解决方案</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 技能维护策略</span></span><br><span class="line"><span class="attr">maintenance:</span></span><br><span class="line">  <span class="attr">scheduled_updates:</span> <span class="string">&quot;每月第一周&quot;</span></span><br><span class="line">  <span class="attr">compatibility_check:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">deprecation_policy:</span> </span><br><span class="line">    <span class="attr">notice_period:</span> <span class="string">&quot;30天&quot;</span></span><br><span class="line">    <span class="attr">migration_guide:</span> <span class="literal">true</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 安全策略</span></span><br><span class="line"><span class="attr">security:</span></span><br><span class="line">  <span class="attr">sandbox_mode:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">allowed_tools:</span> [<span class="string">&quot;Read&quot;</span>, <span class="string">&quot;Glob&quot;</span>, <span class="string">&quot;Grep&quot;</span>]</span><br><span class="line">  <span class="attr">forbidden_actions:</span> [<span class="string">&quot;rm -rf&quot;</span>, <span class="string">&quot;format&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h2><h3 id="1-技能市场生态"><a href="#1-技能市场生态" class="headerlink" title="1. 技能市场生态"></a>1. 技能市场生态</h3><p>想象一个<strong>技能应用商店</strong>，开发者可以：</p>
+<ul>
+<li>发布原创技能</li>
+<li>订阅专业技能包</li>
+<li>评分和评论技能</li>
+<li>自动更新技能版本</li>
+</ul>
+<h3 id="2-AI技能生成"><a href="#2-AI技能生成" class="headerlink" title="2. AI技能生成"></a>2. AI技能生成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 未来可能的功能：AI自动生成技能</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_skill_from_demo</span>(<span class="params">task_description, example_execution</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;从任务描述和执行示例生成技能&quot;&quot;&quot;</span></span><br><span class="line">    skill_structure = ai_analyze_pattern(example_execution)</span><br><span class="line">    skill_instructions = ai_generate_instructions(task_description)</span><br><span class="line">    <span class="keyword">return</span> create_skill_package(skill_structure, skill_instructions)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-技能组合AI"><a href="#3-技能组合AI" class="headerlink" title="3. 技能组合AI"></a>3. 技能组合AI</h3><p>未来的Claude可能具备<strong>元技能管理能力</strong>：</p>
+<ul>
+<li>自动识别任务类型</li>
+<li>推荐最佳技能组合</li>
+<li>动态调整技能参数</li>
+<li>学习新技能使用模式</li>
+</ul>
+<h2 id="开始你的技能开发之旅"><a href="#开始你的技能开发之旅" class="headerlink" title="开始你的技能开发之旅"></a>开始你的技能开发之旅</h2><h3 id="入门建议"><a href="#入门建议" class="headerlink" title="入门建议"></a>入门建议</h3><ol>
+<li><strong>从简单开始</strong>：先创建辅助日常工作的技能</li>
+<li><strong>关注痛点</strong>：解决团队中最耗时的手动任务</li>
+<li><strong>逐步迭代</strong>：技能可以像产品一样持续改进</li>
+<li><strong>团队协作</strong>：鼓励团队成员贡献技能</li>
+</ol>
+<h3 id="实用命令"><a href="#实用命令" class="headerlink" title="实用命令"></a>实用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已安装技能</span></span><br><span class="line"><span class="built_in">ls</span> ~/.claude/skills/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调试技能执行</span></span><br><span class="line">DEBUG=<span class="literal">true</span> claude-code /your-skill</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分享技能给团队成员</span></span><br><span class="line">tar -czf my-skill.tar.gz ~/.claude/skills/my-skill</span><br></pre></td></tr></table></figure>
+
+<h3 id="资源推荐"><a href="#资源推荐" class="headerlink" title="资源推荐"></a>资源推荐</h3><ul>
+<li><strong>官方文档</strong>：Claude Code Skills Guide</li>
+<li><strong>社区资源</strong>：GitHub上的技能示例库</li>
+<li><strong>模板仓库</strong>：快速创建技能骨架</li>
+<li><strong>最佳实践</strong>：企业技能开发指南</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Agent Skills技术正在重新定义AI协作的边界。它不再是简单的”问答-执行”模式，而是构建了一个<strong>专业能力传输系统</strong>，让组织知识能够高效、一致地转化为生产力。</p>
+<p>正如软件开发从手工作坊走向工业化流水线，AI协作也正通过Skills技术走向专业化和规模化。掌握这项技术，意味着你不仅能用好AI工具，更能<strong>定义AI的工作方式</strong>。</p>
+<blockquote>
+<p>技能不是限制，而是赋能。当每个团队成员都能一键调用专家级能力时，创新和效率的天花板将被彻底打破。</p>
+</blockquote>
+<hr>
+<p><em>本文使用Agent Skills技术撰写，由Claude Code的博客发布技能自动部署到Hexo博客系统。</em></p>
+<p><em>想开始你的技能开发？试试输入 <code>/new-skill</code> 创建一个属于你的第一个Agent Skill！</em></p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2026/03/23/go-%E7%BC%96%E5%86%99-mcp-server-%E6%95%99%E5%AD%A6%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%AE%98%E6%96%B9-go-sdk%EF%BC%89/"
+      title="Go 编写 MCP Server 教学（基于官方 go-sdk）"
+     >
+
+    <p class="title-text">
+      
+        Go 编写 MCP Server 教学（基于官方 go-sdk）
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2026 meguriri<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
